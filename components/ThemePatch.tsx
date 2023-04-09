@@ -3,7 +3,17 @@ import { useState } from "react";
 import { Patch } from "../ThemeTypes";
 import { PatchComponent } from "./PatchComponent";
 
-export function ThemePatch({ data, index, fullArr, themeName }) {
+export function ThemePatch({
+  data,
+  index,
+  fullArr,
+  themeName,
+}: {
+  data: Patch;
+  index: number;
+  fullArr: Patch[];
+  themeName: string;
+}) {
   const [selectedIndex, setIndex] = useState(data.options.indexOf(data.value));
 
   const [selectedLabel, setLabel] = useState(data.value);
@@ -25,7 +35,7 @@ export function ThemePatch({ data, index, fullArr, themeName }) {
                 step={1}
                 value={selectedIndex}
                 onChange={(event) => {
-                  const value = event.target.value;
+                  const value = Number(event.target.value);
                   python.setPatchOfTheme(
                     themeName,
                     data.name,

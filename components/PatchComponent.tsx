@@ -32,19 +32,6 @@ export const PatchComponent: VFC<{
       case "image-picker":
         // This makes things compatible with people using HoloISO or who don't have the user /deck/
         // These have to
-        async function pickImage(rootPath: string) {
-          const res = await python.openFilePicker(rootPath);
-          if (!res.path.includes(rootPath)) {
-            python.toast("Invalid File", "Images must be within themes folder");
-            return;
-          }
-          if (!/\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(res.path)) {
-            python.toast("Invalid File", "Must be an image file");
-            return;
-          }
-          const relativePath = res.path.split(`${rootPath}/`)[1];
-          setComponentAndReload(relativePath);
-        }
         return (
           <div>
             <button

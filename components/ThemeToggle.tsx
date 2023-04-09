@@ -50,6 +50,7 @@ export function ThemeToggle({
             if (data.dependencies.length > 0) {
               if (switchValue === true) {
                 python.toast(
+                  `${data.name} enabled other themes`,
                   `${
                     data.dependencies.length === 1
                       ? `1 other theme is required by ${data.name}`
