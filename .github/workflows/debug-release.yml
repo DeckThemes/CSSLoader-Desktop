@@ -37,7 +37,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               tag_name: `debug-${process.env.PACKAGE_VERSION}`,
-              name: `Steam Art Manager debug-${process.env.PACKAGE_VERSION}`,
+              name: `CSSLoader Desktop Beta-${process.env.PACKAGE_VERSION}`,
               body: `Download the release for your platform below`,
               draft: true,
               prerelease: true
