@@ -19,6 +19,10 @@ a {
   box-sizing: border-box;
 }
 
+.fancy-font {
+  font-family: var(--montserrat);
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;

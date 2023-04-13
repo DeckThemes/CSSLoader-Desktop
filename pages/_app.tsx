@@ -11,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
+  variable: "--montserrat",
 });
 
 export const themeContext = createContext<{
@@ -39,7 +40,8 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <themeContext.Provider value={{ themes, setThemes, refreshThemes }}>
-      <div className='w-screen h-screen bg-bgLight dark:bg-bgDark text-textLight dark:text-textDark'>
+      <div
+        className={`w-screen min-h-screen h-full bg-bgLight dark:bg-bgDark text-textLight dark:text-textDark ${montserrat.variable}`}>
         <div className='h-16 gap-2 px-2 flex items-center bg-cardLight dark:bg-cardDark'>
           <Image
             src='logo_css_darkmode.png'
@@ -47,9 +49,7 @@ export default function App({ Component, pageProps }: AppProps) {
             height={48}
             alt='CSSLoader Logo'
           />
-          <h1 className={`${montserrat.className} font-semibold text-3xl`}>
-            CSSLoader
-          </h1>
+          <h1 className={`fancy-font font-semibold text-3xl`}>CSSLoader</h1>
         </div>
         <ToastContainer
           position='bottom-center'
