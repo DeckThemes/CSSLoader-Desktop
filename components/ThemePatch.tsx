@@ -101,7 +101,6 @@ export function ThemePatch({
                       python.setPatchOfTheme(themeName, data.name, newValue);
                       setLabel(newValue);
                       setIndex(data.options.findIndex((e) => e === newValue));
-                      data.value = newValue;
                     }}
                   />
                 </div>
@@ -112,9 +111,17 @@ export function ThemePatch({
               <>
                 <div>
                   <span>{data.name}</span>
-                  <select>
+                  <select
+                    defaultValue={data.value}
+                    onChange={(e) => {
+                      python.setPatchOfTheme(
+                        themeName,
+                        data.name,
+                        e.target.value
+                      );
+                    }}>
                     {data.options.map((x, i) => {
-                      return <option value={i}>{x}</option>;
+                      return <option value={x}>{x}</option>;
                     })}
                   </select>
                 </div>
