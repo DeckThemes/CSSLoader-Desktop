@@ -8,6 +8,7 @@ import { createContext, useState, useEffect } from "react";
 import * as python from "../backend";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Link from "next/link";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -50,7 +51,7 @@ export default function App({ Component, pageProps }: AppProps) {
   function refreshThemes() {
     dummyFuncTest();
     python
-      .getInstalledThemes()
+      .reloadBackend()
       .then((data) => {
         if (data) {
           setThemes(data);
@@ -65,7 +66,9 @@ export default function App({ Component, pageProps }: AppProps) {
     <themeContext.Provider value={{ themes, setThemes, refreshThemes }}>
       <div
         className={`w-screen min-h-screen h-full flex flex-col bg-bgLight dark:bg-bgDark text-textLight dark:text-textDark ${montserrat.variable}`}>
-        <div className='h-16 gap-2 px-2 flex items-center bg-cardLight dark:bg-cardDark'>
+        <Link
+          href='/'
+          className='h-16 gap-2 px-2 flex items-center bg-cardLight dark:bg-cardDark'>
           <Image
             src='logo_css_darkmode.png'
             width={48}
@@ -73,7 +76,7 @@ export default function App({ Component, pageProps }: AppProps) {
             alt='CSSLoader Logo'
           />
           <h1 className={`fancy-font font-semibold text-3xl`}>CSSLoader</h1>
-        </div>
+        </Link>
         <ToastContainer
           position='bottom-center'
           autoClose={5000}
@@ -86,7 +89,9 @@ export default function App({ Component, pageProps }: AppProps) {
           theme={"dark"}
         />
         {dummyResult ? (
-          <Component {...pageProps} />
+          <>
+            <Component {...pageProps} />
+          </>
         ) : (
           <main className='flex flex-col w-full h-full items-center justify-center flex-grow gap-4'>
             <h1 className='text-center'>

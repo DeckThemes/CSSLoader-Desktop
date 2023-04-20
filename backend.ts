@@ -80,9 +80,9 @@ export function getInstalledThemes(): Promise<Theme[] | undefined> {
     });
 }
 
-export function reloadBackend(): Promise<void> {
+export function reloadBackend(): Promise<Theme[] | undefined> {
   return server!.callPluginMethod("reset", {}).then(() => {
-    getInstalledThemes();
+    return getInstalledThemes();
   });
 }
 
@@ -128,7 +128,6 @@ export function toast(title: string, message: string) {
 }
 
 export function downloadThemeFromUrl(themeId: string): Promise<any> {
-  //   const { apiUrl } = globalState!.getPublicState();
   return server!.callPluginMethod("download_theme_from_url", {
     id: themeId,
     url: "https://api.deckthemes.com/",
