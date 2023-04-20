@@ -11,8 +11,9 @@ export default function Store() {
     window.addEventListener(
       "message",
       (event) => {
-        console.log("MESSAGE RECEIVED BACK FROM IFRAME", event.data);
         if (
+          event.origin !== "https://beta.deckthemes.com" &&
+          event.origin !== "https://deckthemes.com"
         )
           return;
 
