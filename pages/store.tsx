@@ -1,19 +1,22 @@
-import { useEffect, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import * as python from "../backend";
+import { themeContext } from "./_app";
 
 export default function Store() {
   const storeRef = useRef<HTMLIFrameElement>();
+
+  const { refreshThemes } = useContext(themeContext);
 
   useEffect(() => {
     window.addEventListener(
       "message",
       (event) => {
         console.log("MESSAGE RECEIVED BACK FROM IFRAME", event.data);
-        if (event.origin !== "https://beta.deckthemes.com") return;
-        // THIS IS DECKTHEMES URL ABOVE
+        if (
+        )
+          return;
 
         if (event.data.action === "isThisDesktopApp") {
-          console.log("is desktop app");
           storeRef.current?.contentWindow?.postMessage(
             "enableDesktopAppMode",
             event.origin
@@ -22,7 +25,7 @@ export default function Store() {
 
         if (event.data.action === "installTheme") {
           console.log("INSTALL THEME", event.data);
-          python.downloadThemeFromUrl(event.data.payload);
+          python.downloadThemeFromUrl(event.data.payload).then(refreshThemes);
         }
       },
       false
@@ -30,12 +33,12 @@ export default function Store() {
   }, []);
   return (
     <>
-      <div>
-        <h1>test</h1>
+      <div className='flex-grow flex flex-col'>
         <iframe
+          // @ts-ignore
           ref={storeRef}
           src='https://beta.deckthemes.com'
-          className='w-screen h-screen'
+          className='w-screen h-full flex-grow'
         />
       </div>
     </>
