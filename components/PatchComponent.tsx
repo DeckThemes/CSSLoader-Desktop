@@ -11,7 +11,7 @@ export const PatchComponent: VFC<{
   selectedLabel: string;
   themeName: string;
   patchName: string;
-  bottomSeparatorValue: "standard" | "none";
+  bottomSeparatorValue: any;
 }> = ({ data, selectedLabel, themeName, patchName, bottomSeparatorValue }) => {
   function setComponentAndReload(value: string) {
     python.resolve(
