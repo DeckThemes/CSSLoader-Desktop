@@ -34,12 +34,12 @@ export default function Store() {
   }, []);
   return (
     <>
-      <div className='flex-grow flex flex-col'>
+      <div className="h-full flex-grow flex flex-col">
         <iframe
           // @ts-ignore
           ref={storeRef}
-          src='https://beta.deckthemes.com'
-          className='w-screen h-full flex-grow'
+          src="https://beta.deckthemes.com"
+          className="w-full h-full flex-grow"
         />
       </div>
     </>
