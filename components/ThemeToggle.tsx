@@ -25,23 +25,23 @@ export function ThemeToggle({
   }, [data.flags]);
 
   return (
-    <div className='bg-cardLight dark:bg-cardDark py-2 flex flex-col gap-1 my-2 w-[320px] rounded-xl'>
-      <div className='flex gap-4 justify-between px-2'>
-        <div className='flex flex-col'>
-          <span className='fancy-font font-medium'>{data.name}</span>
-          <span className='fancy-font'>
+    <div className="bg-cardLight dark:bg-cardDark py-2 flex flex-col gap-1 my-2 w-[320px] rounded-xl">
+      <div className="flex gap-4 justify-between px-2">
+        <div className="flex flex-col">
+          <span className="fancy-font font-medium">{data.name}</span>
+          <span className="fancy-font">
             {isPreset ? `Preset` : `${data.version} | ${data.author}`}
           </span>
         </div>
-        <label className='relative inline-flex items-center cursor-pointer'>
+        <label className="relative inline-flex items-center cursor-pointer">
           <input
-            className='sr-only peer'
+            className="sr-only peer"
             checked={data.enabled}
-            type='checkbox'
+            type="checkbox"
             onChange={(event) => {
               const switchValue = event.target.checked;
               // Actually enabling the theme
-              python.setThemeState(data.name, switchValue).then((e) => {
+              python.setThemeState(data.name, switchValue).then(() => {
                 refreshThemes();
               });
               // Re-collapse menu
@@ -79,8 +79,8 @@ export function ThemeToggle({
       </div>
       {data.enabled && data.patches.length > 0 && (
         <>
-          <div className='w-full h-2 bg-cardLight dark:bg-cardDark' />
-          <div className='flex flex-col gap-2 px-2'>
+          <div className="w-full h-2 bg-cardLight dark:bg-cardDark" />
+          <div className="flex flex-col gap-2 px-2">
             {collapsible && (
               <div>
                 <button onClick={() => setCollapsed(!collapsed)}>
@@ -103,7 +103,7 @@ export function ThemeToggle({
               </div>
             )}
             {!collapsible || !collapsed ? (
-              <div className='flex flex-col '>
+              <div className="flex flex-col ">
                 {data.patches.map((x, i, arr) => {
                   return (
                     <ThemePatch

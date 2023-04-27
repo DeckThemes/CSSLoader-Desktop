@@ -1,7 +1,8 @@
 import * as python from "../backend";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Patch } from "../ThemeTypes";
 import { PatchComponent } from "./PatchComponent";
+import { themeContext } from "../pages/_app";
 
 export function ThemePatch({
   data,
@@ -14,6 +15,7 @@ export function ThemePatch({
   fullArr: Patch[];
   themeName: string;
 }) {
+  const { refreshThemes } = useContext(themeContext);
   const [selectedIndex, setIndex] = useState(data.options.indexOf(data.value));
 
   const [selectedLabel, setLabel] = useState(data.value);
@@ -101,7 +103,12 @@ export function ThemePatch({
                     onChange={(event) => {
                       const bool = event.target.checked;
                       const newValue = bool ? "Yes" : "No";
-                      python.setPatchOfTheme(themeName, data.name, newValue);
+                      python
+                        .setPatchOfTheme(themeName, data.name, newValue)
+                        .then(() => {
+                          // TODO: This is a shim, should fix some other way
+                          refreshThemes();
+                        });
                       setLabel(newValue);
                       setIndex(data.options.findIndex((e) => e === newValue));
                     }}
