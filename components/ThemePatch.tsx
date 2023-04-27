@@ -20,14 +20,16 @@ export function ThemePatch({
 
   const bottomSeparatorValue = fullArr.length - 1 !== index;
 
+  console.log(data);
+
   function ComponentContainer() {
     return (
       <>
         {data.components.length > 0 ? (
-          <div className='pl-4'>
+          <div className="pl-4">
             {data.components.map((e) => (
               <>
-                <div className='flex gap-2'>
+                <div className="flex gap-2">
                   <PatchComponent
                     data={e}
                     selectedLabel={selectedLabel}
@@ -53,9 +55,9 @@ export function ThemePatch({
               <>
                 <div>
                   <span>{data.name}</span>
-                  <div className='w-[300px] max-w-[300px] flex flex-col'>
+                  <div className="w-[300px] max-w-[300px] flex flex-col">
                     <input
-                      type='range'
+                      type="range"
                       min={0}
                       max={data.options.length - 1}
                       step={1}
@@ -71,12 +73,13 @@ export function ThemePatch({
                         setLabel(data.options[value]);
                       }}
                     />
-                    <div className='flex justify-between'>
+                    <div className="flex justify-between">
                       {data.options.map((e) => {
                         return (
                           <div
-                            className='flex flex-col items-center justify-center overflow-hidden mx-4'
-                            style={{ maxWidth: 300 / data.options.length }}>
+                            className="flex flex-col items-center justify-center overflow-hidden mx-4"
+                            style={{ maxWidth: 300 / data.options.length }}
+                          >
                             <span>|</span>
                             <span>{e}</span>
                           </div>
@@ -93,7 +96,7 @@ export function ThemePatch({
                 <div>
                   <span>{data.name}</span>
                   <input
-                    type='checkbox'
+                    type="checkbox"
                     checked={data.value === "Yes"}
                     onChange={(event) => {
                       const bool = event.target.checked;
@@ -119,7 +122,9 @@ export function ThemePatch({
                         data.name,
                         e.target.value
                       );
-                    }}>
+                      setLabel(e.target.value);
+                    }}
+                  >
                     {data.options.map((x, i) => {
                       return <option value={x}>{x}</option>;
                     })}
@@ -141,7 +146,7 @@ export function ThemePatch({
       })()}
       <ComponentContainer />
       {bottomSeparatorValue && (
-        <div className='h-1 my-2 bg-cardLight dark:bg-cardDark' />
+        <div className="h-1 my-2 bg-cardLight dark:bg-cardDark" />
       )}
     </>
   );
