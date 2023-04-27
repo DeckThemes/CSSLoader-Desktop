@@ -26,6 +26,7 @@ export const PatchComponent: VFC<{
       }
     );
   }
+  console.log(selectedLabel === data.on);
   if (selectedLabel === data.on) {
     // The only value that changes from component to component is the value, so this can just be re-used
     switch (data.type) {
@@ -80,7 +81,8 @@ export const PatchComponent: VFC<{
                     }
                   });
                 })
-              }>
+              }
+            >
               <div style={{ display: "flex", alignItems: "center" }}>
                 <span>Open {data.name}</span>
                 <div
@@ -91,7 +93,8 @@ export const PatchComponent: VFC<{
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                  }}>
+                  }}
+                >
                   <FaFolder />
                 </div>
               </div>
@@ -101,10 +104,10 @@ export const PatchComponent: VFC<{
       case "color-picker":
         return (
           <>
-            <div className='flex gap-2'>
+            <div className="flex gap-2">
               <span>{data.name}</span>
               <input
-                type='color'
+                type="color"
                 defaultValue={data.value}
                 onBlur={(e) => {
                   setComponentAndReload(e.target.value);
