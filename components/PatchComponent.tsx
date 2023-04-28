@@ -6,13 +6,19 @@ import * as python from "../backend";
 import { ThemePatchComponent } from "../ThemeTypes";
 import { FaFolder } from "react-icons/fa";
 
-export const PatchComponent: VFC<{
+export const PatchComponent = ({
+  data,
+  selectedLabel,
+  themeName,
+  patchName,
+  bottomSeparatorValue,
+}: {
   data: ThemePatchComponent;
   selectedLabel: string;
   themeName: string;
   patchName: string;
   bottomSeparatorValue: any;
-}> = ({ data, selectedLabel, themeName, patchName, bottomSeparatorValue }) => {
+}) => {
   function setComponentAndReload(value: string) {
     python.resolve(
       python.setComponentOfThemePatch(
@@ -26,7 +32,6 @@ export const PatchComponent: VFC<{
       }
     );
   }
-  console.log(selectedLabel === data.on);
   if (selectedLabel === data.on) {
     // The only value that changes from component to component is the value, so this can just be re-used
     switch (data.type) {
@@ -34,8 +39,9 @@ export const PatchComponent: VFC<{
         // This makes things compatible with people using HoloISO or who don't have the user /deck/
         // These have to
         return (
-          <div>
+          <div className="w-full pr-4">
             <button
+              className="flex items-center justify-between w-full"
               onClick={() =>
                 python.resolve(python.fetchThemePath(), (rootPath: string) => {
                   open({
@@ -73,7 +79,6 @@ export const PatchComponent: VFC<{
                         python.toast("Invalid File", "Must be an image file");
                         return;
                       }
-                      console.log(path, rootPath);
                       const relativePath = path
                         .split(`${rootPath}`)[1]
                         .slice(1);
@@ -83,20 +88,18 @@ export const PatchComponent: VFC<{
                 })
               }
             >
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <span>Open {data.name}</span>
-                <div
-                  style={{
-                    marginLeft: "auto",
-                    width: "24px",
-                    height: "24px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <FaFolder />
-                </div>
+              <span>{data.name}</span>
+              <div
+                style={{
+                  marginLeft: "auto",
+                  width: "24px",
+                  height: "24px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <FaFolder />
               </div>
             </button>
           </div>
@@ -104,7 +107,7 @@ export const PatchComponent: VFC<{
       case "color-picker":
         return (
           <>
-            <div className="flex gap-2">
+            <div className="flex items-center justify-between w-full pr-4">
               <span>{data.name}</span>
               <input
                 type="color"

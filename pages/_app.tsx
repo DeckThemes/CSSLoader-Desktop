@@ -1,9 +1,9 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import Image from "next/image";
-
+import { BiReset } from "react-icons/bi";
 import { Theme } from "../ThemeTypes";
-import { Montserrat } from "next/font/google";
+import { Montserrat, Open_Sans } from "next/font/google";
 import { createContext, useState, useEffect } from "react";
 import * as python from "../backend";
 import { ToastContainer } from "react-toastify";
@@ -15,6 +15,11 @@ import { NavTab } from "../components";
 const montserrat = Montserrat({
   subsets: ["latin"],
   variable: "--montserrat",
+});
+
+const openSans = Open_Sans({
+  subsets: ["latin"],
+  variable: "--opensans",
 });
 
 export const themeContext = createContext<{
@@ -69,7 +74,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <themeContext.Provider value={{ themes, setThemes, refreshThemes }}>
       <div
-        className={`overflow-y-hidden dark w-full min-h-screen h-full flex flex-col bg-bgDark dark:text-textDark ${montserrat.variable}`}
+        className={`overflow-y-hidden dark w-full min-h-screen h-full flex flex-col bg-bgDark dark:text-textDark ${montserrat.variable} ${openSans.variable}`}
       >
         <ToastContainer
           position="bottom-center"
@@ -92,43 +97,33 @@ export default function App({ Component, pageProps }: AppProps) {
                   height={48}
                   alt="CSSLoader Logo"
                 />
-                <h1 className={`fancy-font font-semibold text-3xl`}>
+                <h1
+                  className={`fancy-font font-semibold text-3xl hidden 2cols:flex`}
+                >
                   CSSLoader
                 </h1>
               </Link>
+              <button
+                onClick={() => {
+                  dummyFuncTest();
+                  refreshThemes();
+                }}
+              >
+                <BiReset size={24} color="white" />
+              </button>
               <div className="fancy-font ml-auto mr-2 h-full flex items-end gap-2">
                 <NavTab href="/" name="Your Themes" />
                 <NavTab href="/store" name="Download Themes" />
               </div>
-              {/* <div className='overflow-hidden relative w-16 h-10 flex-grow'>
-                <Link
-                  className='p-2 bg-cardDark rounded-full px-4 fancy-font transition-all duration-300 absolute right-2'
-                  style={{
-                    transform:
-                      router.pathname === "/store" ? "translate(200px,0)" : "",
-                  }}
-                  href='/store'>
-                  Download Themes
-                </Link>
-                <Link
-                  className='p-2 bg-cardDark rounded-full px-4 fancy-font absolute right-2 transition-all duration-300'
-                  style={{
-                    transform:
-                      router.pathname !== "/store" ? "translate(200px,0)" : "",
-                  }}
-                  href='/'>
-                  Your Themes
-                </Link>
-              </div>*/}
             </div>
-            <div
+            <main
               style={{
                 overflowY: router.pathname === "/store" ? "auto" : "scroll",
               }}
               className="w-full h-minusNav overflow-y-scroll"
             >
               <Component {...pageProps} />
-            </div>
+            </main>
           </>
         ) : (
           <>

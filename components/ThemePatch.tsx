@@ -22,25 +22,24 @@ export function ThemePatch({
 
   const bottomSeparatorValue = fullArr.length - 1 !== index;
 
-  console.log(data);
-
   function ComponentContainer() {
     return (
       <>
         {data.components.length > 0 ? (
           <div className="pl-4">
             {data.components.map((e) => (
-              <>
-                <div className="flex gap-2">
-                  <PatchComponent
-                    data={e}
-                    selectedLabel={selectedLabel}
-                    themeName={themeName}
-                    patchName={data.name}
-                    bottomSeparatorValue={bottomSeparatorValue}
-                  />
-                </div>
-              </>
+              <div
+                className="flex gap-2"
+                key={`component_${themeName}_${data.name}_${e.name}`}
+              >
+                <PatchComponent
+                  data={e}
+                  selectedLabel={selectedLabel}
+                  themeName={themeName}
+                  patchName={data.name}
+                  bottomSeparatorValue={bottomSeparatorValue}
+                />
+              </div>
             ))}
           </div>
         ) : null}
@@ -95,33 +94,38 @@ export function ThemePatch({
           case "checkbox":
             return (
               <>
-                <div>
+                <div className="flex items-center justify-between">
                   <span>{data.name}</span>
-                  <input
-                    type="checkbox"
-                    checked={data.value === "Yes"}
-                    onChange={(event) => {
-                      const bool = event.target.checked;
-                      const newValue = bool ? "Yes" : "No";
-                      python
-                        .setPatchOfTheme(themeName, data.name, newValue)
-                        .then(() => {
-                          // TODO: This is a shim, should fix some other way
-                          refreshThemes();
-                        });
-                      setLabel(newValue);
-                      setIndex(data.options.findIndex((e) => e === newValue));
-                    }}
-                  />
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input
+                      className="sr-only peer"
+                      type="checkbox"
+                      checked={data.value === "Yes"}
+                      onChange={(event) => {
+                        const bool = event.target.checked;
+                        const newValue = bool ? "Yes" : "No";
+                        python
+                          .setPatchOfTheme(themeName, data.name, newValue)
+                          .then(() => {
+                            // TODO: This is a shim, should fix some other way
+                            refreshThemes();
+                          });
+                        setLabel(newValue);
+                        setIndex(data.options.findIndex((e) => e === newValue));
+                      }}
+                    />
+                    <div className="w-9 h-5 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600" />
+                  </label>
                 </div>
               </>
             );
           case "dropdown":
             return (
               <>
-                <div>
+                <div className="flex items-center justify-between">
                   <span>{data.name}</span>
                   <select
+                    className="rounded-md"
                     defaultValue={data.value}
                     onChange={(e) => {
                       python.setPatchOfTheme(
