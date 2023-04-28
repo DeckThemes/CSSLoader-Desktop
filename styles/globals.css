@@ -23,6 +23,10 @@ a {
   font-family: var(--montserrat);
 }
 
+main {
+  font-family: var(--opensans);
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
