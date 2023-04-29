@@ -1,7 +1,15 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-export function NavTab({ href, name }: { href: string; name: string }) {
+export function NavTab({
+  href,
+  name,
+  icon,
+}: {
+  href: string;
+  name: string;
+  icon: any;
+}) {
   const router = useRouter();
 
   return (
@@ -13,7 +21,8 @@ export function NavTab({ href, name }: { href: string; name: string }) {
         }}
         className="transition-all duration-300 flex items-center justify-center px-4 bg-elevation-2-dark h-3/4 rounded-t-xl border-t-4 border-t-bgDark"
       >
-        {name}
+        <span className="hidden 2cols:flex">{name}</span>
+        <div className="flex 2cols:hidden">{icon}</div>
       </Link>
     </>
   );

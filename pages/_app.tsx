@@ -1,7 +1,7 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import Image from "next/image";
-import { BiReset } from "react-icons/bi";
+import { BiReset, BiStoreAlt } from "react-icons/bi";
 import { Theme } from "../ThemeTypes";
 import { Montserrat, Open_Sans } from "next/font/google";
 import { createContext, useState, useEffect } from "react";
@@ -11,6 +11,8 @@ import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { NavTab } from "../components";
+import { ImList2 } from "react-icons/im";
+import { RiUninstallLine } from "react-icons/ri";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -69,6 +71,7 @@ export default function App({ Component, pageProps }: AppProps) {
       .catch((err) => {
         setDummyResult(false);
       });
+    return;
   }
 
   return (
@@ -112,8 +115,17 @@ export default function App({ Component, pageProps }: AppProps) {
                 <BiReset size={24} color="white" />
               </button>
               <div className="fancy-font ml-auto mr-2 h-full flex items-end gap-2">
-                <NavTab href="/" name="Your Themes" />
-                <NavTab href="/store" name="Download Themes" />
+                <NavTab href="/" name="Your Themes" icon={<ImList2 />} />
+                <NavTab
+                  href="/store"
+                  name="Download Themes"
+                  icon={<BiStoreAlt />}
+                />
+                <NavTab
+                  href="/manage-themes"
+                  name="Manage Themes"
+                  icon={<RiUninstallLine />}
+                />
               </div>
             </div>
             <main
