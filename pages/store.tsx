@@ -27,6 +27,7 @@ export default function Store() {
 
         if (event.data.action === "installTheme") {
           python.downloadThemeFromUrl(event.data.payload).then(() => {
+            python.toast(`Theme Installed`);
             refreshThemes();
             storeRef.current?.contentWindow?.postMessage(
               "themeInstalled",

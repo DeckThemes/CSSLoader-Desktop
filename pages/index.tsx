@@ -1,5 +1,4 @@
 import { useContext } from "react";
-import Link from "next/link";
 import { ThemeToggle } from "../components";
 import { themeContext } from "./_app";
 

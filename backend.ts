@@ -123,8 +123,8 @@ export function setComponentOfThemePatch(
   });
 }
 
-export function toast(title: string, message: string) {
-  reactToast(`${title} - ${message}`);
+export function toast(title: string, message?: string) {
+  reactToast(`${title}${message ? ` - ${message}` : ""}`);
 }
 
 export function downloadThemeFromUrl(themeId: string): Promise<any> {

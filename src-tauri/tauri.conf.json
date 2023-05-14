@@ -12,6 +12,48 @@
   },
   "tauri": {
     "allowlist": {
+      "shell": {
+        "all": true,
+        "execute": false,
+        "open": true,
+        "scope": [
+          {
+            "name": "killBackend",
+            "cmd": "powershell.exe",
+            "args": [
+              "taskkill",
+              "/IM",
+              "CssLoader-Standalone-Headless.exe",
+              "/F"
+            ]
+          },
+          {
+            "name": "downloadBackend",
+            "cmd": "powershell.exe",
+            "args": [
+              "Invoke-WebRequest",
+              "-Uri",
+              "https://github.com/suchmememanyskill/SDH-CssLoader/releases/latest/download/CssLoader-Standalone-Headless.exe",
+              "-OutFile",
+              "([Environment]::GetFolderPath('Startup')",
+              "+",
+              "'\\CssLoader-Standalone-Headless.exe')"
+            ]
+          },
+          {
+            "name": "startBackend",
+            "cmd": "powershell.exe",
+            "args": [
+              "Start-Process",
+              "-FilePath",
+              "([Environment]::GetFolderPath('Startup')",
+              "+",
+              "'\\CssLoader-Standalone-Headless.exe')"
+            ]
+          }
+        ],
+        "sidecar": false
+      },
       "all": false,
       "dialog": {
         "all": true,

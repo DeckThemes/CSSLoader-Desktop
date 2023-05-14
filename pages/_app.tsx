@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 import { NavTab } from "../components";
 import { ImList2 } from "react-icons/im";
 import { RiUninstallLine } from "react-icons/ri";
+import { Command } from "@tauri-apps/api/shell";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -152,6 +153,38 @@ export default function App({ Component, pageProps }: AppProps) {
                 }}
               >
                 Reset
+              </button>
+              <h1 className="text-center">
+                If this is your first time using CSSLoader, install the backend
+                using the button below.
+              </h1>
+              <button
+                className="p-2 fancy-font bg-cardDark rounded-md px-4"
+                onClick={async () => {
+                  // TODO: this is probably horribly done bcus idk tauri apis, but it works
+                  const command1 = new Command("downloadBackend", [
+                    "Invoke-WebRequest",
+                    "-Uri",
+                    "https://github.com/suchmememanyskill/SDH-CssLoader/releases/latest/download/CssLoader-Standalone-Headless.exe",
+                    "-OutFile",
+                    "([Environment]::GetFolderPath('Startup')",
+                    "+",
+                    "'\\CssLoader-Standalone-Headless.exe')",
+                  ]);
+                  command1.on("close", async (data) => {
+                    const command2 = new Command("startBackend", [
+                      "Start-Process",
+                      "-FilePath",
+                      "([Environment]::GetFolderPath('Startup')",
+                      "+",
+                      "'\\CssLoader-Standalone-Headless.exe')",
+                    ]);
+                    await command2.spawn();
+                  });
+                  await command1.spawn();
+                }}
+              >
+                Install Backend
               </button>
             </main>
           </>
