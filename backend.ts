@@ -1,5 +1,6 @@
 import { fetch, Body } from "@tauri-apps/api/http";
 import { Theme } from "./ThemeTypes";
+import { Command } from "@tauri-apps/api/shell";
 
 import { toast as reactToast } from "react-toastify";
 
@@ -42,6 +43,32 @@ const server: Server = {
       });
   },
 };
+
+export async function startBackend(onClose: any = () => {}) {
+  const command = new Command("startBackend", [
+    "Start-Process",
+    "-FilePath",
+    "([Environment]::GetFolderPath('Startup')",
+    "+",
+    "'\\CssLoader-Standalone-Headless.exe')",
+  ]);
+  command.on("close", onClose);
+  await command.spawn();
+}
+
+export async function downloadBackend(onClose: any = () => {}) {
+  const command = new Command("downloadBackend", [
+    "Invoke-WebRequest",
+    "-Uri",
+    "https://github.com/suchmememanyskill/SDH-CssLoader/releases/latest/download/CssLoader-Standalone-Headless.exe",
+    "-OutFile",
+    "([Environment]::GetFolderPath('Startup')",
+    "+",
+    "'\\CssLoader-Standalone-Headless.exe')",
+  ]);
+  command.on("close", onClose);
+  await command.spawn();
+}
 
 export function fetchThemePath() {
   return server!.callPluginMethod("fetch_theme_path", {});
