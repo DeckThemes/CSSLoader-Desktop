@@ -3,9 +3,10 @@ import Link from "next/link";
 import { useContext } from "react";
 import { themeContext } from "../../pages/_app";
 import { NavTab } from "./NavTab";
-import { RiUninstallLine } from "react-icons/ri";
-import { BiReset, BiStoreAlt } from "react-icons/bi";
-import { ImList2 } from "react-icons/im";
+import { RiPaintFill, RiUninstallLine } from "react-icons/ri";
+import { BiReset } from "react-icons/bi";
+import { AiOutlineCloudDownload } from "react-icons/ai";
+import { BsFolder } from "react-icons/bs";
 
 export function MainNav({ dummyFuncTest }: { dummyFuncTest: any }) {
   const { refreshThemes } = useContext(themeContext);
@@ -19,7 +20,7 @@ export function MainNav({ dummyFuncTest }: { dummyFuncTest: any }) {
             height={48}
             alt="CSSLoader Logo"
           />
-          <h1 className={`fancy-font font-semibold text-3xl hidden 2cols:flex`}>
+          <h1 className={`fancy-font font-semibold text-2xl hidden 2cols:flex`}>
             CSSLoader
           </h1>
         </Link>
@@ -32,12 +33,16 @@ export function MainNav({ dummyFuncTest }: { dummyFuncTest: any }) {
           <BiReset size={24} color="white" />
         </button>
         <div className="fancy-font ml-auto mr-2 h-full flex items-end gap-2">
-          <NavTab href="/" name="Your Themes" icon={<ImList2 />} />
-          <NavTab href="/store" name="Download Themes" icon={<BiStoreAlt />} />
+          <NavTab href="/" name="Your Themes" icon={<RiPaintFill />} />
+          <NavTab
+            href="/store"
+            name="Download Themes"
+            icon={<AiOutlineCloudDownload />}
+          />
           <NavTab
             href="/manage-themes"
             name="Manage Themes"
-            icon={<RiUninstallLine />}
+            icon={<BsFolder />}
           />
         </div>
       </div>

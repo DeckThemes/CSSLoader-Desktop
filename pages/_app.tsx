@@ -100,7 +100,7 @@ export default function App({ Component, pageProps }: AppProps) {
       .reloadBackend()
       .then((data) => {
         if (data) {
-          setThemes(data);
+          setThemes(data.sort());
         }
       })
       .catch((err) => {
@@ -115,6 +115,8 @@ export default function App({ Component, pageProps }: AppProps) {
     if (!dummyResult) {
       return <BackendFailedPage />;
     }
+    console.log("rerender");
+
     return (
       <>
         <MainNav dummyFuncTest={dummyFuncTest} />
@@ -146,7 +148,27 @@ export default function App({ Component, pageProps }: AppProps) {
           pauseOnHover
           theme={"dark"}
         />
-        <MainContentWrapper />
+        {backendExists ? (
+          <>
+            {dummyResult ? (
+              <>
+                <MainNav dummyFuncTest={dummyFuncTest} />
+                <main
+                  style={{
+                    overflowY: router.pathname === "/store" ? "auto" : "scroll",
+                  }}
+                  className="w-full h-minusNav overflow-y-scroll"
+                >
+                  <Component {...pageProps} />
+                </main>
+              </>
+            ) : (
+              <BackendFailedPage />
+            )}
+          </>
+        ) : (
+          <OnboardingPage />
+        )}
       </div>
     </themeContext.Provider>
   );

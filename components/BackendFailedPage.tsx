@@ -29,6 +29,7 @@ export function BackendFailedPage() {
           </div>
         </div>
         <button
+          disabled={!hasWaited}
           className="absolute bottom-4 left-1/2 -translate-x-1/2 p-2 fancy-font bg-cardDark rounded-md px-4 transition-all"
           style={{ opacity: hasWaited ? 1 : 0 }}
           onClick={() => hasWaited && forceRestart()}
