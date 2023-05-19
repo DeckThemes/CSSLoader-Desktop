@@ -1,14 +1,21 @@
-import { BsTrashFill } from "react-icons/bs";
+import { BsFillCloudDownloadFill, BsTrashFill } from "react-icons/bs";
 import { themeContext } from "./_app";
-import { useContext, useState } from "react";
-import { Theme } from "../ThemeTypes";
+import { useContext, useEffect, useState } from "react";
+import { MinimalCSSThemeInfo, Theme } from "../ThemeTypes";
 import * as python from "../backend";
 import { open } from "@tauri-apps/api/shell";
 import { homeDir, join } from "@tauri-apps/api/path";
+import { apiUrl } from "../constants";
+import { fetch } from "@tauri-apps/api/http";
+
+export type LocalThemeStatus = "installed" | "outdated" | "local";
 
 export default function ManageThemes() {
   const { themes: localThemeList, refreshThemes } = useContext(themeContext);
   const [uninstalling, setUninstalling] = useState<boolean>(false);
+  const [updateStatuses, setUpdateStatuses] = useState<
+    [string, LocalThemeStatus, false | MinimalCSSThemeInfo][]
+  >([]);
   function handleUninstall(listEntry: Theme) {
     setUninstalling(true);
     python.resolve(python.deleteTheme(listEntry.name), () => {
@@ -16,25 +23,114 @@ export default function ManageThemes() {
       setUninstalling(false);
     });
   }
+  function handleUpdate(remoteEntry: MinimalCSSThemeInfo) {
+    python.downloadThemeFromUrl(remoteEntry.id).then(() => {
+      python.toast(`${remoteEntry.name} Updated`);
+      refreshThemes();
+    });
+  }
+  useEffect(() => {
+    if (localThemeList.length > 0) {
+      let themeArr: MinimalCSSThemeInfo[] = [];
+      let idsToQuery: string[] = localThemeList.map((e) => e.id);
+
+      if (idsToQuery.length > 0) {
+        const queryStr = "?ids=" + idsToQuery.join(".");
+        fetch<MinimalCSSThemeInfo[]>(`${apiUrl}/themes/ids${queryStr}`)
+          .then((res) => {
+            return res.data;
+          })
+          .then((value: MinimalCSSThemeInfo[]) => {
+            if (value) {
+              themeArr.push(...value);
+            }
+          })
+          .then(() => {
+            if (themeArr.length > 0) {
+              let updateStatusArr: [
+                string,
+                LocalThemeStatus,
+                false | MinimalCSSThemeInfo
+              ][] = [];
+              localThemeList.forEach((localEntry) => {
+                const remoteEntry = themeArr.find(
+                  (remote) =>
+                    remote.id === localEntry.id || remote.name === localEntry.id
+                );
+                if (remoteEntry) {
+                  if (remoteEntry.version === localEntry.version) {
+                    updateStatusArr.push([
+                      localEntry.id,
+                      "installed",
+                      remoteEntry,
+                    ]);
+                    return;
+                  }
+                  updateStatusArr.push([
+                    localEntry.id,
+                    "outdated",
+                    remoteEntry,
+                  ]);
+                  return;
+                }
+                updateStatusArr.push([localEntry.id, "local", false]);
+                return;
+              });
+              setUpdateStatuses(updateStatusArr);
+            }
+          });
+      }
+    }
+  }, [localThemeList]);
 
   return (
     <div className="flex items-center h-full flex-col justify-between pb-10 p-4">
-      <div className="flex flex-wrap justify-center gap-2">
+      <div className="flex flex-wrap justify-center gap-2 pb-10">
         {localThemeList.map((e) => {
+          let [updateStatus, remoteEntry]: [
+            LocalThemeStatus,
+            false | MinimalCSSThemeInfo
+          ] = ["installed", false];
+          const themeArrPlace = updateStatuses.find((f) => f[0] === e.id);
+          if (themeArrPlace) {
+            updateStatus = themeArrPlace[1];
+            remoteEntry = themeArrPlace[2];
+          }
           return (
             <>
-              <div className="flex bg-cardDark p-4 rounded-xl items-center justify-between w-[320px]">
+              <div className="flex bg-cardDark p-4 rounded-xl items-center justify-center w-[320px] 2cols:w-[640px]">
                 <div className="flex flex-col">
                   <span>{e.name}</span>
-                  <span>{e.version}</span>
+                  <span>
+                    {e.version}
+                    {updateStatus === "local" ? (
+                      <span className="italic text-slate-200">
+                        {" "}
+                        - Local Theme
+                      </span>
+                    ) : (
+                      ""
+                    )}
+                  </span>
                 </div>
-                <div className="flex items-center justify-center">
-                  <button
-                    disabled={uninstalling}
-                    onClick={() => handleUninstall(e)}
-                  >
-                    <BsTrashFill size={36} />
-                  </button>
+                <div className="flex ml-auto items-center justify-center gap-2 2cols:gap-4">
+                  {updateStatus === "outdated" && remoteEntry && (
+                    <button
+                      onClick={() => remoteEntry && handleUpdate(remoteEntry)}
+                      className="flex flex-col 2cols:flex-row-reverse 2cols:gap-2 items-center justify-center"
+                    >
+                      <BsFillCloudDownloadFill className="text-2xl 2cols:text-3xl" />
+                      <span>{remoteEntry.version}</span>
+                    </button>
+                  )}
+                  <div className="flex items-center justify-center">
+                    <button
+                      disabled={uninstalling}
+                      onClick={() => handleUninstall(e)}
+                    >
+                      <BsTrashFill className="text-2xl 2cols:text-3xl" />
+                    </button>
+                  </div>
                 </div>
               </div>
             </>

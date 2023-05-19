@@ -1,6 +1,7 @@
 import { useContext, useEffect, useRef } from "react";
 import * as python from "../backend";
 import { themeContext } from "./_app";
+import { allowedStoreOrigins, storeUrl } from "../constants";
 
 export default function Store() {
   const storeRef = useRef<HTMLIFrameElement>();
@@ -9,11 +10,7 @@ export default function Store() {
 
   useEffect(() => {
     function listener(event: any) {
-      if (
-        event.origin !== "https://beta.deckthemes.com" &&
-        event.origin !== "https://deckthemes.com"
-      )
-        return;
+      if (!allowedStoreOrigins.includes(event.origin)) return;
 
       if (event.data.action === "isThisDesktopApp") {
         storeRef.current?.contentWindow?.postMessage(
@@ -44,8 +41,7 @@ export default function Store() {
         <iframe
           // @ts-ignore
           ref={storeRef}
-          src="https://beta.deckthemes.com"
-          // src="http://localhost:3001"
+          src={storeUrl}
           className="w-full h-full flex-grow"
         />
       </div>

@@ -108,29 +108,6 @@ export default function App({ Component, pageProps }: AppProps) {
       });
     return;
   }
-  function MainContentWrapper() {
-    if (!backendExists) {
-      return <OnboardingPage />;
-    }
-    if (!dummyResult) {
-      return <BackendFailedPage />;
-    }
-    console.log("rerender");
-
-    return (
-      <>
-        <MainNav dummyFuncTest={dummyFuncTest} />
-        <main
-          style={{
-            overflowY: router.pathname === "/store" ? "auto" : "scroll",
-          }}
-          className="w-full h-minusNav overflow-y-scroll"
-        >
-          <Component {...pageProps} />
-        </main>
-      </>
-    );
-  }
 
   return (
     <themeContext.Provider value={{ themes, setThemes, refreshThemes }}>
@@ -139,7 +116,7 @@ export default function App({ Component, pageProps }: AppProps) {
       >
         <ToastContainer
           position="bottom-center"
-          autoClose={5000}
+          autoClose={3000}
           hideProgressBar={false}
           newestOnTop
           closeOnClick
