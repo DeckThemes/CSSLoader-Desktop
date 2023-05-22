@@ -110,7 +110,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           release_id: ${{ needs.create-release.outputs.release_id }}
           release_tag: ${{ needs.create-release.outputs.tag }}
-          git_branch: "release"
+          git_branch: "dev"
         with:
           script: |
             const fs = require("fs");
