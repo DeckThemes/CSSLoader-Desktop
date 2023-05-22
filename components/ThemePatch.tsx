@@ -74,11 +74,11 @@ export function ThemePatch({
                         setLabel(data.options[value]);
                       }}
                     />
-                    <div className="flex justify-between">
+                    <div className="flex justify-between w-[300px]">
                       {data.options.map((e) => {
                         return (
                           <div
-                            className="flex flex-col items-center justify-center overflow-hidden mx-4"
+                            className="flex flex-col items-center justify-between overflow-hidden"
                             style={{ maxWidth: 300 / data.options.length }}
                           >
                             <span>|</span>
