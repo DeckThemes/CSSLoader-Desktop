@@ -25,12 +25,6 @@ jobs:
         with:
           node-version: 16
 
-      - name: Conventional Changelog Action
-        id: changelog
-        uses: ./.github/workflows/custom-changelog
-        with:
-          github-token: ${{ secrets.github_token }}
-
       - name: Create Release
         id: create-release
         uses: actions/github-script@v6
