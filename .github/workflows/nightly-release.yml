@@ -57,3 +57,4 @@ jobs:
           releaseBody: "See the assets to download and install the newest version of CSSLoader Desktop"
           releaseDraft: false
           prerelease: true
+          includeUpdaterJson: true
