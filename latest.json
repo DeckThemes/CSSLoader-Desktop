@@ -1,0 +1,11 @@
+{
+  "version": "0.3.5",
+  "notes": "Check Github for the release notes!",
+  "pub_date": "2023-05-22T22:09:01.684Z",
+  "platforms": {
+    "windows-x86_64": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUR25UdTJ0dzN1MWtRY2RyaUJLQlpWWUZONmdxam9mc0tWa0dHZDJVanArU3VaWC9YT1A3bU94RnBpNlV1TEtGOU91Um1QblJkOUV2N0NRcUNnVm5TQU5xeFNoazlsaUFFPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNjg0NzkzMzM5CWZpbGU6Q1NTTG9hZGVyIERlc2t0b3BfMC4zLjVfeDY0X2VuLVVTLm1zaS56aXAKWXRCQUxqcnJVRllmWmVZUGNibVdQQXBhU3U5Z2lSRUdpcmtoSzl0aGNPRkE3RWhHakJPNnNLb0lXVGRpbnZESkFCYzNCVDlIenFaeFdDSDgxRE14Q3c9PQo=",
+      "url": "https://github.com/beebls/CSSLoader-Desktop/releases/latest/download/CSSLoader.Desktop_0.3.5_x64_en-US.msi.zip"
+    }
+  }
+}
