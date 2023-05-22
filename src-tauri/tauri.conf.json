@@ -12,6 +12,66 @@
   },
   "tauri": {
     "allowlist": {
+      "path": {
+        "all": true
+      },
+      "fs": {
+        "all": false,
+        "copyFile": false,
+        "createDir": false,
+        "exists": true,
+        "readDir": false,
+        "readFile": false,
+        "removeDir": false,
+        "removeFile": false,
+        "renameFile": false,
+        "scope": [
+          "$CONFIG\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\*"
+        ],
+        "writeFile": false
+      },
+      "shell": {
+        "all": true,
+        "execute": false,
+        "open": false,
+        "scope": [
+          {
+            "name": "killBackend",
+            "cmd": "powershell.exe",
+            "args": [
+              "taskkill",
+              "/IM",
+              "CssLoader-Standalone-Headless.exe",
+              "/F"
+            ]
+          },
+          {
+            "name": "downloadBackend",
+            "cmd": "powershell.exe",
+            "args": [
+              "Invoke-WebRequest",
+              "-Uri",
+              "https://github.com/suchmememanyskill/SDH-CssLoader/releases/latest/download/CssLoader-Standalone-Headless.exe",
+              "-OutFile",
+              "([Environment]::GetFolderPath('Startup')",
+              "+",
+              "'\\CssLoader-Standalone-Headless.exe')"
+            ]
+          },
+          {
+            "name": "startBackend",
+            "cmd": "powershell.exe",
+            "args": [
+              "Start-Process",
+              "-FilePath",
+              "([Environment]::GetFolderPath('Startup')",
+              "+",
+              "'\\CssLoader-Standalone-Headless.exe')"
+            ]
+          }
+        ],
+        "sidecar": false
+      },
       "all": false,
       "dialog": {
         "all": true,
@@ -24,7 +84,7 @@
       "http": {
         "all": true,
         "request": true,
-        "scope": ["http://127.0.0.1:35821/req"]
+        "scope": ["http://127.0.0.1:35821/req", "https://api.deckthemes.com/*"]
       }
     },
     "bundle": {
@@ -64,7 +124,9 @@
       "csp": null
     },
     "updater": {
-      "active": false
+      "active": true,
+      "dialog": true,
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEQ2RUUwREI3QjYzQjlEQzYKUldUR25UdTJ0dzN1MWdPaVZGbGhaWitmNUJKNkNQRUphd0tOdmR6MzNyMHQ3SHorNDcyRTNqS2MK"
     },
     "windows": [
       {
