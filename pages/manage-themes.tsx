@@ -3,8 +3,6 @@ import { themeContext } from "./_app";
 import { useContext, useEffect, useState } from "react";
 import { MinimalCSSThemeInfo, Theme } from "../ThemeTypes";
 import * as python from "../backend";
-import { open } from "@tauri-apps/api/shell";
-import { homeDir, join } from "@tauri-apps/api/path";
 import { apiUrl } from "../constants";
 import { fetch } from "@tauri-apps/api/http";
 
@@ -141,9 +139,10 @@ export default function ManageThemes() {
         <button
           className="p-4 bg-cardDark rounded-xl"
           onClick={async () => {
+            const { homeDir, join } = await import("@tauri-apps/api/path");
+            const { open } = await import("@tauri-apps/api/shell");
             const userDir = await homeDir();
             const path = await join(userDir, "homebrew", "themes");
-            console.log(path);
             open(path);
           }}
         >
