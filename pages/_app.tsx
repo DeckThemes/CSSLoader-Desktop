@@ -108,6 +108,7 @@ export default function App({ Component, pageProps }: AppProps) {
       });
     return;
   }
+  if (typeof window === undefined) return;
 
   return (
     <themeContext.Provider value={{ themes, setThemes, refreshThemes }}>
