@@ -126,7 +126,7 @@ export default function App({ Component, pageProps }: AppProps) {
           pauseOnHover
           theme={"dark"}
         />
-        {backendExists ? (
+        {backendExists || dummyResult ? (
           <>
             {dummyResult ? (
               <>
