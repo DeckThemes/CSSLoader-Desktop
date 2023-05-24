@@ -18,17 +18,19 @@
       "fs": {
         "all": false,
         "copyFile": false,
-        "createDir": false,
+        "createDir": true,
         "exists": true,
         "readDir": false,
-        "readFile": false,
+        "readFile": true,
         "removeDir": false,
         "removeFile": false,
         "renameFile": false,
         "scope": [
-          "$CONFIG\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\*"
+          "$CONFIG\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\*",
+          "$APPDATA/standaloneVersion.txt",
+          "$APPDATA"
         ],
-        "writeFile": false
+        "writeFile": true
       },
       "shell": {
         "all": true,
@@ -84,7 +86,11 @@
       "http": {
         "all": true,
         "request": true,
-        "scope": ["http://127.0.0.1:35821/req", "https://api.deckthemes.com/*"]
+        "scope": [
+          "http://127.0.0.1:35821/req",
+          "https://api.deckthemes.com/*",
+          "https://api.github.com/repos/suchmememanyskill/SDH-CssLoader/*"
+        ]
       }
     },
     "bundle": {

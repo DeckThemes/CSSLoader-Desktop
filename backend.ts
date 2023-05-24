@@ -1,8 +1,15 @@
 import { fetch, Body } from "@tauri-apps/api/http";
 import { Theme } from "./ThemeTypes";
 import { Command } from "@tauri-apps/api/shell";
-
+import {
+  writeTextFile,
+  readTextFile,
+  BaseDirectory,
+  createDir,
+  exists,
+} from "@tauri-apps/api/fs";
 import { toast as reactToast } from "react-toastify";
+import semver from "semver";
 
 export interface Server {
   callPluginMethod<TArgs = {}, TRes = {}>(
@@ -24,7 +31,6 @@ interface ServerResponseError {
 
 const server: Server = {
   async callPluginMethod(methodName: string, args: any): Promise<any> {
-    console.log("FETCHING", methodName);
     return fetch("http://127.0.0.1:35821/req", {
       method: "POST",
       body: Body.json({
@@ -56,11 +62,77 @@ export async function startBackend(onClose: any = () => {}) {
   await command.spawn();
 }
 
+export async function getStandaloneVersion() {
+  return await readTextFile("standaloneVersion.txt", {
+    dir: BaseDirectory.AppData,
+  });
+}
+
+export async function setStandaloneVersion(value: string) {
+  const appDataExists = await exists("", { dir: BaseDirectory.AppData });
+  if (!appDataExists) {
+    console.log("AppData dir does not exist! Creating.");
+    await createDir("", { dir: BaseDirectory.AppData });
+  }
+  writeTextFile("standaloneVersion.txt", value, { dir: BaseDirectory.AppData });
+}
+
+export async function fetchNewest() {
+  return await fetch<any>(
+    "https://api.github.com/repos/suchmememanyskill/SDH-CssLoader/releases/latest"
+  )
+    .then((res) => {
+      console.log(res);
+      return res.data;
+    })
+    .then((json) => {
+      if (json) {
+        return json;
+      }
+      return;
+    })
+    .catch((err) => {
+      console.error("Error Fetching Latest Backend From Github!", err);
+      return;
+    });
+}
+
+export async function checkForNewStandalone(): Promise<boolean | string> {
+  const current = await getStandaloneVersion();
+  const remote = await fetchNewest();
+  if (!remote) return false;
+  const remoteVersion = remote.tag_name;
+  console.log(current, remoteVersion);
+  // This returns true because if it's not valid, it means your current install borked
+  if (!semver.valid(current)) return remoteVersion;
+  if (!semver.valid(remoteVersion)) return false;
+  if (semver.gt(remoteVersion, current)) {
+    return remoteVersion;
+  }
+  return false;
+}
+
+export async function checkIfBackendExists() {
+  const backendExists = await exists(
+    "Microsoft\\Windows\\Start Menu\\Programs\\Startup\\CssLoader-Standalone-Headless.exe",
+    {
+      dir: BaseDirectory.Config,
+    }
+  );
+  return backendExists;
+}
+
 export async function downloadBackend(onClose: any = () => {}) {
+  const release = await fetchNewest();
+  const url = release.assets.find((e: any) =>
+    e.name.includes("Standalone-Headless.exe")
+  ).url;
+  const version = semver.clean(release.tag) || "v1.6.0";
+  setStandaloneVersion(version);
   const command = new Command("downloadBackend", [
     "Invoke-WebRequest",
     "-Uri",
-    "https://github.com/suchmememanyskill/SDH-CssLoader/releases/latest/download/CssLoader-Standalone-Headless.exe",
+    url,
     "-OutFile",
     "([Environment]::GetFolderPath('Startup')",
     "+",

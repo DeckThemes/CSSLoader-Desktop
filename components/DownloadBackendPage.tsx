@@ -3,7 +3,11 @@ import { ImSpinner5 } from "react-icons/im";
 import { themeContext } from "../pages/_app";
 import { downloadBackend, startBackend } from "../backend";
 
-export function OnboardingPage() {
+export function DownloadBackendPage({
+  onboarding = false,
+}: {
+  onboarding?: boolean;
+}) {
   const { refreshThemes } = useContext(themeContext);
   const [installProg, setInstallProg] = useState<number>(0);
   const [installText, setInstallText] = useState<string>("");
@@ -22,11 +26,12 @@ export function OnboardingPage() {
       });
     });
   }
+
   return (
     <>
       <main className="flex flex-col w-full h-full items-center justify-center flex-grow gap-4">
         <h1 className="fancy-font text-5xl font-semibold">
-          Welcome To CSSLoader
+          {onboarding ? "Welcome To CSSLoader" : "Backend Update Available"}
         </h1>
         <button
           onClick={() => installProg <= 0 && installBackend()}
@@ -39,7 +44,7 @@ export function OnboardingPage() {
               <span className="fancy-font text-2xl">{installText}</span>
             </div>
           ) : (
-            <h2 className="fancy-font text-3xl">Install CSSLoader's Backend</h2>
+            <h2 className="fancy-font text-3xl">Install Backend</h2>
           )}
         </button>
       </main>

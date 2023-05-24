@@ -7,7 +7,7 @@ import * as python from "../backend";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/router";
-import { BackendFailedPage, MainNav, OnboardingPage } from "../components";
+import { BackendFailedPage, MainNav, DownloadBackendPage } from "../components";
 import { exists, BaseDirectory } from "@tauri-apps/api/fs";
 
 const montserrat = Montserrat({
@@ -32,22 +32,20 @@ export const themeContext = createContext<{
 
 export default function App({ Component, pageProps }: AppProps) {
   const [themes, setThemes] = useState<Theme[]>([]);
-
   const [dummyResult, setDummyResult] = useState<boolean>(false);
   const [backendExists, setBackendExists] = useState<boolean>(false);
+  // const [newBackendAvailable, setNewBackend] = useState<string>('');
+  // const [showNewBackendPage, setShowNewBackend] = useState<boolean>(false)
   const router = useRouter();
-  const checkIfBackendExists = async () => {
-    const backendExists = await exists(
-      "Microsoft\\Windows\\Start Menu\\Programs\\Startup\\CssLoader-Standalone-Headless.exe",
-      {
-        dir: BaseDirectory.Config,
-      }
-    );
-    setBackendExists(backendExists);
-    return backendExists;
-  };
   useEffect(() => {
-    checkIfBackendExists().then((backendExists) => {
+    // python.checkForNewStandalone().then((newStandalone) => {
+    //   if (newStandalone){
+    //     setNewBackend(newStandalone as string);
+    //     setShowNewBackend(true)
+    //   }
+    // });
+    python.checkIfBackendExists().then((backendExists) => {
+      setBackendExists(backendExists);
       if (backendExists) {
         recheckDummy();
       }
@@ -94,7 +92,7 @@ export default function App({ Component, pageProps }: AppProps) {
   }
 
   function refreshThemes() {
-    checkIfBackendExists();
+    python.checkIfBackendExists().then((value) => setBackendExists(value));
     dummyFuncTest();
     python
       .reloadBackend()
@@ -108,7 +106,6 @@ export default function App({ Component, pageProps }: AppProps) {
       });
     return;
   }
-  if (typeof window === undefined) return;
 
   return (
     <themeContext.Provider value={{ themes, setThemes, refreshThemes }}>
@@ -126,26 +123,26 @@ export default function App({ Component, pageProps }: AppProps) {
           pauseOnHover
           theme={"dark"}
         />
-        {backendExists || dummyResult ? (
+        {dummyResult ? (
           <>
-            {dummyResult ? (
-              <>
-                <MainNav dummyFuncTest={dummyFuncTest} />
-                <main
-                  style={{
-                    overflowY: router.pathname === "/store" ? "auto" : "scroll",
-                  }}
-                  className="w-full h-minusNav overflow-y-scroll"
-                >
-                  <Component {...pageProps} />
-                </main>
-              </>
-            ) : (
-              <BackendFailedPage />
-            )}
+            <MainNav dummyFuncTest={dummyFuncTest} />
+            <main
+              style={{
+                overflowY: router.pathname === "/store" ? "auto" : "scroll",
+              }}
+              className="w-full h-minusNav overflow-y-scroll"
+            >
+              <Component {...pageProps} />
+            </main>
           </>
         ) : (
-          <OnboardingPage />
+          <>
+            {backendExists ? (
+              <BackendFailedPage />
+            ) : (
+              <DownloadBackendPage onboarding />
+            )}
+          </>
         )}
       </div>
     </themeContext.Provider>
