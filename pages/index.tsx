@@ -1,9 +1,9 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { ThemeToggle } from "../components";
 import { themeContext } from "./_app";
 import { useVW } from "../hooks/useVW";
 
-export default function AllThemesModal() {
+export default function MainPage() {
   const { themes: localThemeList } = useContext(themeContext);
   const vw = useVW();
   return (
