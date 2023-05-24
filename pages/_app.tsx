@@ -34,16 +34,16 @@ export default function App({ Component, pageProps }: AppProps) {
   const [themes, setThemes] = useState<Theme[]>([]);
   const [dummyResult, setDummyResult] = useState<boolean>(false);
   const [backendExists, setBackendExists] = useState<boolean>(false);
-  // const [newBackendAvailable, setNewBackend] = useState<string>('');
-  // const [showNewBackendPage, setShowNewBackend] = useState<boolean>(false)
+  const [newBackendVersion, setNewBackend] = useState<string>("");
+  const [showNewBackendPage, setShowNewBackend] = useState<boolean>(false);
   const router = useRouter();
   useEffect(() => {
-    // python.checkForNewStandalone().then((newStandalone) => {
-    //   if (newStandalone){
-    //     setNewBackend(newStandalone as string);
-    //     setShowNewBackend(true)
-    //   }
-    // });
+    python.checkForNewStandalone().then((newStandalone) => {
+      if (newStandalone) {
+        setNewBackend(newStandalone as string);
+        setShowNewBackend(true);
+      }
+    });
     python.checkIfBackendExists().then((backendExists) => {
       setBackendExists(backendExists);
       if (backendExists) {
@@ -51,6 +51,12 @@ export default function App({ Component, pageProps }: AppProps) {
       }
     });
   }, []);
+
+  async function onUpdateFinish() {
+    refreshThemes();
+    setShowNewBackend(false);
+    setNewBackend("");
+  }
 
   async function recheckDummy() {
     const recursive = async () => {
@@ -123,24 +129,38 @@ export default function App({ Component, pageProps }: AppProps) {
           pauseOnHover
           theme={"dark"}
         />
-        {dummyResult ? (
+        {showNewBackendPage || (!backendExists && !dummyResult) ? (
           <>
-            <MainNav dummyFuncTest={dummyFuncTest} />
-            <main
-              style={{
-                overflowY: router.pathname === "/store" ? "auto" : "scroll",
-              }}
-              className="w-full h-minusNav overflow-y-scroll"
-            >
-              <Component {...pageProps} />
-            </main>
+            <DownloadBackendPage
+              onboarding={!backendExists}
+              onUpdateFinish={onUpdateFinish}
+              hideWindow={() => setShowNewBackend(false)}
+              backendVersion={newBackendVersion}
+            />
           </>
         ) : (
           <>
-            {backendExists ? (
-              <BackendFailedPage />
+            {dummyResult ? (
+              <>
+                <MainNav dummyFuncTest={dummyFuncTest} />
+                <main
+                  style={{
+                    overflowY: router.pathname === "/store" ? "auto" : "scroll",
+                  }}
+                  className="w-full h-minusNav overflow-y-scroll"
+                >
+                  <Component {...pageProps} />
+                </main>
+              </>
             ) : (
-              <DownloadBackendPage onboarding />
+              <>
+                {backendExists ? (
+                  <BackendFailedPage />
+                ) : (
+                  <></>
+                  // <DownloadBackendPage onboarding />
+                )}
+              </>
             )}
           </>
         )}

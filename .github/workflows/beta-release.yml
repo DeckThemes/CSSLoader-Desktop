@@ -40,7 +40,7 @@ jobs:
               name: `CSSLoader Desktop BETA v${process.env.PACKAGE_VERSION}`,
               body: `${process.env.RELEASE_LOG}`,
               draft: true,
-              prerelease: true
+              prerelease: false
             });
             return data.id
 

@@ -62,6 +62,18 @@ export async function startBackend(onClose: any = () => {}) {
   await command.spawn();
 }
 
+export async function killBackend(onClose: any = () => {}) {
+  const command = new Command("killBackend", [
+    "taskkill",
+    "/IM",
+    "CssLoader-Standalone-Headless.exe",
+    "/F",
+  ]);
+  command.on("close", onClose);
+  command.on("error", onClose);
+  await command.spawn();
+}
+
 export async function getStandaloneVersion() {
   return await readTextFile("standaloneVersion.txt", {
     dir: BaseDirectory.AppData,
@@ -127,7 +139,7 @@ export async function downloadBackend(onClose: any = () => {}) {
   const url = release.assets.find((e: any) =>
     e.name.includes("Standalone-Headless.exe")
   ).url;
-  const version = semver.clean(release.tag) || "v1.6.0";
+  const version = semver.clean(release.tag_name || "v1.0.0") || "v1.6.0";
   setStandaloneVersion(version);
   const command = new Command("downloadBackend", [
     "Invoke-WebRequest",
