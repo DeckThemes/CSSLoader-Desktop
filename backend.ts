@@ -75,9 +75,12 @@ export async function killBackend(onClose: any = () => {}) {
 }
 
 export async function getStandaloneVersion() {
-  return await readTextFile("standaloneVersion.txt", {
+  const version = await readTextFile("standaloneVersion.txt", {
     dir: BaseDirectory.AppData,
+  }).catch((err) => {
+    return false;
   });
+  return version;
 }
 
 export async function setStandaloneVersion(value: string) {
