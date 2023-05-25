@@ -115,11 +115,14 @@ export async function fetchNewest() {
 export async function checkForNewStandalone(): Promise<boolean | string> {
   const current = await getStandaloneVersion();
   const remote = await fetchNewest();
-  if (!remote) return false;
-  const remoteVersion = remote.tag_name;
+  const remoteVersion = remote?.tag_name;
   console.log(current, remoteVersion);
-  // This returns true because if it's not valid, it means your current install borked
+  // This returns remoteVersion because if it's not valid, it means your current install borked
+  if (!current || typeof current !== "string") return remoteVersion;
   if (!semver.valid(current)) return remoteVersion;
+
+  // This is after ensuring you have a standaloneVersion.txt
+  if (!remote) return false;
   if (!semver.valid(remoteVersion)) return false;
   if (semver.gt(remoteVersion, current)) {
     return remoteVersion;
