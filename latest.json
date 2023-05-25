@@ -1,11 +1,11 @@
 {
-  "version": "0.3.9",
+  "version": "0.4.0",
   "notes": "Check Github for the release notes!",
-  "pub_date": "2023-05-24T23:10:42.966Z",
+  "pub_date": "2023-05-24T23:40:49.720Z",
   "platforms": {
     "windows-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUR25UdTJ0dzN1MWpTSkhWZEdFR0VHQlA2bGtiN1o4S1Z0V3JHSUZTYXlTVzRoL2k3Ukh4eUIrWUJicm9xS2ZPMXpLZ3dtTTNwRVl3c3pGbDlTenN0c3FRS3VXN2tDUWdnPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNjg0OTY5ODQwCWZpbGU6Q1NTTG9hZGVyIERlc2t0b3BfMC4zLjlfeDY0X2VuLVVTLm1zaS56aXAKYllrNlZWMHA3c0dxRUVTc0g3MDhWQlVBZHNQUTVKeS9UU1hIaktWd1B2UGR1dW9GY1RaQlZ6Q2x1bHlEQlUrZjdKUnNvOWlWNXBMUWpSUzFNNkFsQXc9PQo=",
-      "url": "https://github.com/beebls/CSSLoader-Desktop/releases/latest/download/CSSLoader.Desktop_0.3.9_x64_en-US.msi.zip"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUR25UdTJ0dzN1MWhJYmVHd0hWV05EVS9wMndyeHFrZHM4RktoeGxJRUFkdDJUZmt6VEJVUG8wVUZCUzhMOW1ETFhTT25vU0lNL3B6YTFQMFl6UVhzZTJMMThoeUhRU2dJPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNjg0OTcxNjQ1CWZpbGU6Q1NTTG9hZGVyIERlc2t0b3BfMC40LjBfeDY0X2VuLVVTLm1zaS56aXAKaFdKRnVLN0k0cTVoY25WZkRhMzZKK3FNbkdubXAvaHRWYWc2ckdUNVRORnVLV0dxZjdPTzBiOGhFRTVWa09TRWhzZkp5RjVxQmtTWlZGZXFDWjlZQkE9PQo=",
+      "url": "https://github.com/beebls/CSSLoader-Desktop/releases/latest/download/CSSLoader.Desktop_0.4.0_x64_en-US.msi.zip"
     }
   }
 }
