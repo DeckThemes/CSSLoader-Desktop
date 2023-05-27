@@ -3,12 +3,19 @@ import type { AppProps } from "next/app";
 import { Theme } from "../ThemeTypes";
 import { Montserrat, Open_Sans } from "next/font/google";
 import { createContext, useState, useEffect } from "react";
-import * as python from "../backend";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/router";
 import { BackendFailedPage, MainNav, DownloadBackendPage } from "../components";
-import { exists, BaseDirectory } from "@tauri-apps/api/fs";
+import {
+  checkForNewBackend,
+  checkIfStandaloneBackendExists,
+  checkIfBackendIsStandalone,
+  dummyFunction,
+  reloadBackend,
+  startBackend,
+  recursiveCheck,
+} from "../backend";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -38,18 +45,18 @@ export default function App({ Component, pageProps }: AppProps) {
   const [showNewBackendPage, setShowNewBackend] = useState<boolean>(false);
   const router = useRouter();
   useEffect(() => {
-    python.checkForNewStandalone().then((newStandalone) => {
-      if (newStandalone) {
-        setNewBackend(newStandalone as string);
-        setShowNewBackend(true);
+    checkIfBackendIsStandalone().then((isStandalone) => {
+      if (isStandalone) {
+        checkForNewBackend().then((newStandalone) => {
+          if (newStandalone) {
+            setNewBackend(newStandalone as string);
+            setShowNewBackend(true);
+          }
+        });
       }
     });
-    python.checkIfBackendExists().then((backendExists) => {
-      setBackendExists(backendExists);
-      if (backendExists) {
-        recheckDummy();
-      }
-    });
+    refreshBackendExists();
+    recheckDummy();
   }, []);
 
   async function onUpdateFinish() {
@@ -57,32 +64,16 @@ export default function App({ Component, pageProps }: AppProps) {
     setShowNewBackend(false);
     setNewBackend("");
   }
-
   async function recheckDummy() {
-    const recursive = async () => {
-      const value = await dummyFuncTest();
-      if (value) {
-        refreshThemes();
-        return;
-      } else
-        setTimeout(() => {
-          recursive();
-        }, 1000);
-    };
+    recursiveCheck(dummyFuncTest, refreshThemes, startBackend);
+  }
 
-    const value = await dummyFuncTest();
-    if (value) {
-      refreshThemes();
-      return;
-    } else {
-      python.startBackend();
-      recursive();
-    }
+  async function refreshBackendExists() {
+    checkIfStandaloneBackendExists().then((value) => setBackendExists(value));
   }
 
   async function dummyFuncTest() {
-    return python
-      .dummyFunction()
+    return dummyFunction()
       .then((data) => {
         if (data.success) {
           setDummyResult(data.result);
@@ -98,10 +89,9 @@ export default function App({ Component, pageProps }: AppProps) {
   }
 
   function refreshThemes() {
-    python.checkIfBackendExists().then((value) => setBackendExists(value));
+    refreshBackendExists();
     dummyFuncTest();
-    python
-      .reloadBackend()
+    reloadBackend()
       .then((data) => {
         if (data) {
           setThemes(data.sort());
@@ -153,14 +143,7 @@ export default function App({ Component, pageProps }: AppProps) {
                 </main>
               </>
             ) : (
-              <>
-                {backendExists ? (
-                  <BackendFailedPage />
-                ) : (
-                  <></>
-                  // <DownloadBackendPage onboarding />
-                )}
-              </>
+              <BackendFailedPage />
             )}
           </>
         )}

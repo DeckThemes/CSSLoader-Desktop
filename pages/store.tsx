@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef } from "react";
-import * as python from "../backend";
 import { themeContext } from "./_app";
 import { allowedStoreOrigins, storeUrl } from "../constants";
+import { downloadThemeFromUrl, toast } from "../backend";
 
 export default function Store() {
   const storeRef = useRef<HTMLIFrameElement>();
@@ -20,8 +20,8 @@ export default function Store() {
       }
 
       if (event.data.action === "installTheme") {
-        python.downloadThemeFromUrl(event.data.payload).then(() => {
-          python.toast(`Theme Installed`);
+        downloadThemeFromUrl(event.data.payload).then(() => {
+          toast(`Theme Installed`);
           refreshThemes();
           storeRef.current?.contentWindow?.postMessage(
             "themeInstalled",

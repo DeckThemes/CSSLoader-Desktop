@@ -1,10 +1,14 @@
 import { VFC } from "react";
 
 import { open } from "@tauri-apps/api/dialog";
-
-import * as python from "../backend";
 import { ThemePatchComponent } from "../ThemeTypes";
 import { FaFolder } from "react-icons/fa";
+import {
+  fetchThemePath,
+  getInstalledThemes,
+  setComponentOfThemePatch,
+  toast,
+} from "../backend";
 
 export const PatchComponent = ({
   data,
@@ -20,17 +24,14 @@ export const PatchComponent = ({
   bottomSeparatorValue: any;
 }) => {
   function setComponentAndReload(value: string) {
-    python.resolve(
-      python.setComponentOfThemePatch(
-        themeName,
-        patchName,
-        data.name, // componentName
-        value
-      ),
-      () => {
-        python.getInstalledThemes();
-      }
-    );
+    setComponentOfThemePatch(
+      themeName,
+      patchName,
+      data.name, // componentName
+      value
+    ).then(() => {
+      getInstalledThemes();
+    });
   }
   if (selectedLabel === data.on) {
     // The only value that changes from component to component is the value, so this can just be re-used
@@ -43,49 +44,54 @@ export const PatchComponent = ({
             <button
               className="flex items-center justify-between w-full"
               onClick={() =>
-                python.resolve(python.fetchThemePath(), (rootPath: string) => {
-                  open({
-                    directory: false,
-                    multiple: false,
-                    filters: [
-                      {
-                        name: "Image File",
-                        extensions: [
-                          "svg",
-                          "png",
-                          "jpg",
-                          "jpeg",
-                          "avif",
-                          "webp",
-                          "gif",
-                        ],
-                      },
-                    ],
-                    defaultPath: rootPath,
-                  }).then((path) => {
-                    if (!path) {
-                      python.toast("Error!", "No File Selected");
-                      return;
-                    }
-                    if (typeof path === "string") {
-                      if (!path?.includes(rootPath)) {
-                        python.toast(
-                          "Invalid File",
-                          "Images must be within themes folder"
-                        );
+                fetchThemePath()
+                  .then((res) => {
+                    return res.result;
+                  })
+                  .then((rootPath: string) => {
+                    open({
+                      directory: false,
+                      multiple: false,
+                      filters: [
+                        {
+                          name: "Image File",
+                          extensions: [
+                            "svg",
+                            "png",
+                            "jpg",
+                            "jpeg",
+                            "avif",
+                            "webp",
+                            "gif",
+                          ],
+                        },
+                      ],
+                      defaultPath: rootPath,
+                    }).then((path) => {
+                      if (!path) {
+                        toast("Error!", "No File Selected");
                         return;
                       }
-                      if (!/\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(path)) {
-                        python.toast("Invalid File", "Must be an image file");
-                        return;
+                      if (typeof path === "string") {
+                        if (!path?.includes(rootPath)) {
+                          toast(
+                            "Invalid File",
+                            "Images must be within themes folder"
+                          );
+                          return;
+                        }
+                        if (!/\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(path)) {
+                          toast("Invalid File", "Must be an image file");
+                          return;
+                        }
+                        const relativePath = path
+                          .split(`${rootPath}`)[1]
+                          .slice(1);
+                        console.log(relativePath);
+                        setComponentAndReload(relativePath);
                       }
-                      const relativePath = path
-                        .split(`${rootPath}`)[1]
-                        .slice(1);
-                      setComponentAndReload(relativePath);
-                    }
-                  });
-                })
+                    });
+                  })
               }
             >
               <span>{data.name}</span>

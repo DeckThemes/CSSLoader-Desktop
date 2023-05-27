@@ -2,9 +2,9 @@ import { BsFillCloudDownloadFill, BsTrashFill } from "react-icons/bs";
 import { themeContext } from "./_app";
 import { useContext, useEffect, useState } from "react";
 import { MinimalCSSThemeInfo, Theme } from "../ThemeTypes";
-import * as python from "../backend";
 import { apiUrl } from "../constants";
 import { fetch } from "@tauri-apps/api/http";
+import { deleteTheme, downloadThemeFromUrl, toast } from "../backend";
 
 export type LocalThemeStatus = "installed" | "outdated" | "local";
 
@@ -16,14 +16,14 @@ export default function ManageThemes() {
   >([]);
   function handleUninstall(listEntry: Theme) {
     setUninstalling(true);
-    python.resolve(python.deleteTheme(listEntry.name), () => {
+    deleteTheme(listEntry.name).then(() => {
       refreshThemes();
       setUninstalling(false);
     });
   }
   function handleUpdate(remoteEntry: MinimalCSSThemeInfo) {
-    python.downloadThemeFromUrl(remoteEntry.id).then(() => {
-      python.toast(`${remoteEntry.name} Updated`);
+    downloadThemeFromUrl(remoteEntry.id).then(() => {
+      toast(`${remoteEntry.name} Updated`);
       refreshThemes();
     });
   }

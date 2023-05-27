@@ -12,7 +12,7 @@ export default function MainPage() {
         {vw <= 650 ? (
           <div className="flex flex-wrap items-start w-[320px] 2cols:w-[650px] 3cols:w-[980px] 4cols:w-[1310px] 5cols:w-[1680px] gap-[10px]">
             {localThemeList.map((e) => {
-              return <ThemeToggle data={e} />;
+              return <ThemeToggle data={e} key={`Theme_${e.name}`} />;
             })}
           </div>
         ) : (
@@ -21,14 +21,14 @@ export default function MainPage() {
               {localThemeList
                 .slice(0, Math.round(localThemeList.length / 2))
                 .map((e) => {
-                  return <ThemeToggle data={e} />;
+                  return <ThemeToggle data={e} key={`Theme_${e.name}`} />;
                 })}
             </div>
             <div className="flex flex-col items-start w-[320px] gap-[4px]">
               {localThemeList
                 .slice(Math.round(localThemeList.length / 2))
                 .map((e) => {
-                  return <ThemeToggle data={e} />;
+                  return <ThemeToggle data={e} key={`Theme_${e.name}`} />;
                 })}
             </div>
           </div>

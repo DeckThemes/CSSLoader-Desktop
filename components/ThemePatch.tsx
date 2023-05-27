@@ -1,8 +1,8 @@
-import * as python from "../backend";
 import { useState, useContext } from "react";
 import { Patch } from "../ThemeTypes";
 import { PatchComponent } from "./PatchComponent";
 import { themeContext } from "../pages/_app";
+import { setPatchOfTheme } from "../backend";
 
 export function ThemePatch({
   data,
@@ -65,7 +65,7 @@ export function ThemePatch({
                       value={selectedIndex}
                       onChange={(event) => {
                         const value = Number(event.target.value);
-                        python.setPatchOfTheme(
+                        setPatchOfTheme(
                           themeName,
                           data.name,
                           data.options[value]
@@ -75,9 +75,10 @@ export function ThemePatch({
                       }}
                     />
                     <div className="flex justify-between w-[300px]">
-                      {data.options.map((e) => {
+                      {data.options.map((e, i) => {
                         return (
                           <div
+                            key={`ThemePatch_Slider_${data.name}_${i}`}
                             className="flex flex-col items-center justify-between overflow-hidden"
                             style={{ maxWidth: 300 / data.options.length }}
                           >
@@ -104,12 +105,12 @@ export function ThemePatch({
                       onChange={(event) => {
                         const bool = event.target.checked;
                         const newValue = bool ? "Yes" : "No";
-                        python
-                          .setPatchOfTheme(themeName, data.name, newValue)
-                          .then(() => {
+                        setPatchOfTheme(themeName, data.name, newValue).then(
+                          () => {
                             // TODO: This is a shim, should fix some other way
                             refreshThemes();
-                          });
+                          }
+                        );
                         setLabel(newValue);
                         setIndex(data.options.findIndex((e) => e === newValue));
                       }}
@@ -128,16 +129,19 @@ export function ThemePatch({
                     className="rounded-md"
                     defaultValue={data.value}
                     onChange={(e) => {
-                      python.setPatchOfTheme(
-                        themeName,
-                        data.name,
-                        e.target.value
-                      );
+                      setPatchOfTheme(themeName, data.name, e.target.value);
                       setLabel(e.target.value);
                     }}
                   >
                     {data.options.map((x, i) => {
-                      return <option value={x}>{x}</option>;
+                      return (
+                        <option
+                          value={x}
+                          key={`ThemePatch_Dropdown_${data.name}_${i}`}
+                        >
+                          {x}
+                        </option>
+                      );
                     })}
                   </select>
                 </div>
