@@ -13,4 +13,3 @@ export * from "./deleteTheme";
 export * from "./getBackendVersion";
 export * from "./generatePreset";
 export * from "./fetchThemePath";
-export * from "./abstractions";
