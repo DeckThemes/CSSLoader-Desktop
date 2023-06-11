@@ -1,14 +1,14 @@
 import { VFC } from "react";
 
 import { open } from "@tauri-apps/api/dialog";
-import { ThemePatchComponent } from "../ThemeTypes";
+import { ThemePatchComponent } from "../../ThemeTypes";
 import { FaFolder } from "react-icons/fa";
 import {
   fetchThemePath,
   getInstalledThemes,
   setComponentOfThemePatch,
   toast,
-} from "../backend";
+} from "../../backend";
 
 export const PatchComponent = ({
   data,

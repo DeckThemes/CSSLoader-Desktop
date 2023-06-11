@@ -1,8 +1,8 @@
 import { useState, useContext } from "react";
-import { Patch } from "../ThemeTypes";
+import { Patch } from "../../ThemeTypes";
 import { PatchComponent } from "./PatchComponent";
-import { themeContext } from "../pages/_app";
-import { setPatchOfTheme } from "../backend";
+import { themeContext } from "../../pages/_app";
+import { setPatchOfTheme } from "../../backend";
 
 export function ThemePatch({
   data,

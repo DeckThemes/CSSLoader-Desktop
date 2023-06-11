@@ -3,12 +3,13 @@ import Link from "next/link";
 import { useContext } from "react";
 import { themeContext } from "../../pages/_app";
 import { NavTab } from "./NavTab";
-import { RiPaintFill, RiUninstallLine } from "react-icons/ri";
+import { RiPaintFill } from "react-icons/ri";
 import { BiReset } from "react-icons/bi";
 import { AiOutlineCloudDownload } from "react-icons/ai";
 import { BsFolder } from "react-icons/bs";
+import { FiSettings } from "react-icons/fi";
 
-export function MainNav({ dummyFuncTest }: { dummyFuncTest: any }) {
+export function MainNav() {
   const { refreshThemes } = useContext(themeContext);
   return (
     <>
@@ -26,24 +27,20 @@ export function MainNav({ dummyFuncTest }: { dummyFuncTest: any }) {
         </Link>
         <button
           onClick={() => {
-            dummyFuncTest();
-            refreshThemes();
+            refreshThemes(true);
           }}
         >
           <BiReset size={24} color="white" />
         </button>
         <div className="fancy-font ml-auto mr-2 h-full flex items-end gap-2">
-          <NavTab href="/" name="Your Themes" icon={<RiPaintFill />} />
+          <NavTab href="/" name="Themes" icon={<RiPaintFill />} />
           <NavTab
             href="/store"
-            name="Download Themes"
+            name="Store"
             icon={<AiOutlineCloudDownload />}
           />
-          <NavTab
-            href="/manage-themes"
-            name="Manage Themes"
-            icon={<BsFolder />}
-          />
+          <NavTab href="/manage-themes" name="Manage" icon={<BsFolder />} />
+          {/* <NavTab href="/manage-themes" name="Settings" icon={<FiSettings />} /> */}
         </div>
       </div>
     </>

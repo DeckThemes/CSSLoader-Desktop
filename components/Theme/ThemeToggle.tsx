@@ -1,9 +1,9 @@
 import { useState, useMemo, useContext } from "react";
-import { Flags, Theme } from "../ThemeTypes";
+import { Flags, Theme } from "../../ThemeTypes";
 import { ThemePatch } from "./ThemePatch";
 import { RiArrowDownSFill, RiArrowUpSFill } from "react-icons/ri";
-import { themeContext } from "../pages/_app";
-import { setThemeState, toast } from "../backend";
+import { themeContext } from "../../pages/_app";
+import { setThemeState, toast } from "../../backend";
 
 export function ThemeToggle({
   data,

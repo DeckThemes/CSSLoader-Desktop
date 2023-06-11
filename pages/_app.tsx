@@ -15,6 +15,7 @@ import {
   reloadBackend,
   startBackend,
   recursiveCheck,
+  getInstalledThemes,
 } from "../backend";
 
 const montserrat = Montserrat({
@@ -45,6 +46,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const [showNewBackendPage, setShowNewBackend] = useState<boolean>(false);
   const router = useRouter();
   useEffect(() => {
+    // Checking for updates
     checkIfBackendIsStandalone().then((isStandalone) => {
       if (isStandalone) {
         checkForNewBackend().then((newStandalone) => {
@@ -55,7 +57,10 @@ export default function App({ Component, pageProps }: AppProps) {
         });
       }
     });
+
     refreshBackendExists();
+
+    // This actually initializes the themes and such
     recheckDummy();
   }, []);
 
@@ -65,7 +70,7 @@ export default function App({ Component, pageProps }: AppProps) {
     setNewBackend("");
   }
   async function recheckDummy() {
-    recursiveCheck(dummyFuncTest, refreshThemes, startBackend);
+    recursiveCheck(dummyFuncTest, () => refreshThemes(true), startBackend);
   }
 
   async function refreshBackendExists() {
@@ -88,18 +93,16 @@ export default function App({ Component, pageProps }: AppProps) {
       });
   }
 
-  function refreshThemes() {
+  async function refreshThemes(reset: boolean = false) {
     refreshBackendExists();
     dummyFuncTest();
-    reloadBackend()
-      .then((data) => {
-        if (data) {
-          setThemes(data.sort());
-        }
-      })
-      .catch((err) => {
-        setDummyResult(false);
-      });
+
+    const promise = reset ? reloadBackend() : getInstalledThemes();
+    promise.then((data) => {
+      if (data) {
+        setThemes(data.sort());
+      }
+    });
     return;
   }
 
@@ -132,7 +135,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <>
             {dummyResult ? (
               <>
-                <MainNav dummyFuncTest={dummyFuncTest} />
+                <MainNav />
                 <main
                   style={{
                     overflowY: router.pathname === "/store" ? "auto" : "scroll",

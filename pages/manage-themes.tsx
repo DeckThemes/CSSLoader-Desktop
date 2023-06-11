@@ -17,17 +17,18 @@ export default function ManageThemes() {
   function handleUninstall(listEntry: Theme) {
     setUninstalling(true);
     deleteTheme(listEntry.name).then(() => {
-      refreshThemes();
+      refreshThemes(true);
       setUninstalling(false);
     });
   }
   function handleUpdate(remoteEntry: MinimalCSSThemeInfo) {
     downloadThemeFromUrl(remoteEntry.id).then(() => {
       toast(`${remoteEntry.name} Updated`);
-      refreshThemes();
+      refreshThemes(true);
     });
   }
   useEffect(() => {
+    // TODO: REFACTOR THIS FUCKING GARBAGE
     if (localThemeList.length > 0) {
       let themeArr: MinimalCSSThemeInfo[] = [];
       let idsToQuery: string[] = localThemeList.map((e) => e.id);

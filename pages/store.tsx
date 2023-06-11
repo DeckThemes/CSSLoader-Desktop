@@ -11,18 +11,16 @@ export default function Store() {
   useEffect(() => {
     function listener(event: any) {
       if (!allowedStoreOrigins.includes(event.origin)) return;
-
       if (event.data.action === "isThisDesktopApp") {
         storeRef.current?.contentWindow?.postMessage(
           "enableDesktopAppMode",
           event.origin
         );
       }
-
       if (event.data.action === "installTheme") {
         downloadThemeFromUrl(event.data.payload).then(() => {
           toast(`Theme Installed`);
-          refreshThemes();
+          refreshThemes(true);
           storeRef.current?.contentWindow?.postMessage(
             "themeInstalled",
             event.origin
