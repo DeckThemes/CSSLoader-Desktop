@@ -13,26 +13,19 @@ export function MainNav() {
   const { refreshThemes } = useContext(themeContext);
   return (
     <>
-      <div className="h-16 gap-2 flex items-center bg-cardDark">
-        <Link href="/" className="flex items-center gap-2 ml-2">
+      <div className="flex flex-col items-center bg-cardDark">
+        <Link href="/" className="flex items-center gap-2 my-4">
           <Image
             src="logo_css_darkmode.png"
             width={48}
             height={48}
             alt="CSSLoader Logo"
           />
-          <h1 className={`fancy-font font-semibold text-2xl hidden 2cols:flex`}>
+          <h1 className={`fancy-font font-semibold text-2xl`}>
             CSSLoader
           </h1>
         </Link>
-        <button
-          onClick={() => {
-            refreshThemes(true);
-          }}
-        >
-          <BiReset size={24} color="white" />
-        </button>
-        <div className="fancy-font ml-auto mr-2 h-full flex items-end gap-2">
+        <div className="fancy-font h-full flex items-center gap-2 my-4">
           <NavTab href="/" name="Themes" icon={<RiPaintFill />} />
           <NavTab
             href="/store"
@@ -41,6 +34,14 @@ export function MainNav() {
           />
           <NavTab href="/manage-themes" name="Manage" icon={<BsFolder />} />
           {/* <NavTab href="/manage-themes" name="Settings" icon={<FiSettings />} /> */}
+          <button
+		  	className="flex	h-9 w-9 items-center justify-center bg-[#2e2e2e] rounded-full p-2"
+            onClick={() => {
+              refreshThemes(true);
+            }}
+          >
+            <BiReset size={24} color="white" />
+          </button>
         </div>
       </div>
     </>

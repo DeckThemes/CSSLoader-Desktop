@@ -26,7 +26,7 @@ export function ThemePatch({
     return (
       <>
         {data.components.length > 0 ? (
-          <div className="pl-4">
+          <div className="">
             {data.components.map((e) => (
               <div
                 className="flex gap-2"
@@ -55,8 +55,8 @@ export function ThemePatch({
             return (
               <>
                 <div>
-                  <span>{data.name}</span>
-                  <div className="w-[300px] max-w-[300px] flex flex-col">
+                  <span className="fancy-font font-medium mb-4">{data.name}</span>
+                  <div className="w-full flex flex-col">
                     <input
                       type="range"
                       min={0}
@@ -74,7 +74,7 @@ export function ThemePatch({
                         setLabel(data.options[value]);
                       }}
                     />
-                    <div className="flex justify-between w-[300px]">
+                    <div className="flex justify-between w-full">
                       {data.options.map((e, i) => {
                         return (
                           <div
@@ -82,8 +82,8 @@ export function ThemePatch({
                             className="flex flex-col items-center justify-between overflow-hidden"
                             style={{ maxWidth: 300 / data.options.length }}
                           >
-                            <span>|</span>
-                            <span>{e}</span>
+                            <span className="text-xs opacity-50 -mt-2">|</span>
+                            <span className="uppercase text-xs font-bold">{e}</span>
                           </div>
                         );
                       })}
@@ -126,7 +126,7 @@ export function ThemePatch({
                 <div className="flex items-center justify-between">
                   <span>{data.name}</span>
                   <select
-                    className="rounded-md"
+                    className="px-2 py-1 rounded-md"
                     defaultValue={data.value}
                     onChange={(e) => {
                       setPatchOfTheme(themeName, data.name, e.target.value);
@@ -161,7 +161,7 @@ export function ThemePatch({
       })()}
       <ComponentContainer />
       {bottomSeparatorValue && (
-        <div className="h-1 my-2 bg-cardLight dark:bg-cardDark" />
+        <div className="h-[2px] rounded-full opacity-50 my-4 bg-cardLight dark:bg-cardDark" />
       )}
     </>
   );

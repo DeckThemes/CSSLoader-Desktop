@@ -17,12 +17,13 @@ export function NavTab({
       <Link
         href={href}
         style={{
-          borderColor: router.pathname === href ? "rgb(26,159,255)" : "#2e2e2e",
+          background: router.pathname === href ? "rgb(37, 99, 235)" : "#2e2e2e",
+		//   color: router.pathname === href ? "rgb(48,48,48)" : "",
         }}
-        className="transition-all duration-300 gap-2 flex items-center justify-center px-4 bg-elevation-2-dark h-3/4 rounded-t-xl border-t-4 border-t-bgDark"
+        className="transition-all duration-150 gap-2 flex items-center justify-center px-4 py-2 bg-elevation-2-dark rounded-full"
       >
         <div className="flex">{icon}</div>
-        <span className="hidden 2cols:flex text-sm">{name}</span>
+        <span className="text-sm font-bold">{name}</span>
       </Link>
     </>
   );

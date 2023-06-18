@@ -31,6 +31,7 @@ module.exports = {
         bgLight: "#e2e2e2",
         cardDark: "#0000004e",
         cardLight: "#0000002e",
+		muted: "#a2a2a2",
         elevation: {
           1: {
             light: "#0000001e",

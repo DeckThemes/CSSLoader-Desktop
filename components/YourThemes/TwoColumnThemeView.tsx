@@ -28,13 +28,13 @@ export function TwoColumnThemeView() {
   // If you're wondering "why not CSS grid", it's because each theme has it's own unique height
   // Having the left-col theme affect the right-col theme's height looked bad
   return (
-    <div className="flex gap-[10px]">
-      <div className="flex flex-col items-start w-[320px] gap-[4px]">
+    <div className="flex gap-4 max-w-[960px] w-full">
+      <div className="flex flex-col items-start w-full max-w-[480px] gap-4 flex-1">
         {leftColumn.map((e) => {
           return <ThemeToggle data={e} key={`Theme_${e.name}`} />;
         })}
       </div>
-      <div className="flex flex-col items-start w-[320px] gap-[4px]">
+      <div className="flex flex-col items-start w-full max-w-[480px] gap-4 flex-1">
         {rightColumn.map((e) => {
           return <ThemeToggle data={e} key={`Theme_${e.name}`} />;
         })}

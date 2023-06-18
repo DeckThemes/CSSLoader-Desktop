@@ -24,15 +24,15 @@ export function ThemeToggle({
   }, [data.flags]);
 
   return (
-    <div className="bg-cardLight dark:bg-cardDark py-2 flex flex-col gap-1 my-2 w-[320px] rounded-xl">
-      <div className="flex gap-4 justify-between px-2">
+    <div className="bg-cardLight dark:bg-cardDark p-6 flex flex-col gap-1 w-full max-w-[480px] rounded-xl">
+      <div className="flex gap-4 justify-between">
         <div className="flex flex-col">
-          <span className="fancy-font font-medium">{data.name}</span>
-          <span className="fancy-font">
-            {isPreset ? `Preset` : `${data.version} | ${data.author}`}
+          <span className="fancy-font font-bold text-md">{data.name}</span>
+          <span className="fancy-font text-sm text-muted">
+            {isPreset ? `Preset` : `${data.version} • ${data.author}`}
           </span>
         </div>
-        <label className="relative inline-flex items-center cursor-pointer">
+        <label className="relative flex items-center cursor-pointer">
           <input
             className="sr-only peer"
             checked={data.enabled}
@@ -73,13 +73,14 @@ export function ThemeToggle({
               }
             }}
           />
-          <div className="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[14px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600" />
+          <div className="relative w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600" />
         </label>
       </div>
       {data.enabled && data.patches.length > 0 && (
         <>
-          <div className="w-full h-2 bg-cardLight dark:bg-cardDark" />
-          <div className="flex flex-col gap-2 px-2">
+          <div className="w-full h-[2px] my-4 bg-cardLight dark:bg-cardDark opacity-50" />
+		  <h2 className="fancy-font text-xs uppercase font-bold mb-4">Theme Settings</h2>
+          <div className="flex flex-col gap-2 w-full max-w-[480px]">
             {collapsible && (
               <div>
                 <button onClick={() => setCollapsed(!collapsed)}>

@@ -65,16 +65,18 @@ export function CreatePresetModal() {
           </button>
         </div>
       </dialog>
-      {enabledThemes > 0 && (
-        <div className="flex items-center justify-center">
+      
+        <div className="">
+		 <h2 className="fancy-font text-sm font-bold mb-4 mx-auto max-w-[960px] w-full">Create Preset</h2>
+		  <div className="w-full mb-4">A preset is a group of themes that are enabled together. {enabledThemes > 0 ? '' : 'Enable a theme to get started.'}</div>
           <button
-            className="bg-cardDark p-4 rounded-xl fancy-font text-xl"
+            className={`bg-cardDark px-4 py-2 rounded-xl fancy-font text-sm font-bold transition duration-100 ${enabledThemes > 0 ? 'bg-[#2563eb]' : 'pointer-events-none opacity-50'}`}
             onClick={() => dialogRef.current?.showModal()}
           >
             <span>Create Preset</span>
           </button>
         </div>
-      )}
+      
     </>
   );
 }
