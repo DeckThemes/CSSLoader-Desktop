@@ -1,16 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useContext } from "react";
-import { themeContext } from "../../pages/_app";
 import { NavTab } from "./NavTab";
 import { RiPaintFill } from "react-icons/ri";
-import { BiReset } from "react-icons/bi";
 import { AiOutlineCloudDownload } from "react-icons/ai";
 import { BsFolder } from "react-icons/bs";
-import { FiSettings } from "react-icons/fi";
 
 export function MainNav() {
-  const { refreshThemes } = useContext(themeContext);
   return (
     <>
       <div className="flex flex-col items-center bg-cardDark">
@@ -34,15 +29,6 @@ export function MainNav() {
           />
           <NavTab href="/manage-themes" name="Manage" icon={<BsFolder />} />
           {/* <NavTab href="/manage-themes" name="Settings" icon={<FiSettings />} /> */}
-          <button
-		  	className="flex items-center justify-center border-2 border-[#2e2e2e] rounded-full p-2 gap-2"
-            onClick={() => {
-              refreshThemes(true);
-            }}
-          >
-            <BiReset size={20} color="white" />
-			<span className="text-sm font-bold">Refresh Steam</span>
-          </button>
         </div>
       </div>
     </>

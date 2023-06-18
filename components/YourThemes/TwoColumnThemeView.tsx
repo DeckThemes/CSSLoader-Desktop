@@ -2,9 +2,10 @@ import { useContext, useMemo } from "react";
 import { themeContext } from "../../pages/_app";
 import { ThemeToggle } from "../SingleTheme";
 import { Theme } from "../../ThemeTypes";
+import { BiReset } from "react-icons/bi";
 
 export function TwoColumnThemeView() {
-  const { themes } = useContext(themeContext);
+  const { themes, refreshThemes } = useContext(themeContext);
 
   // This takes the list of themes and returns two columns
   // When these columns are displayed as left and right, the themes inside will read alphabetically, left ro right and top to bottom.
@@ -29,14 +30,27 @@ export function TwoColumnThemeView() {
   // Having the left-col theme affect the right-col theme's height looked bad
   return (
     <div className="flex gap-4 max-w-[960px] w-full">
+      <button
+        className="flex items-center justify-center border-2 border-[#2e2e2e] rounded-full p-2 gap-2"
+        onClick={() => {
+          refreshThemes(true);
+        }}
+      >
+        <BiReset size={20} color="white" />
+        <span className="text-sm font-bold">Refresh Steam</span>
+      </button>
       <div className="flex flex-col items-start w-full max-w-[480px] gap-4 flex-1">
         {leftColumn.map((e) => {
-          return <ThemeToggle collapsible={true} data={e} key={`Theme_${e.name}`} />;
+          return (
+            <ThemeToggle collapsible={true} data={e} key={`Theme_${e.name}`} />
+          );
         })}
       </div>
       <div className="flex flex-col items-start w-full max-w-[480px] gap-4 flex-1">
         {rightColumn.map((e) => {
-          return <ThemeToggle collapsible={true} data={e} key={`Theme_${e.name}`} />;
+          return (
+            <ThemeToggle collapsible={true} data={e} key={`Theme_${e.name}`} />
+          );
         })}
       </div>
     </div>
