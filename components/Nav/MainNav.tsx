@@ -8,7 +8,7 @@ import { BsFolder } from "react-icons/bs";
 export function MainNav() {
   return (
     <>
-      <div className="flex flex-col items-center bg-cardDark">
+      <div className="flex flex-col items-center">
         <Link href="/" className="flex items-center gap-2 my-4">
           <Image
             src="logo_css_darkmode.png"

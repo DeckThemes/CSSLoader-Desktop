@@ -24,7 +24,7 @@ export function ThemeToggle({
   }, [data.flags]);
 
   return (
-    <div className="bg-cardLight dark:bg-cardDark p-6 flex flex-col gap-1 w-full max-w-[480px] rounded-xl">
+    <div className="bg-cardLight dark:bg-base-3-dark border-2 border-borders-base1-dark hover:border-borders-base2-dark transition p-6 flex flex-col gap-1 w-full max-w-[480px] rounded-xl">
       <div className="flex gap-4 justify-between">
         <div className="flex flex-col">
           <span className="fancy-font font-bold text-md">{data.name}</span>

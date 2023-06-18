@@ -109,7 +109,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <themeContext.Provider value={{ themes, setThemes, refreshThemes }}>
       <div
-        className={`overflow-y-hidden dark w-full h-full flex flex-col bg-bgDark dark:text-textDark ${montserrat.variable} ${openSans.variable}`}
+        className={`overflow-y-hidden dark w-full h-full flex flex-col bg-base-6-dark dark:text-textDark ${montserrat.variable} ${openSans.variable}`}
       >
         <ToastContainer
           position="bottom-center"
@@ -140,7 +140,7 @@ export default function App({ Component, pageProps }: AppProps) {
                   style={{
                     overflowY: router.pathname === "/store" ? "auto" : "scroll",
                   }}
-                  className="flex-1 w-full h-full overflow-y-scroll"
+                  className="flex flex-1 h-full overflow-y-scroll bg-base-2-dark mx-4 border-x-[1px] border-t-[1px] rounded-t-3xl border-borders-base2-dark page-shadow"
                 >
                   <Component {...pageProps} />
                 </main>

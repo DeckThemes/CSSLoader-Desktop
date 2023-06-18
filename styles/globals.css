@@ -86,3 +86,7 @@ input[type="color"]::-webkit-color-swatch {
 	border-radius: 9999px;
 	background: transparent;
 }
+
+.page-shadow {
+	box-shadow: 0px 0px 30px hsl(220, 5%, 0%)
+}
