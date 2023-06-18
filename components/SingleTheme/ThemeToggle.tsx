@@ -78,23 +78,27 @@ export function ThemeToggle({
       </div>
       {data.enabled && data.patches.length > 0 && (
         <>
-          <div className="w-full h-[2px] my-4 bg-cardLight dark:bg-cardDark opacity-50" />
-		  <h2 className="fancy-font text-xs uppercase font-bold mb-4">Theme Settings</h2>
-          <div className="flex flex-col gap-2 w-full max-w-[480px]">
+          <div className="flex flex-col gap-2 w-full max-w-[480px] dark:bg-cardDark rounded-lg px-4 py-2 mt-4">
             {collapsible && (
-              <div>
-                <button onClick={() => setCollapsed(!collapsed)}>
+              <div className="flex flex-row items-center relative py-2">
+				<h3 className="flex flex-1 items-center gap-2 fancy-font text-xs font-bold">
+					Theme Settings	
+				</h3>
+                <button 
+					className="absolute inset-0 flex items-center justify-end"
+					aria-controls="content"
+					
+					onClick={() => setCollapsed(!collapsed)}>
                   {collapsed ? (
                     <RiArrowDownSFill
+						className="flex"
                       style={{
-                        transform: "translate(0, -13px)",
                         fontSize: "1.5em",
                       }}
                     />
                   ) : (
                     <RiArrowUpSFill
                       style={{
-                        transform: "translate(0, -12px)",
                         fontSize: "1.5em",
                       }}
                     />

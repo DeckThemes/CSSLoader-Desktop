@@ -31,12 +31,12 @@ export function TwoColumnThemeView() {
     <div className="flex gap-4 max-w-[960px] w-full">
       <div className="flex flex-col items-start w-full max-w-[480px] gap-4 flex-1">
         {leftColumn.map((e) => {
-          return <ThemeToggle data={e} key={`Theme_${e.name}`} />;
+          return <ThemeToggle collapsible={true} data={e} key={`Theme_${e.name}`} />;
         })}
       </div>
       <div className="flex flex-col items-start w-full max-w-[480px] gap-4 flex-1">
         {rightColumn.map((e) => {
-          return <ThemeToggle data={e} key={`Theme_${e.name}`} />;
+          return <ThemeToggle collapsible={true} data={e} key={`Theme_${e.name}`} />;
         })}
       </div>
     </div>
