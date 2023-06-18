@@ -35,12 +35,13 @@ export function MainNav() {
           <NavTab href="/manage-themes" name="Manage" icon={<BsFolder />} />
           {/* <NavTab href="/manage-themes" name="Settings" icon={<FiSettings />} /> */}
           <button
-		  	className="flex	h-9 w-9 items-center justify-center bg-[#2e2e2e] rounded-full p-2"
+		  	className="flex items-center justify-center border-2 border-[#2e2e2e] rounded-full p-2 gap-2"
             onClick={() => {
               refreshThemes(true);
             }}
           >
-            <BiReset size={24} color="white" />
+            <BiReset size={20} color="white" />
+			<span className="text-sm font-bold">Refresh Steam</span>
           </button>
         </div>
       </div>

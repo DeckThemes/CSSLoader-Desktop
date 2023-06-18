@@ -33,33 +33,36 @@ export default function ManageThemes() {
   }, [localThemeList]);
 
   return (
-    <div className="flex items-center h-full flex-col justify-between pb-10 p-4">
-      <div className="flex flex-wrap justify-center gap-2 pb-10">
-        {localThemeList.map((e) => (
-          <ManageThemeCard
-            themeData={e}
-            updateStatuses={updateStatuses}
-            uninstalling={uninstalling}
-            handleUninstall={handleUninstall}
-            handleUpdate={handleUpdate}
-          />
-        ))}
-      </div>
-      <div>
-        <button
-          className="p-4 bg-cardDark rounded-xl"
-          onClick={async () => {
-            // These have to be async imported here as otherwise NextJS tries to "SSR" them and it errors
-            const { homeDir, join } = await import("@tauri-apps/api/path");
-            const { open } = await import("@tauri-apps/api/shell");
-            const userDir = await homeDir();
-            const path = await join(userDir, "homebrew", "themes");
-            open(path);
-          }}
-        >
-          <span>Open Themes Directory</span>
-        </button>
-      </div>
+	
+    <div className="flex items-center h-full flex-col mt-8">
+		<div className="max-w-[960px] w-full mx-auto">	
+		<h2 className="fancy-font text-sm font-bold mb-4 mx-auto max-w-[960px] w-full">Theme Directory</h2>
+			<button
+				className="bg-cardDark px-4 py-2 rounded-xl fancy-font text-sm font-bold transition duration-100 bg-[#2563eb]"
+				onClick={async () => {
+					// These have to be async imported here as otherwise NextJS tries to "SSR" them and it errors
+					const { homeDir, join } = await import("@tauri-apps/api/path");
+					const { open } = await import("@tauri-apps/api/shell");
+					const userDir = await homeDir();
+					const path = await join(userDir, "homebrew", "themes");
+					open(path);
+				}}
+			>
+				<span>Open Themes Directory</span>
+			</button>
+      	</div>
+		<h2 className="fancy-font text-sm font-bold mt-12 mb-4 mx-auto max-w-[960px] w-full">Installed Themes</h2>
+		<div className="flex flex-col gap-4 mb-4 mx-auto max-w-[960px] w-full">
+			{localThemeList.map((e) => (
+			<ManageThemeCard
+				themeData={e}
+				updateStatuses={updateStatuses}
+				uninstalling={uninstalling}
+				handleUninstall={handleUninstall}
+				handleUpdate={handleUpdate}
+			/>
+			))}
+		</div>
     </div>
   );
 }
