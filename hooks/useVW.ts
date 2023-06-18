@@ -10,7 +10,7 @@ export function useVW() {
       clearTimeout(timeoutId);
       timeoutId = setTimeout(() => {
         setVW(window.innerWidth);
-      }, 250);
+      }, 100);
     }
 
     window.addEventListener("resize", handleResize);
