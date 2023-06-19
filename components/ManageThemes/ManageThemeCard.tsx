@@ -27,11 +27,11 @@ export function ManageThemeCard({
     remoteEntry = themeArrPlace[2];
   }
   return (
-    <div className="flex bg-cardDark p-4 rounded-xl items-center justify-center w-[320px] 2cols:w-[640px]">
+    <div className="flex dark:bg-base-3-dark border-2 border-borders-base1-dark hover:border-borders-base2-dark transition p-6 rounded-xl items-center justify-center w-full 2cols:w-[480px]">
       <div className="flex flex-col">
-        <span>{themeData.name}</span>
-        <span>
-          {themeData.version}
+	  	<span className="fancy-font font-bold text-md">{themeData.name}</span>
+        <span className="fancy-font text-sm text-muted">
+          {themeData.version} •  {themeData.author}
           {updateStatus === "local" ? (
             <span className="italic text-slate-200"> - Local Theme</span>
           ) : (
@@ -39,7 +39,7 @@ export function ManageThemeCard({
           )}
         </span>
       </div>
-      <div className="flex ml-auto items-center justify-center gap-2 2cols:gap-4">
+      <div className="flex ml-auto items-center justify-center gap-4">
         {updateStatus === "outdated" && remoteEntry && (
           <button
             onClick={() => remoteEntry && handleUpdate(remoteEntry)}

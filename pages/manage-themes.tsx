@@ -4,6 +4,7 @@ import { MinimalCSSThemeInfo, Theme } from "../ThemeTypes";
 import { deleteTheme, downloadThemeFromUrl, toast } from "../backend";
 import { bulkThemeUpdateCheck } from "../logic";
 import { ManageThemeCard } from "../components";
+import { BiFolderOpen } from "react-icons/bi";
 
 export type LocalThemeStatus = "installed" | "outdated" | "local";
 
@@ -33,21 +34,11 @@ export default function ManageThemes() {
   }, [localThemeList]);
 
   return (
-    <div className="flex items-center h-full flex-col justify-between pb-10 p-4">
-      <div className="flex flex-wrap justify-center gap-2 pb-10">
-        {localThemeList.map((e) => (
-          <ManageThemeCard
-            themeData={e}
-            updateStatuses={updateStatuses}
-            uninstalling={uninstalling}
-            handleUninstall={handleUninstall}
-            handleUpdate={handleUpdate}
-          />
-        ))}
-      </div>
-      <div>
+    <div className="pl-4 flex h-full flex-col mt-8 mx-auto max-w-[960px] w-full">
+      <div className="">
+        <h2 className="fancy-font text-sm font-bold mb-4">Theme Directory</h2>
         <button
-          className="p-4 bg-cardDark rounded-xl"
+          className="flex w-fit items-center justify-center border-2 border-[#2e2e2e] rounded-full text-sm px-4 py-2 gap-2 font-bold transition duration-100 bg-[#2563eb]"
           onClick={async () => {
             // These have to be async imported here as otherwise NextJS tries to "SSR" them and it errors
             const { homeDir, join } = await import("@tauri-apps/api/path");
@@ -57,8 +48,23 @@ export default function ManageThemes() {
             open(path);
           }}
         >
+          <BiFolderOpen />
           <span>Open Themes Directory</span>
         </button>
+      </div>
+      <h2 className="fancy-font text-sm font-bold mt-12 mb-4 mx-auto max-w-[960px] w-full">
+        Installed Themes
+      </h2>
+      <div className="flex flex-col gap-4 mb-4 mx-auto max-w-[960px] w-full">
+        {localThemeList.map((e) => (
+          <ManageThemeCard
+            themeData={e}
+            updateStatuses={updateStatuses}
+            uninstalling={uninstalling}
+            handleUninstall={handleUninstall}
+            handleUpdate={handleUpdate}
+          />
+        ))}
       </div>
     </div>
   );

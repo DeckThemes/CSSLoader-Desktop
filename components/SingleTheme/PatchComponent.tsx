@@ -113,9 +113,10 @@ export const PatchComponent = ({
       case "color-picker":
         return (
           <>
-            <div className="flex items-center justify-between w-full pr-4">
+            <div className="flex items-center justify-between w-full">
               <span>{data.name}</span>
               <input
+			  	className="overflow-hidden rounded-full my-4"
                 type="color"
                 defaultValue={data.value}
                 onBlur={(e) => {

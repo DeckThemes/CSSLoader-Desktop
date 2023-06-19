@@ -40,7 +40,12 @@ export default function Store() {
           // @ts-ignore
           ref={storeRef}
           src={storeUrl}
-          className="w-full h-full flex-grow"
+		  allowTransparency={true}
+		  style={{ background: 'transparent !important' }}
+		  width={"100%"}
+		  height={"100%"}
+		  loading="eager"
+          className="!bg-transparent w-full h-full flex-grow"
         />
       </div>
     </>
