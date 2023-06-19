@@ -2,6 +2,7 @@ import { useContext, useMemo, useRef, useState } from "react";
 import { themeContext } from "../pages/_app";
 import { FiX } from "react-icons/fi";
 import { generatePreset } from "../backend";
+import { BiPlus } from "react-icons/bi";
 
 export function CreatePresetModal() {
   const { themes: localThemeList, refreshThemes } = useContext(themeContext);
@@ -70,9 +71,10 @@ export function CreatePresetModal() {
 		 <h2 className="fancy-font text-sm font-bold mb-4 mx-auto max-w-[960px] w-full">Create Preset</h2>
 		  <div className="w-full mb-4">A preset is a group of themes that are enabled together. {enabledThemes > 0 ? '' : 'Enable a theme to get started.'}</div>
           <button
-            className={`flex w-fit items-center justify-center border-2 border-[#2e2e2e] rounded-full px-4 py-2 gap-2 font-bold transition duration-100 ${enabledThemes > 0 ? 'bg-[#2563eb]' : 'pointer-events-none opacity-50'}`}
+            className={`flex w-fit items-center justify-center border-2 border-[#2e2e2e] rounded-full text-sm px-4 py-2 gap-2 font-bold transition duration-100 ${enabledThemes > 0 ? 'bg-[#2563eb]' : 'pointer-events-none opacity-50'}`}
             onClick={() => dialogRef.current?.showModal()}
           >
+			<BiPlus />
             <span>Create Preset</span>
           </button>
         </div>
