@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef } from "react";
-import * as python from "../backend";
 import { themeContext } from "./_app";
 import { allowedStoreOrigins, storeUrl } from "../constants";
+import { downloadThemeFromUrl, toast } from "../backend";
 
 export default function Store() {
   const storeRef = useRef<HTMLIFrameElement>();
@@ -11,18 +11,16 @@ export default function Store() {
   useEffect(() => {
     function listener(event: any) {
       if (!allowedStoreOrigins.includes(event.origin)) return;
-
       if (event.data.action === "isThisDesktopApp") {
         storeRef.current?.contentWindow?.postMessage(
           "enableDesktopAppMode",
           event.origin
         );
       }
-
       if (event.data.action === "installTheme") {
-        python.downloadThemeFromUrl(event.data.payload).then(() => {
-          python.toast(`Theme Installed`);
-          refreshThemes();
+        downloadThemeFromUrl(event.data.payload).then(() => {
+          toast(`Theme Installed`);
+          refreshThemes(true);
           storeRef.current?.contentWindow?.postMessage(
             "themeInstalled",
             event.origin

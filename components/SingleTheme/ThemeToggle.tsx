@@ -1,10 +1,9 @@
 import { useState, useMemo, useContext } from "react";
-import { Flags, Theme } from "../ThemeTypes";
-
-import * as python from "../backend";
+import { Flags, Theme } from "../../ThemeTypes";
 import { ThemePatch } from "./ThemePatch";
 import { RiArrowDownSFill, RiArrowUpSFill } from "react-icons/ri";
-import { themeContext } from "../pages/_app";
+import { themeContext } from "../../pages/_app";
+import { setThemeState, toast } from "../../backend";
 
 export function ThemeToggle({
   data,
@@ -41,7 +40,7 @@ export function ThemeToggle({
             onChange={(event) => {
               const switchValue = event.target.checked;
               // Actually enabling the theme
-              python.setThemeState(data.name, switchValue).then(() => {
+              setThemeState(data.name, switchValue).then(() => {
                 refreshThemes();
               });
               // Re-collapse menu
@@ -49,7 +48,7 @@ export function ThemeToggle({
               // Dependency Toast
               if (data.dependencies.length > 0) {
                 if (switchValue === true) {
-                  python.toast(
+                  toast(
                     `${data.name} enabled other themes`,
                     `${
                       data.dependencies.length === 1
@@ -60,7 +59,7 @@ export function ThemeToggle({
                   return;
                 }
                 if (!data.flags.includes(Flags.dontDisableDeps)) {
-                  python.toast(
+                  toast(
                     `${data.name} disabled other themes`,
                     // @ts-ignore
                     `${
@@ -107,6 +106,7 @@ export function ThemeToggle({
                 {data.patches.map((x, i, arr) => {
                   return (
                     <ThemePatch
+                      key={`ThemePatch_${data.name}_${i}`}
                       data={x}
                       index={i}
                       fullArr={arr}
