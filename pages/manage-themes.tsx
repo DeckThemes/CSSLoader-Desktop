@@ -34,7 +34,7 @@ export default function ManageThemes() {
   }, [localThemeList]);
 
   return (
-    <div className="flex h-full flex-col mt-8 mx-auto max-w-[960px] w-full">
+    <div className="pl-4 flex h-full flex-col mt-8 mx-auto max-w-[960px] w-full">
       <div className="">
         <h2 className="fancy-font text-sm font-bold mb-4">Theme Directory</h2>
         <button
