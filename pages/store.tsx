@@ -44,7 +44,6 @@ export default function Store() {
               }
             });
           }}
-          allowTransparency={true}
           style={{ background: "transparent !important" }}
           width={"100%"}
           height={"100%"}
