@@ -3,12 +3,7 @@ import { VFC } from "react";
 import { open } from "@tauri-apps/api/dialog";
 import { ThemePatchComponent } from "../../ThemeTypes";
 import { FaFolder } from "react-icons/fa";
-import {
-  fetchThemePath,
-  getInstalledThemes,
-  setComponentOfThemePatch,
-  toast,
-} from "../../backend";
+import { fetchThemePath, getInstalledThemes, setComponentOfThemePatch, toast } from "../../backend";
 
 export const PatchComponent = ({
   data,
@@ -42,7 +37,7 @@ export const PatchComponent = ({
         return (
           <div className="w-full pr-4">
             <button
-              className="flex items-center justify-between w-full"
+              className="flex w-full items-center justify-between"
               onClick={() =>
                 fetchThemePath()
                   .then((res) => {
@@ -55,15 +50,7 @@ export const PatchComponent = ({
                       filters: [
                         {
                           name: "Image File",
-                          extensions: [
-                            "svg",
-                            "png",
-                            "jpg",
-                            "jpeg",
-                            "avif",
-                            "webp",
-                            "gif",
-                          ],
+                          extensions: ["svg", "png", "jpg", "jpeg", "avif", "webp", "gif"],
                         },
                       ],
                       defaultPath: rootPath,
@@ -74,19 +61,14 @@ export const PatchComponent = ({
                       }
                       if (typeof path === "string") {
                         if (!path?.includes(rootPath)) {
-                          toast(
-                            "Invalid File",
-                            "Images must be within themes folder"
-                          );
+                          toast("Invalid File", "Images must be within themes folder");
                           return;
                         }
                         if (!/\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(path)) {
                           toast("Invalid File", "Must be an image file");
                           return;
                         }
-                        const relativePath = path
-                          .split(`${rootPath}`)[1]
-                          .slice(1);
+                        const relativePath = path.split(`${rootPath}`)[1].slice(1);
                         console.log(relativePath);
                         setComponentAndReload(relativePath);
                       }
@@ -113,10 +95,10 @@ export const PatchComponent = ({
       case "color-picker":
         return (
           <>
-            <div className="flex items-center justify-between w-full">
+            <div className="flex w-full items-center justify-between">
               <span>{data.name}</span>
               <input
-			  	className="overflow-hidden rounded-full my-4"
+                className="my-4 overflow-hidden rounded-full"
                 type="color"
                 defaultValue={data.value}
                 onBlur={(e) => {

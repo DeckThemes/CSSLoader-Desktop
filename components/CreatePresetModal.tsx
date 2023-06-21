@@ -25,7 +25,7 @@ export function CreatePresetModal() {
     <>
       <dialog
         ref={dialogRef}
-        className="backdrop:bg-elevation-3-dark w-full bg-transparent"
+        className="w-full bg-transparent backdrop:bg-elevation-3-dark"
         onClick={(e) => {
           // @ts-ignore
           if (e.target.nodeName === "DIALOG") {
@@ -34,21 +34,18 @@ export function CreatePresetModal() {
           }
         }}
       >
-        <div className="flex flex-col items-center justify-center p-8 bg-bgDark mx-10 gap-4 relative shadow-xl rounded-xl">
-          <button
-            className="absolute top-4 left-4"
-            onClick={() => dialogRef?.current?.close()}
-          >
+        <div className="relative mx-10 flex flex-col items-center justify-center gap-4 rounded-xl bg-bgDark p-8 shadow-xl">
+          <button className="absolute top-4 left-4" onClick={() => dialogRef?.current?.close()}>
             <FiX size={30} />
           </button>
           <span className="text-xl">Create Preset?</span>
-          <span className="text-center text-md">
+          <span className="text-md text-center">
             This preset will combine {enabledThemes === 1 ? "the " : "all "}
             {enabledThemes} theme
-            {enabledThemes === 1 ? "" : "s"} you currently have enabled.
-            Enabling/disabling it will toggle them all at once.
+            {enabledThemes === 1 ? "" : "s"} you currently have enabled. Enabling/disabling it will
+            toggle them all at once.
           </span>
-          <div className="flex gap-2 items-center justify-center">
+          <div className="flex items-center justify-center gap-2">
             <input
               placeholder="Preset Name"
               className="rounded-xl p-2"
@@ -58,7 +55,7 @@ export function CreatePresetModal() {
           </div>
           <button
             onClick={createPreset}
-            className="p-4 bg-elevation-3-light rounded-xl font-fancy transition-all"
+            className="font-fancy rounded-xl bg-elevation-3-light p-4 transition-all"
             style={{ opacity: presetName.length === 0 ? "0.5" : "1" }}
             disabled={presetName.length === 0}
           >
@@ -68,18 +65,16 @@ export function CreatePresetModal() {
       </dialog>
 
       <div className="">
-        <h2 className="font-fancy text-sm font-bold mb-4 mx-auto max-w-[960px] w-full">
+        <h2 className="font-fancy mx-auto mb-4 w-full max-w-[960px] text-sm font-bold">
           Create Preset
         </h2>
-        <div className="w-full mb-4">
+        <div className="mb-4 w-full">
           A preset is a group of themes that are enabled together.{" "}
           {enabledThemes > 0 ? "" : "Enable a theme to get started."}
         </div>
         <button
-          className={`flex w-fit items-center justify-center border-2 border-[#2e2e2e] rounded-full text-sm px-4 py-2 gap-2 font-bold transition duration-100 ${
-            enabledThemes > 0
-              ? "bg-[#2563eb]"
-              : "pointer-events-none opacity-50"
+          className={`flex w-fit items-center justify-center gap-2 rounded-full border-2 border-[#2e2e2e] px-4 py-2 text-sm font-bold transition duration-100 ${
+            enabledThemes > 0 ? "bg-[#2563eb]" : "pointer-events-none opacity-50"
           }`}
           onClick={() => dialogRef.current?.showModal()}
         >

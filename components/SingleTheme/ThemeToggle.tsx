@@ -5,13 +5,7 @@ import { RiArrowDownSFill, RiArrowUpSFill } from "react-icons/ri";
 import { themeContext } from "../../pages/_app";
 import { setThemeState, toast } from "../../backend";
 
-export function ThemeToggle({
-  data,
-  collapsible = false,
-}: {
-  data: Theme;
-  collapsible?: boolean;
-}) {
+export function ThemeToggle({ data, collapsible = false }: { data: Theme; collapsible?: boolean }) {
   const { refreshThemes } = useContext(themeContext);
 
   const [collapsed, setCollapsed] = useState<boolean>(true);
@@ -24,17 +18,17 @@ export function ThemeToggle({
   }, [data.flags]);
 
   return (
-    <div className="bg-cardLight dark:bg-base-3-dark border-2 border-borders-base1-dark hover:border-borders-base2-dark transition p-6 flex flex-col gap-1 w-full max-w-[480px] rounded-xl">
-      <div className="flex gap-4 justify-between">
+    <div className="flex w-full max-w-[480px] flex-col gap-1 rounded-xl border-2 border-borders-base1-dark bg-cardLight p-6 transition hover:border-borders-base2-dark dark:bg-base-3-dark">
+      <div className="flex justify-between gap-4">
         <div className="flex flex-col">
-          <span className="font-fancy font-bold text-md">{data.name}</span>
-          <span className="font-fancy text-sm text-muted">
+          <span className="font-fancy text-md font-bold">{data.name}</span>
+          <span className="font-fancy text-muted text-sm">
             {isPreset ? `Preset` : `${data.version} • ${data.author}`}
           </span>
         </div>
-        <label className="relative flex items-center cursor-pointer">
+        <label className="relative flex cursor-pointer items-center">
           <input
-            className="sr-only peer"
+            className="peer sr-only"
             checked={data.enabled}
             type="checkbox"
             onChange={(event) => {
@@ -73,15 +67,15 @@ export function ThemeToggle({
               }
             }}
           />
-          <div className="relative w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600" />
+          <div className="peer relative h-6 w-11 rounded-full bg-gray-200 after:absolute after:top-[2px] after:left-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white dark:border-gray-600 dark:bg-gray-700" />
         </label>
       </div>
       {data.enabled && data.patches.length > 0 && (
         <>
-          <div className="flex flex-col gap-2 w-full max-w-[480px] dark:bg-cardDark rounded-lg px-4 py-2 mt-4">
+          <div className="mt-4 flex w-full max-w-[480px] flex-col gap-2 rounded-lg px-4 py-2 dark:bg-cardDark">
             {collapsible && (
-              <div className="flex flex-row items-center relative py-2">
-                <h3 className="flex flex-1 items-center gap-2 font-fancy text-xs font-bold">
+              <div className="relative flex flex-row items-center py-2">
+                <h3 className="font-fancy flex flex-1 items-center gap-2 text-xs font-bold">
                   Theme Settings
                 </h3>
                 <button

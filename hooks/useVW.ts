@@ -4,7 +4,7 @@ export function useVW() {
   const [vw, setVW] = useState(window.innerWidth);
 
   useEffect(() => {
-	let timeoutId: NodeJS.Timeout;
+    let timeoutId: NodeJS.Timeout;
 
     function handleResize() {
       clearTimeout(timeoutId);

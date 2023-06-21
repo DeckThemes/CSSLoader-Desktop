@@ -1,8 +1,4 @@
-import {
-  OneColumnThemeView,
-  TwoColumnThemeView,
-  CreatePresetModal,
-} from "../components";
+import { OneColumnThemeView, TwoColumnThemeView, CreatePresetModal } from "../components";
 import { useVW } from "../hooks/useVW";
 
 export default function MainPage() {
@@ -11,18 +7,18 @@ export default function MainPage() {
   return (
     <>
       {/* pl-4 negates the shift from the scrollbar */}
-      <div className="flex flex-col flex-1 pl-4">
+      <div className="flex flex-1 flex-col pl-4">
         {/* <div className="mt-8">
 		  <div className="w-full max-w-[960px] mx-auto text-center">These are your currently installed themes. Get more themes through the Store page.</div>
 		</div> */}
-        <div className="mt-8 max-w-[960px] w-full mx-auto">
+        <div className="mx-auto mt-8 w-full max-w-[960px]">
           <CreatePresetModal />
         </div>
         <div className="mt-12 flex flex-col items-center">
-          <h2 className="font-fancy text-sm font-bold mb-4 mx-auto max-w-[960px] w-full">
+          <h2 className="font-fancy mx-auto mb-4 w-full max-w-[960px] text-sm font-bold">
             Installed Themes
           </h2>
-          <div className="w-full flex justify-center h-full mb-8">
+          <div className="mb-8 flex h-full w-full justify-center">
             {vw <= 650 ? <OneColumnThemeView /> : <TwoColumnThemeView />}
           </div>
         </div>

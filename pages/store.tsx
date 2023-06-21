@@ -15,10 +15,7 @@ export default function Store() {
         downloadThemeFromUrl(event.data.payload).then(() => {
           toast(`Theme Installed`);
           refreshThemes(true);
-          storeRef.current?.contentWindow?.postMessage(
-            { action: "themeInstalled" },
-            event.origin
-          );
+          storeRef.current?.contentWindow?.postMessage({ action: "themeInstalled" }, event.origin);
         });
       }
     }
@@ -29,7 +26,7 @@ export default function Store() {
   }, []);
   return (
     <>
-      <div className="h-full flex-grow flex flex-col">
+      <div className="flex h-full flex-grow flex-col">
         <iframe
           // @ts-ignore
           ref={storeRef}
@@ -48,7 +45,7 @@ export default function Store() {
           width={"100%"}
           height={"100%"}
           loading="eager"
-          className="!bg-transparent w-full h-full flex-grow"
+          className="h-full w-full flex-grow !bg-transparent"
         />
       </div>
     </>

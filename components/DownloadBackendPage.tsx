@@ -44,7 +44,7 @@ export function DownloadBackendPage({
 
   return (
     <>
-      <main className="flex flex-col w-full h-full items-center justify-center flex-grow gap-4 relative">
+      <main className="relative flex h-full w-full flex-grow flex-col items-center justify-center gap-4">
         {!onboarding && installProg === 0 ? (
           <FiXCircle
             size={48}
@@ -59,7 +59,7 @@ export function DownloadBackendPage({
         <button
           onClick={() => installProg <= 0 && installBackend()}
           disabled={installProg > 0}
-          className="p-4 bg-cardDark rounded-3xl transition-all"
+          className="rounded-3xl bg-cardDark p-4 transition-all"
         >
           {installProg > 0 ? (
             <div className="flex items-center justify-center gap-4">

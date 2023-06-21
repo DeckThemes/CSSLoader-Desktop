@@ -50,25 +50,20 @@ export function MainNav() {
 
   return (
     <>
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between px-4 max-w-5xl w-full mx-auto">
-        <div className="w-full flex basis-auto">
-          <Link href="/" className="flex items-center gap-2 my-4">
-            <Image
-              src="logo_css_darkmode.png"
-              width={48}
-              height={48}
-              alt="CSSLoader Logo"
-            />
-            <h1 className={`font-fancy font-semibold text-2xl`}>CSSLoader</h1>
+      <div className="mx-auto flex w-full max-w-5xl flex-col px-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex w-full basis-auto">
+          <Link href="/" className="my-4 flex items-center gap-2">
+            <Image src="logo_css_darkmode.png" width={48} height={48} alt="CSSLoader Logo" />
+            <h1 className={`font-fancy text-2xl font-semibold`}>CSSLoader</h1>
           </Link>
         </div>
         <div
           id="navContainer"
-          className="font-fancy h-full w-full flex flex-grow basis-auto items-center gap-2 my-4 sm:my-0 overflow-hidden relative"
+          className="font-fancy relative my-4 flex h-full w-full flex-grow basis-auto items-center gap-2 overflow-hidden sm:my-0"
         >
           <button
-            className={`absolute left-0 z-20 top-1/2 -translate-y-1/2 p-2 flex items-center justify-center bg-base-5-dark backdrop-blur-lg rounded-full transition ${
-              scrollPosition >= 0 ? "opacity-0 pointer-events-none" : ""
+            className={`absolute left-0 top-1/2 z-20 flex -translate-y-1/2 items-center justify-center rounded-full bg-base-5-dark p-2 backdrop-blur-lg transition ${
+              scrollPosition >= 0 ? "pointer-events-none opacity-0" : ""
             }`}
             onClick={handleScrollLeft}
             disabled={scrollPosition >= 0}
@@ -77,10 +72,8 @@ export function MainNav() {
           </button>
 
           <button
-            className={`absolute right-0 z-20 top-1/2 -translate-y-1/2 p-2 flex items-center justify-center bg-base-5-dark backdrop-blur-lg rounded-full transition ${
-              scrollPosition <= containerWidth - contentWidth
-                ? "opacity-0 pointer-events-none"
-                : ""
+            className={`absolute right-0 top-1/2 z-20 flex -translate-y-1/2 items-center justify-center rounded-full bg-base-5-dark p-2 backdrop-blur-lg transition ${
+              scrollPosition <= containerWidth - contentWidth ? "pointer-events-none opacity-0" : ""
             }`}
             onClick={handleScrollRight}
             disabled={scrollPosition <= containerWidth - contentWidth}
@@ -88,7 +81,7 @@ export function MainNav() {
             <RiArrowRightLine />
           </button>
           <div
-            className="flex w-[52px] h-full left-0 top-0 bottom-0 p-0 pointer-events-none absolute items-center justify-center z-10"
+            className="pointer-events-none absolute left-0 top-0 bottom-0 z-10 flex h-full w-[52px] items-center justify-center p-0"
             style={{
               background: `${
                 scrollPosition >= 0
@@ -98,7 +91,7 @@ export function MainNav() {
             }}
           ></div>
           <div
-            className="flex w-[52px] h-full right-0 top-0 bottom-0 p-0 pointer-events-none absolute items-center justify-center z-10"
+            className="pointer-events-none absolute right-0 top-0 bottom-0 z-10 flex h-full w-[52px] items-center justify-center p-0"
             style={{
               background: `${
                 scrollPosition <= containerWidth - contentWidth
@@ -109,23 +102,19 @@ export function MainNav() {
           ></div>
           <div
             id="navContent"
-            className="w-fit flex flex-row"
+            className="flex w-fit flex-row"
             style={{
               transform: `translateX(${scrollPosition}px)`,
               transition: "200ms ease",
             }}
           >
             <div
-              className="h-[1px] w-[1px] pointer-events-none invisible ml-auto"
+              className="pointer-events-none invisible ml-auto h-[1px] w-[1px]"
               aria-hidden={true}
             ></div>
             <NavTab href="/" name="Themes" icon={<RiPaintFill />} />
             {/* Replace with actual settings page when ready */}
-            <NavTab
-              href="/store"
-              name="Store"
-              icon={<AiOutlineCloudDownload />}
-            />
+            <NavTab href="/store" name="Store" icon={<AiOutlineCloudDownload />} />
             <NavTab href="/manage-themes" name="Manage" icon={<BsFolder />} />
             <NavTab href="/settings" name="Settings" icon={<RiPaintFill />} />
           </div>

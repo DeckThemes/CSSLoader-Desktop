@@ -19,16 +19,12 @@ export default function SettingsPage() {
 
   return (
     <>
-      <div className="flex flex-col w-full pl-4 pt-10">
-        <div className="flex items-end gap-4 justify-center">
-          <LabelledInput
-            label="DeckThemes Token"
-            value={token}
-            onValueChange={setToken}
-          />
+      <div className="flex w-full flex-col pl-4 pt-10">
+        <div className="flex items-end justify-center gap-4">
+          <LabelledInput label="DeckThemes Token" value={token} onValueChange={setToken} />
           <button
             onClick={onSaveToken}
-            className="h-12 bg-brandBlue rounded-xl whitespace-nowrap px-4"
+            className="h-12 whitespace-nowrap rounded-xl bg-brandBlue px-4"
           >
             Save Token
           </button>

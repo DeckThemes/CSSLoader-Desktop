@@ -17,15 +17,8 @@ export function LabelledInput({
   placeholder?: string;
 }) {
   return (
-    <div
-      className={twMerge(
-        "flex w-full flex-col items-start justify-between gap-2",
-        rootClass
-      )}
-    >
-      <Label.Root
-        className={twMerge("font-fancy text-sm font-bold", labelClass)}
-      >
+    <div className={twMerge("flex w-full flex-col items-start justify-between gap-2", rootClass)}>
+      <Label.Root className={twMerge("font-fancy text-sm font-bold", labelClass)}>
         {label}
       </Label.Root>
       <input

@@ -28,10 +28,7 @@ export function ThemePatch({
         {data.components.length > 0 ? (
           <div className="">
             {data.components.map((e) => (
-              <div
-                className="flex gap-2"
-                key={`component_${themeName}_${data.name}_${e.name}`}
-              >
+              <div className="flex gap-2" key={`component_${themeName}_${data.name}_${e.name}`}>
                 <PatchComponent
                   data={e}
                   selectedLabel={selectedLabel}
@@ -55,10 +52,8 @@ export function ThemePatch({
             return (
               <>
                 <div>
-                  <span className="font-fancy font-medium mb-4">
-                    {data.name}
-                  </span>
-                  <div className="w-full flex flex-col">
+                  <span className="font-fancy mb-4 font-medium">{data.name}</span>
+                  <div className="flex w-full flex-col">
                     <input
                       type="range"
                       min={0}
@@ -67,16 +62,12 @@ export function ThemePatch({
                       value={selectedIndex}
                       onChange={(event) => {
                         const value = Number(event.target.value);
-                        setPatchOfTheme(
-                          themeName,
-                          data.name,
-                          data.options[value]
-                        );
+                        setPatchOfTheme(themeName, data.name, data.options[value]);
                         setIndex(value);
                         setLabel(data.options[value]);
                       }}
                     />
-                    <div className="flex justify-between w-full">
+                    <div className="flex w-full justify-between">
                       {data.options.map((e, i) => {
                         return (
                           <div
@@ -84,10 +75,8 @@ export function ThemePatch({
                             className="flex flex-col items-center justify-between overflow-hidden"
                             style={{ maxWidth: 300 / data.options.length }}
                           >
-                            <span className="text-xs opacity-50 -mt-2">|</span>
-                            <span className="uppercase text-xs font-bold">
-                              {e}
-                            </span>
+                            <span className="-mt-2 text-xs opacity-50">|</span>
+                            <span className="text-xs font-bold uppercase">{e}</span>
                           </div>
                         );
                       })}
@@ -101,25 +90,23 @@ export function ThemePatch({
               <>
                 <div className="flex items-center justify-between">
                   <span>{data.name}</span>
-                  <label className="relative inline-flex items-center cursor-pointer">
+                  <label className="relative inline-flex cursor-pointer items-center">
                     <input
-                      className="sr-only peer"
+                      className="peer sr-only"
                       type="checkbox"
                       checked={data.value === "Yes"}
                       onChange={(event) => {
                         const bool = event.target.checked;
                         const newValue = bool ? "Yes" : "No";
-                        setPatchOfTheme(themeName, data.name, newValue).then(
-                          () => {
-                            // TODO: This is a shim, should fix some other way
-                            refreshThemes();
-                          }
-                        );
+                        setPatchOfTheme(themeName, data.name, newValue).then(() => {
+                          // TODO: This is a shim, should fix some other way
+                          refreshThemes();
+                        });
                         setLabel(newValue);
                         setIndex(data.options.findIndex((e) => e === newValue));
                       }}
                     />
-                    <div className="w-9 h-5 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600" />
+                    <div className="peer h-5 w-9 rounded-full bg-gray-200 after:absolute after:top-[2px] after:left-[2px] after:h-4 after:w-4 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white dark:border-gray-600 dark:bg-gray-700" />
                   </label>
                 </div>
               </>
@@ -130,7 +117,7 @@ export function ThemePatch({
                 <div className="flex items-center justify-between">
                   <span>{data.name}</span>
                   <select
-                    className="px-2 py-1 rounded-md"
+                    className="rounded-md px-2 py-1"
                     defaultValue={data.value}
                     onChange={(e) => {
                       setPatchOfTheme(themeName, data.name, e.target.value);
@@ -139,10 +126,7 @@ export function ThemePatch({
                   >
                     {data.options.map((x, i) => {
                       return (
-                        <option
-                          value={x}
-                          key={`ThemePatch_Dropdown_${data.name}_${i}`}
-                        >
+                        <option value={x} key={`ThemePatch_Dropdown_${data.name}_${i}`}>
                           {x}
                         </option>
                       );
@@ -165,7 +149,7 @@ export function ThemePatch({
       })()}
       <ComponentContainer />
       {bottomSeparatorValue && (
-        <div className="h-[2px] rounded-full opacity-50 my-4 bg-cardLight dark:bg-cardDark" />
+        <div className="my-4 h-[2px] rounded-full bg-cardLight opacity-50 dark:bg-cardDark" />
       )}
     </>
   );
