@@ -5,7 +5,7 @@ import { Theme } from "../../ThemeTypes";
 import { BiReset } from "react-icons/bi";
 
 export function TwoColumnThemeView() {
-  const { themes, refreshThemes } = useContext(themeContext);
+  const { themes } = useContext(themeContext);
 
   // This takes the list of themes and returns two columns
   // When these columns are displayed as left and right, the themes inside will read alphabetically, left ro right and top to bottom.
@@ -30,15 +30,6 @@ export function TwoColumnThemeView() {
   // Having the left-col theme affect the right-col theme's height looked bad
   return (
     <div className="flex w-full max-w-[960px] flex-col gap-4">
-      <button
-        className="flex w-fit items-center justify-center gap-2 rounded-full border-2 border-[#2e2e2e] px-4 py-2"
-        onClick={() => {
-          refreshThemes(true);
-        }}
-      >
-        <BiReset size={20} color="white" />
-        <span className="text-sm font-bold">Refresh Steam</span>
-      </button>
       <div className="flex w-full max-w-[960px] gap-4">
         <div className="flex w-full max-w-[480px] flex-1 flex-col items-start gap-4">
           {leftColumn.map((e) => {
