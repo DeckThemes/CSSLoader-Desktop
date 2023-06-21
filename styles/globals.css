@@ -96,3 +96,21 @@ input[type="color"]::-webkit-color-swatch {
 .page-shadow {
   box-shadow: 0px 0px 30px hsl(220, 5%, 0%);
 }
+
+@keyframes load-in {
+	0% {
+		opacity: 0;
+		pointer-events: none;
+	}
+	100% {
+		opacity: 1;
+		pointer-events: auto;
+	}
+}
+
+.iframe-load-animation {
+	opacity: 0;
+
+	animation: load-in 0.2s ease forwards;
+	animation-delay: 0.4s;
+}
