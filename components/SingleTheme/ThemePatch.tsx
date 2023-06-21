@@ -55,7 +55,9 @@ export function ThemePatch({
             return (
               <>
                 <div>
-                  <span className="fancy-font font-medium mb-4">{data.name}</span>
+                  <span className="font-fancy font-medium mb-4">
+                    {data.name}
+                  </span>
                   <div className="w-full flex flex-col">
                     <input
                       type="range"
@@ -83,7 +85,9 @@ export function ThemePatch({
                             style={{ maxWidth: 300 / data.options.length }}
                           >
                             <span className="text-xs opacity-50 -mt-2">|</span>
-                            <span className="uppercase text-xs font-bold">{e}</span>
+                            <span className="uppercase text-xs font-bold">
+                              {e}
+                            </span>
                           </div>
                         );
                       })}

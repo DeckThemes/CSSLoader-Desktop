@@ -1,12 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { NavTab } from "./NavTab";
-import {
-  RiArrowLeftFill,
-  RiArrowLeftLine,
-  RiArrowRightLine,
-  RiPaintFill,
-} from "react-icons/ri";
+import { RiArrowLeftLine, RiArrowRightLine, RiPaintFill } from "react-icons/ri";
 import { AiOutlineCloudDownload } from "react-icons/ai";
 import { BsFolder } from "react-icons/bs";
 import { useState, useEffect } from "react";
@@ -64,12 +59,12 @@ export function MainNav() {
               height={48}
               alt="CSSLoader Logo"
             />
-            <h1 className={`fancy-font font-semibold text-2xl`}>CSSLoader</h1>
+            <h1 className={`font-fancy font-semibold text-2xl`}>CSSLoader</h1>
           </Link>
         </div>
         <div
           id="navContainer"
-          className="fancy-font h-full w-full flex flex-grow basis-auto items-center gap-2 my-4 sm:my-0 overflow-hidden relative"
+          className="font-fancy h-full w-full flex flex-grow basis-auto items-center gap-2 my-4 sm:my-0 overflow-hidden relative"
         >
           <button
             className={`absolute left-0 z-20 top-1/2 -translate-y-1/2 p-2 flex items-center justify-center bg-base-5-dark backdrop-blur-lg rounded-full transition ${
@@ -125,14 +120,14 @@ export function MainNav() {
               aria-hidden={true}
             ></div>
             <NavTab href="/" name="Themes" icon={<RiPaintFill />} />
-			{/* Replace with actual settings page when ready */}
-            {/* <NavTab href="/b" name="Settings" icon={<RiPaintFill />} /> */}
+            {/* Replace with actual settings page when ready */}
             <NavTab
               href="/store"
               name="Store"
               icon={<AiOutlineCloudDownload />}
             />
             <NavTab href="/manage-themes" name="Manage" icon={<BsFolder />} />
+            <NavTab href="/settings" name="Settings" icon={<RiPaintFill />} />
           </div>
         </div>
       </div>

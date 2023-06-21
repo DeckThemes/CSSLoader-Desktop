@@ -27,8 +27,8 @@ export function ThemeToggle({
     <div className="bg-cardLight dark:bg-base-3-dark border-2 border-borders-base1-dark hover:border-borders-base2-dark transition p-6 flex flex-col gap-1 w-full max-w-[480px] rounded-xl">
       <div className="flex gap-4 justify-between">
         <div className="flex flex-col">
-          <span className="fancy-font font-bold text-md">{data.name}</span>
-          <span className="fancy-font text-sm text-muted">
+          <span className="font-fancy font-bold text-md">{data.name}</span>
+          <span className="font-fancy text-sm text-muted">
             {isPreset ? `Preset` : `${data.version} • ${data.author}`}
           </span>
         </div>
@@ -81,17 +81,17 @@ export function ThemeToggle({
           <div className="flex flex-col gap-2 w-full max-w-[480px] dark:bg-cardDark rounded-lg px-4 py-2 mt-4">
             {collapsible && (
               <div className="flex flex-row items-center relative py-2">
-				<h3 className="flex flex-1 items-center gap-2 fancy-font text-xs font-bold">
-					Theme Settings	
-				</h3>
-                <button 
-					className="absolute inset-0 flex items-center justify-end"
-					aria-controls="content"
-					
-					onClick={() => setCollapsed(!collapsed)}>
+                <h3 className="flex flex-1 items-center gap-2 font-fancy text-xs font-bold">
+                  Theme Settings
+                </h3>
+                <button
+                  className="absolute inset-0 flex items-center justify-end"
+                  aria-controls="content"
+                  onClick={() => setCollapsed(!collapsed)}
+                >
                   {collapsed ? (
                     <RiArrowDownSFill
-						className="flex"
+                      className="flex"
                       style={{
                         fontSize: "1.5em",
                       }}

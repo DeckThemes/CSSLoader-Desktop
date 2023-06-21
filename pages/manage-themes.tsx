@@ -36,7 +36,7 @@ export default function ManageThemes() {
   return (
     <div className="pl-4 flex h-full flex-col mt-8 mx-auto max-w-[960px] w-full">
       <div className="">
-        <h2 className="fancy-font text-sm font-bold mb-4">Theme Directory</h2>
+        <h2 className="font-fancy text-sm font-bold mb-4">Theme Directory</h2>
         <button
           className="flex w-fit items-center justify-center border-2 border-[#2e2e2e] rounded-full text-sm px-4 py-2 gap-2 font-bold transition duration-100 bg-[#2563eb]"
           onClick={async () => {
@@ -52,7 +52,7 @@ export default function ManageThemes() {
           <span>Open Themes Directory</span>
         </button>
       </div>
-      <h2 className="fancy-font text-sm font-bold mt-12 mb-4 mx-auto max-w-[960px] w-full">
+      <h2 className="font-fancy text-sm font-bold mt-12 mb-4 mx-auto max-w-[960px] w-full">
         Installed Themes
       </h2>
       <div className="flex flex-col gap-4 mb-4 mx-auto max-w-[960px] w-full">

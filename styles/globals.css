@@ -4,89 +4,95 @@
 
 html,
 body {
-	padding: 0;
-	margin: 0;
-	font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-		Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  padding: 0;
+  margin: 0;
+  font-family: var(--montserrat), BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
 a {
-	color: inherit;
-	text-decoration: none;
+  color: inherit;
+  text-decoration: none;
 }
 
 * {
-	box-sizing: border-box;
-	user-select: none;
+  box-sizing: border-box;
+  user-select: none;
+  font-family: var(--montserrat);
 }
 
-html, body, #__next {
-	height: 100%;
-	width: 100%;
-	overflow: hidden;
+html,
+body,
+#__next {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
 }
 
 @media (prefers-color-scheme: dark) {
-	html {
-		color-scheme: dark;
-	}
+  html {
+    color-scheme: dark;
+  }
 
-	body {
-		color: white;
-		background: #2e2e2e;
-	}
+  body {
+    color: white;
+    background: #2e2e2e;
+  }
 }
 
+.font-fancy {
+  font-family: var(--montserrat);
+}
 
-.fancy-font {
-	font-family: var(--montserrat);
+.font-notfancy {
+  font-family: var(--opensans);
 }
 
 main {
-	font-family: var(--opensans);
+  font-family: var(--opensans);
 }
 
 iframe {
-	background: transparent !important;
+  background: transparent !important;
 }
 
 input[type="color"] {
-	-webkit-appearance: none;
-	border: none;
-	width: 32px;
-	height: 32px;
+  -webkit-appearance: none;
+  border: none;
+  width: 32px;
+  height: 32px;
 }
 input[type="color"]::-webkit-color-swatch-wrapper {
-	padding: 0;
+  padding: 0;
 }
 input[type="color"]::-webkit-color-swatch {
-	border: none;
+  border: none;
 }
 
 ::-webkit-scrollbar {
-	width: 15px;
-	height: 0px;
-	background: transparent;
-	padding-right: 8px;
+  width: 15px;
+  height: 0px;
+  background: transparent;
+  padding-right: 8px;
 }
 
 ::-webkit-scrollbar-corner {
-	background: transparent;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-	border-radius: 9999px;
-	background: #161616;
-	background-clip: padding-box;
-	border: 5px solid rgba(0, 0, 0, 0);
-	border-width: 5px;
+  border-radius: 9999px;
+  background: #161616;
+  background-clip: padding-box;
+  border: 5px solid rgba(0, 0, 0, 0);
+  border-width: 5px;
 }
 
 ::-webkit-scrollbar-track {
-	border-radius: 9999px;
-	background: transparent;
+  border-radius: 9999px;
+  background: transparent;
 }
 
 .page-shadow {
-	box-shadow: 0px 0px 30px hsl(220, 5%, 0%)
+  box-shadow: 0px 0px 30px hsl(220, 5%, 0%);
 }

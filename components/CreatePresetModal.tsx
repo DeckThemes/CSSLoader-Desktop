@@ -58,7 +58,7 @@ export function CreatePresetModal() {
           </div>
           <button
             onClick={createPreset}
-            className="p-4 bg-elevation-3-light rounded-xl fancy-font transition-all"
+            className="p-4 bg-elevation-3-light rounded-xl font-fancy transition-all"
             style={{ opacity: presetName.length === 0 ? "0.5" : "1" }}
             disabled={presetName.length === 0}
           >
@@ -66,19 +66,27 @@ export function CreatePresetModal() {
           </button>
         </div>
       </dialog>
-      
-        <div className="">
-		 <h2 className="fancy-font text-sm font-bold mb-4 mx-auto max-w-[960px] w-full">Create Preset</h2>
-		  <div className="w-full mb-4">A preset is a group of themes that are enabled together. {enabledThemes > 0 ? '' : 'Enable a theme to get started.'}</div>
-          <button
-            className={`flex w-fit items-center justify-center border-2 border-[#2e2e2e] rounded-full text-sm px-4 py-2 gap-2 font-bold transition duration-100 ${enabledThemes > 0 ? 'bg-[#2563eb]' : 'pointer-events-none opacity-50'}`}
-            onClick={() => dialogRef.current?.showModal()}
-          >
-			<BiPlus />
-            <span>Create Preset</span>
-          </button>
+
+      <div className="">
+        <h2 className="font-fancy text-sm font-bold mb-4 mx-auto max-w-[960px] w-full">
+          Create Preset
+        </h2>
+        <div className="w-full mb-4">
+          A preset is a group of themes that are enabled together.{" "}
+          {enabledThemes > 0 ? "" : "Enable a theme to get started."}
         </div>
-      
+        <button
+          className={`flex w-fit items-center justify-center border-2 border-[#2e2e2e] rounded-full text-sm px-4 py-2 gap-2 font-bold transition duration-100 ${
+            enabledThemes > 0
+              ? "bg-[#2563eb]"
+              : "pointer-events-none opacity-50"
+          }`}
+          onClick={() => dialogRef.current?.showModal()}
+        >
+          <BiPlus />
+          <span>Create Preset</span>
+        </button>
+      </div>
     </>
   );
 }

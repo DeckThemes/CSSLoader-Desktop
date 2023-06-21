@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef } from "react";
 import { themeContext } from "./_app";
 import { allowedStoreOrigins, storeUrl } from "../constants";
-import { downloadThemeFromUrl, toast } from "../backend";
+import { downloadThemeFromUrl, storeRead, toast } from "../backend";
 
 export default function Store() {
   const storeRef = useRef<HTMLIFrameElement>();
@@ -11,18 +11,12 @@ export default function Store() {
   useEffect(() => {
     function listener(event: any) {
       if (!allowedStoreOrigins.includes(event.origin)) return;
-      if (event.data.action === "isThisDesktopApp") {
-        storeRef.current?.contentWindow?.postMessage(
-          "enableDesktopAppMode",
-          event.origin
-        );
-      }
       if (event.data.action === "installTheme") {
         downloadThemeFromUrl(event.data.payload).then(() => {
           toast(`Theme Installed`);
           refreshThemes(true);
           storeRef.current?.contentWindow?.postMessage(
-            "themeInstalled",
+            { action: "themeInstalled" },
             event.origin
           );
         });
@@ -40,11 +34,21 @@ export default function Store() {
           // @ts-ignore
           ref={storeRef}
           src={storeUrl}
-		  allowTransparency={true}
-		  style={{ background: 'transparent !important' }}
-		  width={"100%"}
-		  height={"100%"}
-		  loading="eager"
+          onLoad={() => {
+            storeRead("shortToken").then((res) => {
+              if (res.success && res.result !== undefined) {
+                storeRef.current?.contentWindow?.postMessage(
+                  { action: "logInWithToken", payload: res.result },
+                  "*"
+                );
+              }
+            });
+          }}
+          allowTransparency={true}
+          style={{ background: "transparent !important" }}
+          width={"100%"}
+          height={"100%"}
+          loading="eager"
           className="!bg-transparent w-full h-full flex-grow"
         />
       </div>

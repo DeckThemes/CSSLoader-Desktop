@@ -53,7 +53,7 @@ export function DownloadBackendPage({
           />
         ) : null}
 
-        <h1 className="fancy-font text-5xl font-semibold">
+        <h1 className="font-fancy text-5xl font-semibold">
           {onboarding ? "Welcome To CSSLoader" : "Backend Update Available"}
         </h1>
         <button
@@ -64,10 +64,10 @@ export function DownloadBackendPage({
           {installProg > 0 ? (
             <div className="flex items-center justify-center gap-4">
               <ImSpinner5 className="animate-spin" size={64} />
-              <span className="fancy-font text-2xl">{installText}</span>
+              <span className="font-fancy text-2xl">{installText}</span>
             </div>
           ) : (
-            <h2 className="fancy-font text-3xl">
+            <h2 className="font-fancy text-3xl">
               Install Backend{backendVersion ? ` ${backendVersion}` : ""}
             </h2>
           )}
