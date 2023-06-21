@@ -117,6 +117,8 @@ export default function App({ Component, pageProps }: AppProps) {
           hideProgressBar={false}
           newestOnTop
           closeOnClick
+          toastClassName="rounded-xl border-2 border-borders-base1-light bg-base-3-light transition hover:border-borders-base2-light dark:border-borders-base1-dark dark:bg-base-3-dark hover:dark:border-borders-base2-dark"
+          bodyClassName="rounded-xl font-fancy text-black dark:text-white text-sm"
           pauseOnFocusLoss
           draggable
           pauseOnHover
