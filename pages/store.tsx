@@ -45,7 +45,7 @@ export default function Store() {
           width={"100%"}
           height={"100%"}
           loading="eager"
-          className="h-full w-full flex-grow !bg-transparent"
+          className="iframe-load-animation h-full w-full flex-grow !bg-transparent"
         />
       </div>
     </>
