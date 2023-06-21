@@ -3,6 +3,7 @@ import { Patch } from "../../ThemeTypes";
 import { PatchComponent } from "./PatchComponent";
 import { themeContext } from "../../pages/_app";
 import { setPatchOfTheme } from "../../backend";
+import { SimpleRadioDropdown } from "@components/Primitives";
 
 export function ThemePatch({
   data,
@@ -116,22 +117,14 @@ export function ThemePatch({
               <>
                 <div className="flex items-center justify-between">
                   <span>{data.name}</span>
-                  <select
-                    className="rounded-md px-2 py-1"
-                    defaultValue={data.value}
-                    onChange={(e) => {
-                      setPatchOfTheme(themeName, data.name, e.target.value);
-                      setLabel(e.target.value);
+                  <SimpleRadioDropdown
+                    options={data.options}
+                    value={data.value}
+                    onValueChange={(e) => {
+                      setPatchOfTheme(themeName, data.name, e);
+                      setLabel(e);
                     }}
-                  >
-                    {data.options.map((x, i) => {
-                      return (
-                        <option value={x} key={`ThemePatch_Dropdown_${data.name}_${i}`}>
-                          {x}
-                        </option>
-                      );
-                    })}
-                  </select>
+                  />
                 </div>
               </>
             );

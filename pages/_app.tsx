@@ -38,6 +38,11 @@ export const themeContext = createContext<{
   refreshThemes: () => {},
 });
 
+export const fontContext = createContext({
+  montserrat: "",
+  openSans: "",
+});
+
 export default function App({ Component, pageProps }: AppProps) {
   const [themes, setThemes] = useState<Theme[]>([]);
   const [dummyResult, setDummyResult] = useState<boolean>(false);
@@ -108,51 +113,55 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <themeContext.Provider value={{ themes, setThemes, refreshThemes }}>
-      <div
-        className={`dark flex h-full w-full flex-col overflow-y-hidden bg-base-6-dark dark:text-textDark ${montserrat.variable} ${openSans.variable}`}
+      <fontContext.Provider
+        value={{ montserrat: montserrat.variable, openSans: openSans.variable }}
       >
-        <ToastContainer
-          position="bottom-center"
-          autoClose={3000}
-          hideProgressBar={false}
-          newestOnTop
-          closeOnClick
-          toastClassName="rounded-xl border-2 border-borders-base1-light bg-base-3-light transition hover:border-borders-base2-light dark:border-borders-base1-dark dark:bg-base-3-dark hover:dark:border-borders-base2-dark"
-          bodyClassName="rounded-xl font-fancy text-black dark:text-white text-sm"
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme={"dark"}
-        />
-        {showNewBackendPage || (!backendExists && !dummyResult) ? (
-          <>
-            <DownloadBackendPage
-              onboarding={!backendExists}
-              onUpdateFinish={onUpdateFinish}
-              hideWindow={() => setShowNewBackend(false)}
-              backendVersion={newBackendVersion}
-            />
-          </>
-        ) : (
-          <>
-            {dummyResult ? (
-              <>
-                <MainNav />
-                <main
-                  style={{
-                    overflowY: router.pathname === "/store" ? "auto" : "scroll",
-                  }}
-                  className="page-shadow mx-4 flex h-full flex-1 overflow-y-scroll rounded-t-3xl border-x-[1px] border-t-[1px] border-borders-base2-dark bg-base-2-dark"
-                >
-                  <Component {...pageProps} />
-                </main>
-              </>
-            ) : (
-              <BackendFailedPage />
-            )}
-          </>
-        )}
-      </div>
+        <div
+          className={`dark flex h-full w-full flex-col overflow-y-hidden bg-base-6-dark dark:text-textDark ${montserrat.variable} ${openSans.variable}`}
+        >
+          <ToastContainer
+            position="bottom-center"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop
+            closeOnClick
+            toastClassName="rounded-xl border-2 border-borders-base1-light bg-base-3-light transition hover:border-borders-base2-light dark:border-borders-base1-dark dark:bg-base-3-dark hover:dark:border-borders-base2-dark"
+            bodyClassName="rounded-xl font-fancy text-black dark:text-white text-sm"
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme={"dark"}
+          />
+          {showNewBackendPage || (!backendExists && !dummyResult) ? (
+            <>
+              <DownloadBackendPage
+                onboarding={!backendExists}
+                onUpdateFinish={onUpdateFinish}
+                hideWindow={() => setShowNewBackend(false)}
+                backendVersion={newBackendVersion}
+              />
+            </>
+          ) : (
+            <>
+              {dummyResult ? (
+                <>
+                  <MainNav />
+                  <main
+                    style={{
+                      overflowY: router.pathname === "/store" ? "auto" : "scroll",
+                    }}
+                    className="page-shadow mx-4 flex h-full flex-1 overflow-y-scroll rounded-t-3xl border-x-[1px] border-t-[1px] border-borders-base2-dark bg-base-2-dark"
+                  >
+                    <Component {...pageProps} />
+                  </main>
+                </>
+              ) : (
+                <BackendFailedPage />
+              )}
+            </>
+          )}
+        </div>
+      </fontContext.Provider>
     </themeContext.Provider>
   );
 }
