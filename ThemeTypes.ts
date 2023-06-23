@@ -11,6 +11,8 @@ export interface Theme {
   patches: Patch[];
   dependencies: string[];
   flags: Flags[];
+  created: number;
+  modified: number;
 }
 
 export interface ThemePatchComponent {

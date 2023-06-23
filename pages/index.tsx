@@ -10,12 +10,13 @@ export default function MainPage() {
   const { refreshThemes, themes } = useContext(themeContext);
   const [search, setSearch] = useState<string>("");
   const [numCols, setNumCols] = useState<number>(1);
-  const [sortValue, setSort] = useState<any>();
+  const [sortValue, setSort] = useState<any>("nameAZ");
 
   const sortedThemes = useMemo(() => {
     const filteredThemes = themes.filter(
       (e) => e.name.toLowerCase().includes(search) || e.author.toLowerCase().includes(search)
     );
+    console.log(filteredThemes);
     const sortedThemes = filteredThemes.sort((a, b) => {
       switch (sortValue) {
         case "nameAZ": {
@@ -29,6 +30,12 @@ export default function MainPage() {
         }
         case "authorZA": {
           return a.author < b.author ? 1 : a.author > b.author ? -1 : 0;
+        }
+        case "created": {
+          return a.created > b.created ? -1 : a.created < b.created ? 1 : 0;
+        }
+        case "modified": {
+          return a.modified > b.modified ? -1 : a.modified < b.modified ? 1 : 0;
         }
         default: {
           return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
@@ -68,8 +75,8 @@ export default function MainPage() {
                 { value: "nameZA", displayText: "Theme Name (Z to A)" },
                 { value: "authorAZ", displayText: "Author Name (A to Z)" },
                 { value: "authorZA", displayText: "Author Name (Z to A)" },
-                { value: "", displayText: "Recently Installed" },
-                { value: "", displayText: "Last Modified" },
+                { value: "created", displayText: "Recently Installed" },
+                { value: "modified", displayText: "Last Modified" },
               ]}
             />
             <TwoItemToggle
