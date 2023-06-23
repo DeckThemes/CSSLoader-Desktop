@@ -4,6 +4,7 @@ import { useVW } from "../hooks/useVW";
 import { themeContext } from "./_app";
 import { useContext, useState, useEffect, useMemo } from "react";
 import { LabelledInput, RadioDropdown, TwoItemToggle } from "@components/Primitives";
+import { TbColumns1, TbColumns2 } from "react-icons/tb";
 
 export default function MainPage() {
   const vw = useVW();
@@ -60,44 +61,51 @@ export default function MainPage() {
 		</div> */}
 
         <div className="mt-12 flex w-full flex-col items-center">
-          <h2 className="font-fancy mx-auto mb-4 w-full max-w-[960px] text-sm font-bold">
+          {/* <h2 className="font-fancy mx-auto mb-4 w-full max-w-[960px] text-sm font-bold">
             Installed Themes
-          </h2>
-          <div className="flex w-full items-center pl-8 pr-10">
-            <LabelledInput value={search} onValueChange={setSearch} label="Search" />
-            <RadioDropdown
-              ariaLabel="Sort By Dropdown"
-              headingText="Sort By"
-              value={sortValue}
-              onValueChange={setSort}
-              options={[
-                { value: "nameAZ", displayText: "Theme Name (A to Z)" },
-                { value: "nameZA", displayText: "Theme Name (Z to A)" },
-                { value: "authorAZ", displayText: "Author Name (A to Z)" },
-                { value: "authorZA", displayText: "Author Name (Z to A)" },
-                { value: "created", displayText: "Recently Installed" },
-                { value: "modified", displayText: "Last Modified" },
-              ]}
-            />
-            <TwoItemToggle
-              label="# Columns"
-              rootClass="hidden 2cols:flex"
-              value={numCols + ""}
-              options={["1", "2"]}
-              onValueChange={(e) => setNumCols(Number(e))}
-            />
+          </h2> */}
+          <div className="flex w-full flex-col items-center gap-4 pl-8 pr-10">
+            <div className="flex w-full max-w-5xl items-end justify-between gap-4">
+              <LabelledInput value={search} onValueChange={setSearch} label="Search" />
+              <RadioDropdown
+                ariaLabel="Sort By Dropdown"
+                headingText="Sort By"
+                value={sortValue}
+                onValueChange={setSort}
+                options={[
+                  { value: "nameAZ", displayText: "Theme Name (A to Z)" },
+                  { value: "nameZA", displayText: "Theme Name (Z to A)" },
+                  { value: "authorAZ", displayText: "Author Name (A to Z)" },
+                  { value: "authorZA", displayText: "Author Name (Z to A)" },
+                  { value: "created", displayText: "Recently Installed" },
+                  { value: "modified", displayText: "Last Modified" },
+                ]}
+              />
+              <TwoItemToggle
+                label="Display"
+                rootClass="hidden 2cols:flex"
+                optionClass="w-4"
+                value={numCols}
+                options={[
+                  { value: 1, displayText: <TbColumns1 size={18} /> },
+                  { value: 2, displayText: <TbColumns2 size={18} /> },
+                ]}
+                onValueChange={setNumCols}
+              />
+            </div>
+            <div className="flex w-full max-w-5xl items-end justify-center gap-4">
+              <button
+                className="flex h-full w-fit items-center justify-center gap-2 rounded-full border-2 border-[#2e2e2e] px-4 py-2"
+                onClick={() => {
+                  // refreshThemes(true);
+                }}
+              >
+                <BiReset size={20} color="white" />
+                <span className="text-sm font-bold">Refresh Injector</span>
+              </button>
+            </div>
           </div>
-          <div className="flex w-full max-w-[960px] flex-col gap-4 pb-4">
-            <button
-              className="flex w-fit items-center justify-center gap-2 self-start rounded-full border-2 border-[#2e2e2e] px-4 py-2"
-              onClick={() => {
-                // refreshThemes(true);
-              }}
-            >
-              <BiReset size={20} color="white" />
-              <span className="text-sm font-bold">Refresh Injector</span>
-            </button>
-          </div>
+
           <div className="mb-8 flex h-full w-full justify-center">
             {numCols === 1 ? (
               <OneColumnThemeView themes={sortedThemes} />
