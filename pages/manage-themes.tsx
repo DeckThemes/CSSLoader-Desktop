@@ -34,8 +34,8 @@ export default function ManageThemes() {
   }, [localThemeList]);
 
   return (
-    <main className="page-shadow mx-4 flex w-full max-w-[calc(100vw-3rem)] flex-1 flex-grow flex-col items-center gap-4 rounded-3xl border-[1px] border-borders-base3-light bg-base-2-light dark:border-borders-base1-dark dark:bg-base-2-dark">
-      <div className="">
+    <main className="flex flex-col gap-4 items-center flex-1">
+      <div className="mt-12 w-full max-w-[960px]">
         <h2 className="font-fancy mb-4 text-sm font-bold">Theme Directory</h2>
         <button
           className="flex w-fit items-center justify-center gap-2 rounded-full border-2 border-[#2e2e2e] bg-[#2563eb] px-4 py-2 text-sm font-bold transition duration-100"
