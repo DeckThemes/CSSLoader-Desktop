@@ -27,7 +27,7 @@ export function ManageThemeCard({
     remoteEntry = themeArrPlace[2];
   }
   return (
-    <div className="flex w-full items-center justify-center rounded-xl border-2 border-borders-base1-dark p-6 transition hover:border-borders-base2-dark dark:bg-base-3-dark 2cols:w-[480px]">
+    <div className="flex w-full items-center justify-center rounded-xl border-2 border-borders-base1-dark p-6 transition hover:border-borders-base2-dark dark:bg-base-3-dark">
       <div className="flex flex-col">
         <span className="font-fancy text-md font-bold">{themeData.name}</span>
         <span className="font-fancy text-muted text-sm">
