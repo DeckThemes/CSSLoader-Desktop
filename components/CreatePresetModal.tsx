@@ -56,7 +56,7 @@ export function CreatePresetModal() {
         Trigger={
           <button
             disabled={enabledThemes === 0}
-            className={`flex w-fit items-center justify-center gap-2 rounded-full border-2 border-[#2e2e2e] px-4 py-2 text-sm font-bold transition duration-100 ${
+            className={`flex w-fit items-center justify-center gap-2 rounded-full border-2 border-[#2e2e2e] px-4 py-2 text-sm font-bold outline-none transition duration-100 ${
               enabledThemes > 0 ? "bg-[#2563eb]" : "pointer-events-none opacity-50"
             }`}
           >

@@ -100,16 +100,19 @@ export default function MainPage() {
             <div className="flex w-full max-w-5xl items-end justify-center gap-4"></div>
           </div>
 
-          <div className="mb-8 flex h-full w-fit flex-col items-center justify-center px-4">
-            <span className="self-start text-lg font-bold">Themes</span>
+          <div className="mb-8 mt-6 flex h-full w-full flex-col items-center justify-center px-4">
+            <span className="mb-6 w-full max-w-[960px] text-lg font-bold">Themes</span>
             {numCols === 1 ? (
               <OneColumnThemeView themes={sortedThemes} />
             ) : (
               <TwoColumnThemeView themes={sortedThemes} />
             )}
           </div>
-          <div className="mb-8 flex h-full w-fit flex-col items-stretch justify-center px-4">
-            <span className="self-start text-lg font-bold">Presets</span>
+          <div className="mb-8 flex h-full w-full flex-col items-center justify-center gap-2 px-4">
+            <span className="w-full max-w-[960px] text-lg font-bold">Presets</span>
+            <div className="mb-6 w-full max-w-[960px]">
+              <CreatePresetModal />
+            </div>
             {numCols === 1 ? (
               <OneColumnThemeView themes={sortedPresets} />
             ) : (
@@ -118,7 +121,6 @@ export default function MainPage() {
           </div>
         </div>
         <div className="mx-auto mt-8 flex w-full max-w-[960px] items-end justify-between pb-8">
-          <CreatePresetModal />
           <button
             className="flex h-full w-fit items-center justify-center gap-2 rounded-full border-2 border-[#2e2e2e] px-4 py-2"
             onClick={() => {

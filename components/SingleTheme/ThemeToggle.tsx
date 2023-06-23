@@ -18,7 +18,7 @@ export function ThemeToggle({ data, collapsible = false }: { data: Theme; collap
   }, [data.flags]);
 
   return (
-    <div className="flex w-full max-w-[480px] flex-col gap-1 rounded-xl border-2 border-borders-base1-dark bg-cardLight p-6 transition hover:border-borders-base2-dark dark:bg-base-3-dark">
+    <div className="flex w-full max-w-[960px] flex-col gap-1 rounded-xl border-2 border-borders-base1-dark bg-cardLight p-6 transition hover:border-borders-base2-dark dark:bg-base-3-dark">
       <div className="flex justify-between gap-4">
         <div className="flex flex-col">
           <span className="font-fancy text-md font-bold">{data.name}</span>

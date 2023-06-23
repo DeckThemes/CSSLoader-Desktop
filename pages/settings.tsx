@@ -19,24 +19,34 @@ export default function SettingsPage() {
 
   return (
     <>
-      <main className="page-shadow mx-4 flex w-full max-w-[calc(100vw-2rem)] flex-1 flex-grow flex-col items-center gap-4 rounded-3xl border-[1px] border-borders-base3-light bg-base-2-light dark:border-borders-base1-dark dark:bg-red-800">
-        <div className="flex w-full flex-col self-start px-4 pt-12">
-          <div className="flex items-end justify-center gap-4">
-            <LabelledInput label="DeckThemes Token" value={token} onValueChange={setToken} />
+      <main className="flex w-full flex-1 flex-grow flex-col items-center gap-4">
+        <div className="flex w-full max-w-[960px] flex-col gap-8 px-4 pt-12">
+          <div className="flex w-full flex-col gap-4">
+            <span className="text-lg font-bold">Store Settings</span>
+            <div className="flex items-end justify-center gap-4">
+              <LabelledInput
+                password
+                label="DeckThemes Token"
+                value={token}
+                onValueChange={setToken}
+              />
+              <button
+                onClick={onSaveToken}
+                className="h-12 whitespace-nowrap rounded-xl bg-brandBlue px-4"
+              >
+                Save Token
+              </button>
+            </div>
+          </div>
+          <div className="flex w-full flex-col gap-4">
+            <span className="text-lg font-bold">Developer Settings</span>
             <button
-              onClick={onSaveToken}
-              className="h-12 whitespace-nowrap rounded-xl bg-brandBlue px-4"
+              onClick={() => killBackend(() => console.log("Backend Killed"))}
+              className="h-12 whitespace-nowrap rounded-xl bg-base-3-dark px-4"
             >
-              Save Token
+              Kill Backend
             </button>
           </div>
-          <span>Dev Settings</span>
-          <button
-            onClick={() => killBackend(() => console.log("Backend Killed"))}
-            className="h-12 whitespace-nowrap rounded-xl bg-base-3-dark px-4"
-          >
-            Kill Backend
-          </button>
         </div>
       </main>
     </>

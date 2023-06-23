@@ -1,4 +1,5 @@
 import * as Label from "@radix-ui/react-label";
+import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 export function LabelledInput({
@@ -9,6 +10,7 @@ export function LabelledInput({
   labelClass = "",
   placeholder = "",
   inputClass = "",
+  password = false,
 }: {
   label: string;
   value: string;
@@ -17,15 +19,19 @@ export function LabelledInput({
   labelClass?: string;
   placeholder?: string;
   inputClass?: string;
+  password?: boolean;
 }) {
+  const [type, setType] = useState<"text" | "password">(password ? "password" : "text");
   return (
     <div className={twMerge("flex w-full flex-col items-start justify-between gap-2", rootClass)}>
       <Label.Root className={twMerge("font-fancy text-sm font-bold", labelClass)}>
         {label}
       </Label.Root>
       <input
+        onFocus={() => password && setType("text")}
+        onBlur={() => password && setType("password")}
         placeholder={placeholder}
-        type="text"
+        type={type}
         value={value}
         onChange={(e) => onValueChange(e.target.value)}
         className={twMerge(
