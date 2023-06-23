@@ -147,7 +147,7 @@ export default function App({ Component, pageProps }: AppProps) {
               {dummyResult ? (
                 <>
                   <MainNav />
-                  <main className="page-shadow ml-4 mt-[64px] mb-4 flex h-full flex-1 flex-grow flex-col rounded-3xl border-[1px] border-borders-base3-light bg-base-2-light dark:border-borders-base1-dark dark:bg-base-2-dark">
+                  <main className="page-shadow ml-4 mt-2 mb-4 flex h-full flex-1 flex-grow flex-col rounded-3xl border-[1px] border-borders-base3-light bg-base-2-light dark:border-borders-base1-dark dark:bg-base-2-dark">
                     <Component {...pageProps} />
                   </main>
                 </>
