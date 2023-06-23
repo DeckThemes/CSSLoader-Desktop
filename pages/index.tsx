@@ -5,6 +5,7 @@ import { themeContext } from "./_app";
 import { useContext, useState, useEffect, useMemo } from "react";
 import { LabelledInput, RadioDropdown, TwoItemToggle } from "@components/Primitives";
 import { TbColumns1, TbColumns2 } from "react-icons/tb";
+import { Flags } from "ThemeTypes";
 
 export default function MainPage() {
   const vw = useVW();
@@ -13,12 +14,11 @@ export default function MainPage() {
   const [numCols, setNumCols] = useState<number>(1);
   const [sortValue, setSort] = useState<any>("nameAZ");
 
-  const sortedThemes = useMemo(() => {
-    const filteredThemes = themes.filter(
+  const [sortedThemes, sortedPresets] = useMemo(() => {
+    const filteredAll = themes.filter(
       (e) => e.name.toLowerCase().includes(search) || e.author.toLowerCase().includes(search)
     );
-    console.log(filteredThemes);
-    const sortedThemes = filteredThemes.sort((a, b) => {
+    const sortedAll = filteredAll.sort((a, b) => {
       switch (sortValue) {
         case "nameAZ": {
           return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
@@ -43,7 +43,9 @@ export default function MainPage() {
         }
       }
     });
-    return sortedThemes;
+    const sortedPresets = sortedAll.filter((e) => e.flags.includes(Flags.isPreset));
+    const sortedThemes = sortedAll.filter((e) => !e.flags.includes(Flags.isPreset));
+    return [sortedThemes, sortedPresets];
   }, [themes, search, sortValue]);
 
   useEffect(() => {
@@ -64,7 +66,7 @@ export default function MainPage() {
           {/* <h2 className="font-fancy mx-auto mb-4 w-full max-w-[960px] text-sm font-bold">
             Installed Themes
           </h2> */}
-          <div className="flex w-full flex-col items-center gap-4 px-8">
+          <div className="flex w-full flex-col items-center gap-4 px-4">
             <div className="flex w-full max-w-[960px] items-end justify-between gap-4">
               <LabelledInput value={search} onValueChange={setSearch} label="Search" />
               <RadioDropdown
@@ -98,20 +100,29 @@ export default function MainPage() {
             <div className="flex w-full max-w-5xl items-end justify-center gap-4"></div>
           </div>
 
-          <div className="mb-8 flex h-full w-full justify-center">
+          <div className="mb-8 flex h-full w-fit flex-col items-center justify-center px-4">
+            <span className="self-start text-lg font-bold">Themes</span>
             {numCols === 1 ? (
               <OneColumnThemeView themes={sortedThemes} />
             ) : (
               <TwoColumnThemeView themes={sortedThemes} />
             )}
           </div>
+          <div className="mb-8 flex h-full w-fit flex-col items-stretch justify-center px-4">
+            <span className="self-start text-lg font-bold">Presets</span>
+            {numCols === 1 ? (
+              <OneColumnThemeView themes={sortedPresets} />
+            ) : (
+              <TwoColumnThemeView themes={sortedPresets} />
+            )}
+          </div>
         </div>
-        <div className="mx-auto mt-8 w-full max-w-[960px]">
+        <div className="mx-auto mt-8 flex w-full max-w-[960px] items-end justify-between pb-8">
           <CreatePresetModal />
           <button
             className="flex h-full w-fit items-center justify-center gap-2 rounded-full border-2 border-[#2e2e2e] px-4 py-2"
             onClick={() => {
-              // refreshThemes(true);
+              refreshThemes(true);
             }}
           >
             <BiReset size={20} color="white" />
