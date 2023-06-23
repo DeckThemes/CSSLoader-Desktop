@@ -1,6 +1,8 @@
 import { LabelledInput } from "@components/Primitives";
 import { killBackend, storeRead, storeWrite, toast } from "backend";
 import { useState, useEffect } from "react";
+import { BsDiscord } from "react-icons/bs";
+import { FaPatreon } from "react-icons/fa";
 
 export default function SettingsPage() {
   const [token, setToken] = useState<string>("");
@@ -46,6 +48,36 @@ export default function SettingsPage() {
             >
               Kill Backend
             </button>
+          </div>
+          <div className="flex w-full flex-col gap-4">
+            <span className="text-lg font-bold">Credits</span>
+            <ul>
+              <li>SuchMemeManySkill - Backend Dev</li>
+              <li>Beebles - Frontend Dev</li>
+              <li>Fero - Frontend Dev</li>
+            </ul>
+            <div className="flex w-full flex-col items-start">
+              <button
+                className="flex items-center justify-center gap-4 text-discordColor"
+                onClick={async () => {
+                  const { open } = await import("@tauri-apps/api/shell");
+                  await open("https://deckthemes.com/discord");
+                }}
+              >
+                <BsDiscord />
+                <span>Join The Community</span>
+              </button>
+              <button
+                className="flex items-center justify-center gap-4 text-patreonColor"
+                onClick={async () => {
+                  const { open } = await import("@tauri-apps/api/shell");
+                  await open("https://patreon.com/deckthemes");
+                }}
+              >
+                <FaPatreon />
+                <span>Support Us</span>
+              </button>
+            </div>
           </div>
         </div>
       </main>
