@@ -54,7 +54,7 @@ export default function MainPage() {
   return (
     <>
       {/* pl-4 negates the shift from the scrollbar */}
-      <main className="page-shadow mx-4 flex w-full max-w-[calc(100vw-3rem)] flex-1 flex-grow flex-col items-center gap-4 rounded-3xl border-[1px] border-borders-base3-light bg-base-2-light py-12 dark:border-borders-base1-dark dark:bg-base-2-dark">
+      <main className="flex flex-1 flex-grow flex-col items-center gap-4">
         {/* <div className="mt-8">
 		  <div className="w-full max-w-[960px] mx-auto text-center">These are your currently installed themes. Get more themes through the Store page.</div>
 		</div> */}

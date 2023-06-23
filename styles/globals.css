@@ -4,10 +4,17 @@
 
 html,
 body {
+/* I'm not sure why you removed the width and height at 100%, but it's super important */
+  height: 100%;
+  width: 100%;
   padding: 0;
   margin: 0;
   font-family: var(--montserrat), BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
     Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+body {
+	overflow-y: scroll;
 }
 
 a {
@@ -28,7 +35,7 @@ a {
 
   body {
     color: white;
-    background: #2e2e2e;
+    background: #090a0c;
   }
 }
 
@@ -74,7 +81,7 @@ input[type="color"]::-webkit-color-swatch {
 
 ::-webkit-scrollbar-thumb {
   border-radius: 9999px;
-  background: #161616;
+  background: #484848;
   background-clip: padding-box;
   border: 5px solid rgba(0, 0, 0, 0);
   border-width: 5px;

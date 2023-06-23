@@ -26,7 +26,7 @@ export default function Store() {
   }, []);
   return (
     <>
-      <main className="page-shadow mx-4 flex w-full max-w-[calc(100vw-2rem)] flex-1 flex-grow flex-col items-center gap-4 rounded-3xl border-[1px] border-borders-base3-light bg-base-2-light dark:border-borders-base1-dark dark:bg-base-2-dark">
+      <main className="w-full h-full flex flex-1 flex-grow flex-col items-center gap-4">
         <iframe
           // @ts-ignore
           ref={storeRef}
