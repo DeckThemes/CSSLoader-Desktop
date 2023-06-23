@@ -51,11 +51,11 @@ export function MainNav() {
   return (
     <>
       <div
-        className="sticky top-0 w-full isolate z-[9998] dark:bg-base-6-dark"
+        className="fixed mt-2 top-8 left-0 right-0 isolate z-[9998] dark:bg-base-6-dark"
         style={{ boxShadow: "0px 0px 15px #090a0c, 0px 4px 15px #090a0c" }}
       >
         <div className="mx-auto flex w-full max-w-5xl flex-col px-4 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex w-full flex-1 basis-auto select-none items-center">
+          {/* <div className="flex w-full flex-1 basis-auto select-none items-center">
             <Link
               href="/"
               className="group  my-4 flex items-center gap-2 transition duration-150 hover:scale-95 hover:active:scale-90"
@@ -69,10 +69,10 @@ export function MainNav() {
               />
               <h1 className={`font-fancy text-xl font-semibold`}>CSSLoader</h1>
             </Link>
-          </div>
+          </div> */}
           <div
             id="navContainer"
-            className="font-fancy relative my-4 flex h-full w-full flex-grow basis-auto items-center gap-2 overflow-hidden sm:my-0"
+            className="font-fancy relative flex h-full w-full flex-grow basis-auto items-center gap-2 overflow-hidden sm:my-0"
           >
             <button
               className={`absolute left-0 top-1/2 z-20 flex -translate-y-1/2 items-center justify-center rounded-full bg-base-5-dark p-2 backdrop-blur-lg transition ${

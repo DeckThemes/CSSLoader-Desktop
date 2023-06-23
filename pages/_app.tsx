@@ -17,6 +17,7 @@ import {
   recursiveCheck,
   getInstalledThemes,
 } from "../backend";
+import DynamicTitleBar from "@components/Native/DynamicTitlebar";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -116,9 +117,10 @@ export default function App({ Component, pageProps }: AppProps) {
       <fontContext.Provider
         value={{ montserrat: montserrat.variable, openSans: openSans.variable }}
       >
+		<DynamicTitleBar />
         <div
           // A lot of this codebase is from the DeckThemes codebase, which has a light and dark mode, however this app only has a dark mode, so we put the dark class here incase we copy over things that have both styles
-          className={`dark relative flex min-h-screen flex-col bg-base-6-light text-textLight dark:bg-base-6-dark dark:text-textDark ${montserrat.variable} ${openSans.variable}`}
+          className={`dark relative flex h-screen max-h-[calc(100vh-96px)] mt-[96px] flex-col bg-base-6-light text-textLight dark:bg-base-6-dark dark:text-textDark ${montserrat.variable} ${openSans.variable}`}
         >
           <ToastContainer
             position="bottom-center"
@@ -147,7 +149,7 @@ export default function App({ Component, pageProps }: AppProps) {
               {dummyResult ? (
                 <>
                   <MainNav />
-                  <main className="page-shadow ml-4 mt-2 mb-4 flex h-full flex-1 flex-grow flex-col rounded-3xl border-[1px] border-borders-base3-light bg-base-2-light dark:border-borders-base1-dark dark:bg-base-2-dark">
+                  <main className="overflow-y-auto page-shadow ml-4 mr-4 mb-4 h-min flex flex-1 flex-grow flex-col rounded-3xl border-[1px] border-borders-base3-light bg-base-2-light dark:border-borders-base1-dark dark:bg-base-2-dark">
                     <Component {...pageProps} />
                   </main>
                 </>

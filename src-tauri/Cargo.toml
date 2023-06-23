@@ -17,7 +17,7 @@ tauri-build = { version = "1.2.1", features = [] }
 [dependencies]
 serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
-tauri = { version = "1.2.4", features = ["dialog-all", "fs-create-dir", "fs-exists", "fs-read-file", "fs-write-file", "http-all", "path-all", "shell-all", "updater"] }
+tauri = { version = "1.2.4", features = ["dialog-all", "fs-create-dir", "fs-exists", "fs-read-file", "fs-write-file", "http-all", "path-all", "shell-all", "updater", "window-close", "window-maximize", "window-minimize", "window-set-decorations", "window-set-focus", "window-set-fullscreen", "window-set-size", "window-start-dragging", "window-unmaximize", "window-unminimize"] }
 reqwest = { version = "0.11.0", features = ["json"] }
 tokio = { version = "1", features = ["full"] }
 
