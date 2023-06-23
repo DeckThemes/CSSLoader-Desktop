@@ -64,8 +64,8 @@ export default function MainPage() {
           {/* <h2 className="font-fancy mx-auto mb-4 w-full max-w-[960px] text-sm font-bold">
             Installed Themes
           </h2> */}
-          <div className="flex w-full flex-col items-center gap-4 pl-8 pr-10">
-            <div className="flex w-full max-w-5xl items-end justify-between gap-4">
+          <div className="flex w-full flex-col items-center gap-4 px-8">
+            <div className="flex w-full max-w-[960px] items-end justify-between gap-4">
               <LabelledInput value={search} onValueChange={setSearch} label="Search" />
               <RadioDropdown
                 ariaLabel="Sort By Dropdown"
@@ -82,6 +82,8 @@ export default function MainPage() {
                 ]}
               />
               <TwoItemToggle
+                buttonClass="h-12 rounded-xl"
+                highlightClass="rounded-lg"
                 label="Display"
                 rootClass="hidden 2cols:flex"
                 optionClass="w-4"
@@ -93,17 +95,7 @@ export default function MainPage() {
                 onValueChange={setNumCols}
               />
             </div>
-            <div className="flex w-full max-w-5xl items-end justify-center gap-4">
-              <button
-                className="flex h-full w-fit items-center justify-center gap-2 rounded-full border-2 border-[#2e2e2e] px-4 py-2"
-                onClick={() => {
-                  // refreshThemes(true);
-                }}
-              >
-                <BiReset size={20} color="white" />
-                <span className="text-sm font-bold">Refresh Injector</span>
-              </button>
-            </div>
+            <div className="flex w-full max-w-5xl items-end justify-center gap-4"></div>
           </div>
 
           <div className="mb-8 flex h-full w-full justify-center">
@@ -116,6 +108,15 @@ export default function MainPage() {
         </div>
         <div className="mx-auto mt-8 w-full max-w-[960px]">
           <CreatePresetModal />
+          <button
+            className="flex h-full w-fit items-center justify-center gap-2 rounded-full border-2 border-[#2e2e2e] px-4 py-2"
+            onClick={() => {
+              // refreshThemes(true);
+            }}
+          >
+            <BiReset size={20} color="white" />
+            <span className="text-sm font-bold">Refresh Injector</span>
+          </button>
         </div>
       </main>
     </>
