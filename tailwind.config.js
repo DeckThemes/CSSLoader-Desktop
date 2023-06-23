@@ -14,10 +14,7 @@ module.exports = {
         minusNav: "calc(100vh - 4rem)",
       },
       screens: {
-        "2cols": "690px",
-        "3cols": "1020px",
-        "4cols": "1350px",
-        "5cols": "1680px",
+        "2cols": "650px",
       },
       colors: {
         base: {

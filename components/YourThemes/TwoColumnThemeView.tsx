@@ -1,12 +1,8 @@
-import { useContext, useMemo } from "react";
-import { themeContext } from "../../pages/_app";
+import { useMemo } from "react";
 import { ThemeToggle } from "../SingleTheme";
 import { Theme } from "../../ThemeTypes";
-import { BiReset } from "react-icons/bi";
 
-export function TwoColumnThemeView() {
-  const { themes } = useContext(themeContext);
-
+export function TwoColumnThemeView({ themes }: { themes: Theme[] }) {
   // This takes the list of themes and returns two columns
   // When these columns are displayed as left and right, the themes inside will read alphabetically, left ro right and top to bottom.
   // A  B

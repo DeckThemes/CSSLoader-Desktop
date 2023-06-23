@@ -1,10 +1,7 @@
-import { useContext } from "react";
-import { themeContext } from "../../pages/_app";
 import { ThemeToggle } from "../SingleTheme";
+import { Theme } from "ThemeTypes";
 
-export function OneColumnThemeView() {
-  const { themes } = useContext(themeContext);
-
+export function OneColumnThemeView({ themes }: { themes: Theme[] }) {
   return (
     <div className="flex w-full flex-col items-center gap-4">
       {themes.map((e) => {

@@ -34,7 +34,7 @@ export default function ManageThemes() {
   }, [localThemeList]);
 
   return (
-    <div className="mx-auto mt-8 flex h-full w-full max-w-[960px] flex-col pl-4">
+    <main className="page-shadow mx-4 flex w-full max-w-[calc(100vw-3rem)] flex-1 flex-grow flex-col items-center gap-4 rounded-3xl border-[1px] border-borders-base3-light bg-base-2-light dark:border-borders-base1-dark dark:bg-base-2-dark">
       <div className="">
         <h2 className="font-fancy mb-4 text-sm font-bold">Theme Directory</h2>
         <button
@@ -66,6 +66,6 @@ export default function ManageThemes() {
           />
         ))}
       </div>
-    </div>
+    </main>
   );
 }

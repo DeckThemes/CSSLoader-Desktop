@@ -6,8 +6,8 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: var(--montserrat), BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: var(--montserrat), BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
+    Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
 a {
@@ -19,14 +19,6 @@ a {
   box-sizing: border-box;
   user-select: none;
   font-family: var(--montserrat);
-}
-
-html,
-body,
-#__next {
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -98,19 +90,19 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 @keyframes load-in {
-	0% {
-		opacity: 0;
-		pointer-events: none;
-	}
-	100% {
-		opacity: 1;
-		pointer-events: auto;
-	}
+  0% {
+    opacity: 0;
+    pointer-events: none;
+  }
+  100% {
+    opacity: 1;
+    pointer-events: auto;
+  }
 }
 
 .iframe-load-animation {
-	opacity: 0;
+  opacity: 0;
 
-	animation: load-in 0.2s ease forwards;
-	animation-delay: 0.4s;
+  animation: load-in 0.2s ease forwards;
+  animation-delay: 0.4s;
 }

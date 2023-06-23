@@ -26,7 +26,7 @@ export default function Store() {
   }, []);
   return (
     <>
-      <div className="flex h-full flex-grow flex-col">
+      <main className="page-shadow mx-4 flex w-full max-w-[calc(100vw-2rem)] flex-1 flex-grow flex-col items-center gap-4 rounded-3xl border-[1px] border-borders-base3-light bg-base-2-light dark:border-borders-base1-dark dark:bg-base-2-dark">
         <iframe
           // @ts-ignore
           ref={storeRef}
@@ -45,9 +45,9 @@ export default function Store() {
           width={"100%"}
           height={"100%"}
           loading="eager"
-          className="iframe-load-animation h-full w-full flex-grow !bg-transparent"
+          className="iframe-load-animation h-full w-full flex-grow rounded-3xl !bg-transparent"
         />
-      </div>
+      </main>
     </>
   );
 }

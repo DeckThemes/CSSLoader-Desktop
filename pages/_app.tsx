@@ -117,7 +117,7 @@ export default function App({ Component, pageProps }: AppProps) {
         value={{ montserrat: montserrat.variable, openSans: openSans.variable }}
       >
         <div
-          className={`dark flex h-full w-full flex-col overflow-y-hidden bg-base-6-dark dark:text-textDark ${montserrat.variable} ${openSans.variable}`}
+          className={`dark relative flex min-h-screen flex-col bg-base-6-light text-textLight dark:bg-base-6-dark dark:text-textDark ${montserrat.variable} ${openSans.variable}`}
         >
           <ToastContainer
             position="bottom-center"
@@ -146,14 +146,7 @@ export default function App({ Component, pageProps }: AppProps) {
               {dummyResult ? (
                 <>
                   <MainNav />
-                  <main
-                    style={{
-                      overflowY: router.pathname === "/store" ? "auto" : "scroll",
-                    }}
-                    className="page-shadow mx-4 flex h-full flex-1 overflow-y-scroll rounded-t-3xl border-x-[1px] border-t-[1px] border-borders-base2-dark bg-base-2-dark"
-                  >
-                    <Component {...pageProps} />
-                  </main>
+                  <Component {...pageProps} />
                 </>
               ) : (
                 <BackendFailedPage />
