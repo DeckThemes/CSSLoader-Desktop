@@ -4,7 +4,7 @@
 
 html,
 body {
-/* I'm not sure why you removed the width and height at 100%, but it's super important */
+  /* I'm not sure why you removed the width and height at 100%, but it's super important */
   height: 100%;
   width: 100%;
   padding: 0;
@@ -14,7 +14,7 @@ body {
 }
 
 body {
-	overflow-y: scroll;
+  overflow-y: scroll;
 }
 
 a {
@@ -94,6 +94,10 @@ input[type="color"]::-webkit-color-swatch {
 
 .page-shadow {
   box-shadow: 0px 0px 30px hsl(220, 5%, 0%);
+}
+
+.modal-shadow {
+  box-shadow: 0px 0px 20px hsl(220, 5%, 0%);
 }
 
 @keyframes load-in {

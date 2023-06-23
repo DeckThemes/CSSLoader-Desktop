@@ -50,11 +50,23 @@ export function MainNav() {
 
   return (
     <>
-      <div className="fixed left-0 right-0 dark:bg-base-6-dark z-[9998] isolate" style={{ boxShadow: '0px 0px 15px #090a0c, 0px 4px 15px #090a0c' }}>
+      <div
+        className="fixed left-0 right-0 isolate z-[9998] dark:bg-base-6-dark"
+        style={{ boxShadow: "0px 0px 15px #090a0c, 0px 4px 15px #090a0c" }}
+      >
         <div className="mx-auto flex w-full max-w-5xl flex-col px-4 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex flex-1 w-full select-none items-center basis-auto">
-            <Link href="/" className="group  transition duration-150 hover:scale-95 hover:active:scale-90 my-4 flex items-center gap-2">
-              <Image src="logo_css_darkmode.png" width={28} height={28} alt="CSSLoader Logo" className="transition duration-[750ms] group-hover:brightness-150 group-hover:hue-rotate-180"/>
+          <div className="flex w-full flex-1 basis-auto select-none items-center">
+            <Link
+              href="/"
+              className="group  my-4 flex items-center gap-2 transition duration-150 hover:scale-95 hover:active:scale-90"
+            >
+              <Image
+                src="logo_css_darkmode.png"
+                width={28}
+                height={28}
+                alt="CSSLoader Logo"
+                className="transition duration-[750ms] group-hover:brightness-150 group-hover:hue-rotate-180"
+              />
               <h1 className={`font-fancy text-xl font-semibold`}>CSSLoader</h1>
             </Link>
           </div>

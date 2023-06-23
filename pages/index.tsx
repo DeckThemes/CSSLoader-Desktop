@@ -106,7 +106,6 @@ export default function MainPage() {
             )}
           </div>
         </div>
-        <div className="h-96 bg-red-800">test</div>
         <div className="mx-auto mt-8 w-full max-w-[960px]">
           <CreatePresetModal />
         </div>

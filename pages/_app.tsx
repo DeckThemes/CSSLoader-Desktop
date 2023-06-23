@@ -117,6 +117,7 @@ export default function App({ Component, pageProps }: AppProps) {
         value={{ montserrat: montserrat.variable, openSans: openSans.variable }}
       >
         <div
+          // A lot of this codebase is from the DeckThemes codebase, which has a light and dark mode, however this app only has a dark mode, so we put the dark class here incase we copy over things that have both styles
           className={`dark relative flex min-h-screen flex-col bg-base-6-light text-textLight dark:bg-base-6-dark dark:text-textDark ${montserrat.variable} ${openSans.variable}`}
         >
           <ToastContainer
@@ -146,9 +147,9 @@ export default function App({ Component, pageProps }: AppProps) {
               {dummyResult ? (
                 <>
                   <MainNav />
-				  <main className="page-shadow ml-4 flex h-full flex-1 flex-grow flex-col rounded-3xl border-[1px] border-borders-base3-light bg-base-2-light mt-[64px] mb-4 dark:border-borders-base1-dark dark:bg-base-2-dark">
-				  	<Component {...pageProps} />
-				  </main>
+                  <main className="page-shadow ml-4 mt-[64px] mb-4 flex h-full flex-1 flex-grow flex-col rounded-3xl border-[1px] border-borders-base3-light bg-base-2-light dark:border-borders-base1-dark dark:bg-base-2-dark">
+                    <Component {...pageProps} />
+                  </main>
                 </>
               ) : (
                 <BackendFailedPage />
