@@ -5,7 +5,6 @@ import { Montserrat, Open_Sans } from "next/font/google";
 import { createContext, useState, useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useRouter } from "next/router";
 import { BackendFailedPage, MainNav, DownloadBackendPage } from "../components";
 import {
   checkForNewBackend,
@@ -49,17 +48,17 @@ export default function App({ Component, pageProps }: AppProps) {
   const [backendExists, setBackendExists] = useState<boolean>(false);
   const [newBackendVersion, setNewBackend] = useState<string>("");
   const [showNewBackendPage, setShowNewBackend] = useState<boolean>(false);
-  const router = useRouter();
   useEffect(() => {
     // Checking for updates
     checkIfBackendIsStandalone().then((isStandalone) => {
       if (isStandalone) {
-        checkForNewBackend().then((newStandalone) => {
-          if (newStandalone) {
-            setNewBackend(newStandalone as string);
-            setShowNewBackend(true);
-          }
-        });
+        // checkForNewBackend().then((newStandalone) => {
+        //   console.log(newStandalone);
+        //   if (newStandalone) {
+        //     setNewBackend(newStandalone as string);
+        //     setShowNewBackend(true);
+        //   }
+        // });
       }
     });
 
@@ -133,29 +132,24 @@ export default function App({ Component, pageProps }: AppProps) {
             pauseOnHover
             theme={"dark"}
           />
-          {showNewBackendPage || (!backendExists && !dummyResult) ? (
-            <>
-              <DownloadBackendPage
-                onboarding={!backendExists}
-                onUpdateFinish={onUpdateFinish}
-                hideWindow={() => setShowNewBackend(false)}
-                backendVersion={newBackendVersion}
-              />
-            </>
-          ) : (
-            <>
-              {dummyResult ? (
-                <>
-                  <MainNav />
-                  <main className="page-shadow ml-4 mt-2 mb-4 flex h-full flex-1 flex-grow flex-col rounded-3xl border-[1px] border-borders-base3-light bg-base-2-light dark:border-borders-base1-dark dark:bg-base-2-dark">
-                    <Component {...pageProps} />
-                  </main>
-                </>
-              ) : (
-                <BackendFailedPage />
-              )}
-            </>
-          )}
+          <main className="page-shadow ml-4 mt-2 mb-4 flex h-full flex-1 flex-grow flex-col rounded-3xl border-[1px] border-borders-base3-light bg-base-2-light dark:border-borders-base1-dark dark:bg-base-2-dark">
+            {dummyResult ? (
+              <>
+                {(showNewBackendPage || (!backendExists && !dummyResult)) && (
+                  <DownloadBackendPage
+                    onboarding={!backendExists}
+                    onUpdateFinish={onUpdateFinish}
+                    hideWindow={() => setShowNewBackend(false)}
+                    backendVersion={newBackendVersion}
+                  />
+                )}
+                <MainNav />
+                <Component {...pageProps} />
+              </>
+            ) : (
+              <BackendFailedPage />
+            )}
+          </main>
         </div>
       </fontContext.Provider>
     </themeContext.Provider>

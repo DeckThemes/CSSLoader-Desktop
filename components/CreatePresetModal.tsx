@@ -37,7 +37,7 @@ export function CreatePresetModal() {
           <button
             onClick={createPreset}
             className={twMerge(
-              "font-fancy my-3 mr-2 self-end rounded-3xl p-2 px-6 transition-all",
+              "font-fancy my-2 mr-2 ml-auto rounded-2xl p-2 px-6 transition-all",
               presetName.length > 0 ? "bg-brandBlue" : "bg-base-5.5-dark"
             )}
             style={{ opacity: presetName.length === 0 ? "0.5" : "1" }}

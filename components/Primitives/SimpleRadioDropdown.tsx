@@ -49,7 +49,7 @@ export function SimpleRadioDropdown({
             collisionPadding={16}
             className="font-fancy radio-dropdown z-[9999] my-1 h-max w-[250px] cursor-default select-none overflow-hidden overflow-y-auto rounded-xl bg-base-3-light text-sm text-black transition-all dark:bg-base-3-dark dark:text-white"
           >
-            <DropdownMenu.RadioGroup value={value} onValueChange={handleChange}>
+            <DropdownMenu.RadioGroup value={selected} onValueChange={handleChange}>
               <div className="max-h-[var(--radix-popper-available-height)]">
                 {options.map((e) => (
                   <DropdownMenu.RadioItem

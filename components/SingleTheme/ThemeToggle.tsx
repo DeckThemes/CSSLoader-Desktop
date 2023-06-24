@@ -72,7 +72,7 @@ export function ThemeToggle({ data, collapsible = false }: { data: Theme; collap
       </div>
       {data.enabled && data.patches.length > 0 && (
         <>
-          <div className="mt-4 flex w-full max-w-[480px] flex-col gap-2 rounded-lg px-4 py-2 dark:bg-cardDark">
+          <div className="mt-4 flex w-full max-w-[960px] flex-col gap-2 rounded-lg px-4 py-2 dark:bg-cardDark">
             {collapsible && (
               <div className="relative flex flex-row items-center py-2">
                 <h3 className="font-fancy flex flex-1 items-center gap-2 text-xs font-bold">

@@ -2,6 +2,8 @@ import { useState } from "react";
 import { ImSpinner5 } from "react-icons/im";
 import { downloadBackend, killBackend, startBackend } from "../backend";
 import { FiXCircle } from "react-icons/fi";
+import { AlertDialog } from "./Primitives";
+import { twMerge } from "tailwind-merge";
 
 export function DownloadBackendPage({
   onboarding = false,
@@ -44,35 +46,35 @@ export function DownloadBackendPage({
 
   return (
     <>
-      <main className="relative flex h-full w-full flex-grow flex-col items-center justify-center gap-4">
-        {!onboarding && installProg === 0 ? (
-          <FiXCircle
-            size={48}
-            className="absolute top-4 right-4 cursor-pointer"
-            onClick={hideWindow}
-          />
-        ) : null}
-
-        <h1 className="font-fancy text-5xl font-semibold">
-          {onboarding ? "Welcome To CSSLoader" : "Backend Update Available"}
-        </h1>
-        <button
-          onClick={() => installProg <= 0 && installBackend()}
-          disabled={installProg > 0}
-          className="rounded-3xl bg-cardDark p-4 transition-all"
-        >
-          {installProg > 0 ? (
-            <div className="flex items-center justify-center gap-4">
-              <ImSpinner5 className="animate-spin" size={64} />
-              <span className="font-fancy text-2xl">{installText}</span>
-            </div>
-          ) : (
-            <h2 className="font-fancy text-3xl">
-              Install Backend{backendVersion ? ` ${backendVersion}` : ""}
-            </h2>
-          )}
-        </button>
-      </main>
+      <AlertDialog
+        defaultOpen
+        dontCloseOnAction
+        onAction={() => installBackend()}
+        actionDisabled={installProg > 0 || onboarding}
+        dontClose={installProg > 0 || onboarding}
+        onOpenChange={(open) => {
+          if (!open) {
+            hideWindow();
+          }
+        }}
+        title={onboarding ? "Install CSSLoader's Backend" : "Backend Update Available"}
+        description={
+          onboarding
+            ? "CSSLoader's backend allows it to inject your CSS into Steam. You must install it to use CSSLoader Desktop"
+            : "We recommend installing backend updates as soon as they're available in order to maintain compatibility with new themes."
+        }
+        Content={
+          <div className="flex h-full w-full items-center justify-center pb-8 pt-4">
+            {installProg > 0 && (
+              <div className="flex items-center justify-center gap-4">
+                <ImSpinner5 className="animate-spin" size={32} />
+                <span className="font-fancy text-2xl">{installText}</span>
+              </div>
+            )}
+          </div>
+        }
+        actionText={installProg > 0 ? "Installing..." : "Install"}
+      />
     </>
   );
 }
