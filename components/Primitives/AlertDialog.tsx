@@ -1,6 +1,6 @@
 import * as AD from "@radix-ui/react-alert-dialog";
 import { fontContext } from "@pages/_app";
-import { ReactNode, useContext, useState } from "react";
+import { ReactNode, useContext, useState, useEffect } from "react";
 import { twMerge } from "tailwind-merge";
 export function AlertDialog({
   Trigger = null,
@@ -34,7 +34,12 @@ export function AlertDialog({
   onAction?: () => void;
 }) {
   const { montserrat } = useContext(fontContext);
-  const [open, setOpen] = useState<boolean>(defaultOpen);
+  const [open, setOpen] = useState<boolean>(false);
+
+  // This is here to fix a hydration error inherent to Radix
+  useEffect(() => {
+    setOpen(defaultOpen);
+  }, []);
 
   return (
     <AD.Root

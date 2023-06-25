@@ -22,7 +22,7 @@ export function BackendFailedPage() {
     <>
       <main className="relative flex h-full w-full flex-grow flex-col items-center justify-center pb-10">
         <div className="flex h-full w-full flex-col items-center justify-center gap-4">
-          <h1 className="font-fancy text-5xl font-semibold">CSSLoader</h1>
+          <h1 className="font-fancy text-5xl font-bold tracking-tight">CSSLoader</h1>
           <div className="flex items-center justify-center gap-4">
             <ImSpinner5 size={64} className="animate-spin" />
             <h1 className="font-fancy text-3xl">Loading Backend</h1>
@@ -30,7 +30,7 @@ export function BackendFailedPage() {
         </div>
         <button
           disabled={!hasWaited}
-          className="font-fancy absolute bottom-4 left-1/2 -translate-x-1/2 rounded-md bg-cardDark p-2 px-4 transition-all"
+          className="font-fancy absolute bottom-4 left-1/2 -translate-x-1/2 rounded-xl border-2 border-borders-base1-dark bg-base-3-dark p-2 px-4 transition-all hover:border-borders-base2-dark"
           style={{ opacity: hasWaited ? 1 : 0 }}
           onClick={() => hasWaited && forceRestart()}
         >

@@ -50,7 +50,7 @@ export function DownloadBackendPage({
         defaultOpen
         dontCloseOnAction
         onAction={() => installBackend()}
-        actionDisabled={installProg > 0 || onboarding}
+        actionDisabled={installProg > 0}
         dontClose={installProg > 0 || onboarding}
         onOpenChange={(open) => {
           if (!open) {

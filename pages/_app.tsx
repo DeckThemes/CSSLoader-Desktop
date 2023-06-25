@@ -44,7 +44,8 @@ export const fontContext = createContext({
 
 export default function App({ Component, pageProps }: AppProps) {
   const [themes, setThemes] = useState<Theme[]>([]);
-  const [dummyResult, setDummyResult] = useState<boolean>(false);
+  // This is now undefined before the initial check, that way things can use dummyResult !== undefined to see if the app has properly loaded
+  const [dummyResult, setDummyResult] = useState<boolean | undefined>(undefined);
   const [backendExists, setBackendExists] = useState<boolean>(false);
   const [newBackendVersion, setNewBackend] = useState<string>("");
   const [showNewBackendPage, setShowNewBackend] = useState<boolean>(false);
@@ -133,16 +134,16 @@ export default function App({ Component, pageProps }: AppProps) {
             theme={"dark"}
           />
           <main className="page-shadow ml-4 mt-2 mb-4 flex h-full flex-1 flex-grow flex-col rounded-3xl border-[1px] border-borders-base3-light bg-base-2-light dark:border-borders-base1-dark dark:bg-base-2-dark">
+            {(showNewBackendPage || (!backendExists && !dummyResult)) && (
+              <DownloadBackendPage
+                onboarding={true}
+                onUpdateFinish={onUpdateFinish}
+                hideWindow={() => setShowNewBackend(false)}
+                backendVersion={newBackendVersion}
+              />
+            )}
             {dummyResult ? (
               <>
-                {(showNewBackendPage || (!backendExists && !dummyResult)) && (
-                  <DownloadBackendPage
-                    onboarding={!backendExists}
-                    onUpdateFinish={onUpdateFinish}
-                    hideWindow={() => setShowNewBackend(false)}
-                    backendVersion={newBackendVersion}
-                  />
-                )}
                 <MainNav />
                 <Component {...pageProps} />
               </>
