@@ -51,7 +51,7 @@ export function MainNav() {
   return (
     <>
       <div
-        className="sticky top-0 w-full isolate z-[9998] dark:bg-base-6-dark"
+        className="sticky top-0 isolate z-[9998] w-full dark:bg-base-6-dark"
         style={{ boxShadow: "0px 0px 15px #090a0c, 0px 4px 15px #090a0c" }}
       >
         <div className="mx-auto flex w-full max-w-5xl flex-col px-4 sm:flex-row sm:items-center sm:justify-between">
@@ -117,7 +117,7 @@ export function MainNav() {
             ></div>
             <div
               id="navContent"
-              className="flex w-fit flex-row"
+              className="flex w-fit flex-row gap-3"
               style={{
                 transform: `translateX(${scrollPosition}px)`,
                 transition: "200ms ease",
@@ -128,7 +128,6 @@ export function MainNav() {
                 aria-hidden={true}
               ></div>
               <NavTab href="/" name="Themes" icon={<RiPaintFill />} />
-              {/* Replace with actual settings page when ready */}
               <NavTab href="/store" name="Store" icon={<AiOutlineCloudDownload />} />
               <NavTab href="/manage-themes" name="Manage" icon={<BsFolder />} />
               <NavTab href="/settings" name="Settings" icon={<RiSettings2Fill />} />
