@@ -4,10 +4,13 @@ import { ThemePatch } from "./ThemePatch";
 import { RiArrowDownSFill, RiArrowUpSFill } from "react-icons/ri";
 import { themeContext } from "../../pages/_app";
 import { setThemeState, toast } from "../../backend";
+import { AlertDialog } from "..";
+import { AlertDialogAction } from "@radix-ui/react-alert-dialog";
 
 export function ThemeToggle({ data, collapsible = false }: { data: Theme; collapsible?: boolean }) {
   const { refreshThemes } = useContext(themeContext);
 
+  const [showOptDepsModal, setShowOptDepsModal] = useState<boolean>(false);
   const [collapsed, setCollapsed] = useState<boolean>(true);
   const isPreset = useMemo(() => {
     if (data.flags.includes(Flags.isPreset)) {
@@ -17,8 +20,49 @@ export function ThemeToggle({ data, collapsible = false }: { data: Theme; collap
     // This might not actually memoize it as data.flags is an array, so idk if it deep checks the values here
   }, [data.flags]);
 
+  function enableThemeOptDeps(enableDeps: boolean = true, enableDepValues: boolean = true) {
+    setThemeState(data.name, true, enableDeps, enableDepValues).then(() => {
+      refreshThemes();
+    });
+  }
+
   return (
     <div className="flex w-full max-w-[960px] flex-col gap-1 rounded-xl border-2 border-borders-base1-dark bg-cardLight p-6 transition hover:border-borders-base2-dark dark:bg-base-3-dark">
+      {showOptDepsModal && (
+        <>
+          <AlertDialog
+            dontClose
+            onOpenChange={(open) => !open && setShowOptDepsModal(false)}
+            defaultOpen
+            title="Optional Dependencies"
+            description={`${data.name} enables optional themes to enhance this theme. Disabling these may break
+        the theme, or make the theme look completely different. Specific optional themes can be
+        configured and or enabled/disabled anytime via the Quick Access Menu.`}
+            customAction={
+              <div className="flex h-full w-full flex-col items-stretch justify-center gap-2 p-2 text-sm">
+                <AlertDialogAction
+                  onClick={() => enableThemeOptDeps(true, true)}
+                  className="h-10 w-full rounded-2xl bg-brandBlue px-4 text-start"
+                >
+                  Enable with configuration {"(Recommended)"}
+                </AlertDialogAction>
+                <AlertDialogAction
+                  onClick={() => enableThemeOptDeps(true, false)}
+                  className="h-10 w-full rounded-2xl bg-base-4-dark px-4 text-start"
+                >
+                  Enable without configuration
+                </AlertDialogAction>
+                <AlertDialogAction
+                  onClick={() => enableThemeOptDeps(false, false)}
+                  className="h-10 w-full rounded-2xl bg-base-4-dark px-4 text-start"
+                >
+                  Enable only this theme
+                </AlertDialogAction>
+              </div>
+            }
+          />
+        </>
+      )}
       <div className="flex justify-between gap-4">
         <div className="flex flex-col">
           <span className="font-fancy text-md font-bold">{data.name}</span>
@@ -33,6 +77,13 @@ export function ThemeToggle({ data, collapsible = false }: { data: Theme; collap
             type="checkbox"
             onChange={(event) => {
               const switchValue = event.target.checked;
+
+              // If theme has optional dependency flag
+              if (switchValue === true && data.flags.includes(Flags.optionalDeps)) {
+                console.log("test");
+                setShowOptDepsModal(true);
+                return;
+              }
               // Actually enabling the theme
               setThemeState(data.name, switchValue).then(() => {
                 refreshThemes();

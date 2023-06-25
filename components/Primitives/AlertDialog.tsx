@@ -17,6 +17,7 @@ export function AlertDialog({
   actionDisabled = false,
   dontClose = false,
   onAction = () => {},
+  customAction = null,
 }: {
   Trigger?: ReactNode;
   title: string;
@@ -31,6 +32,7 @@ export function AlertDialog({
   onOpenChange?: (open: boolean) => void;
   actionText?: string | ReactNode;
   actionDisabled?: boolean;
+  customAction?: ReactNode;
   onAction?: () => void;
 }) {
   const { montserrat } = useContext(fontContext);
@@ -45,7 +47,7 @@ export function AlertDialog({
     <AD.Root
       open={open}
       onOpenChange={(open) => {
-        if (!dontClose && !dontCloseOnAction) {
+        if (!dontClose || !dontCloseOnAction) {
           setOpen(open);
           onOpenChange(open);
         }
@@ -70,17 +72,19 @@ export function AlertDialog({
                 </AD.Cancel>
               )}
               {Footer}
-              <AD.Action
-                onClick={() => !actionDisabled && onAction()}
-                className={twMerge(
-                  "font-fancy my-2 mx-2 ml-auto rounded-2xl p-2 px-6",
-                  dontClose ? "ml-2 w-full" : "",
-                  !actionDisabled ? "bg-brandBlue" : "bg-base-5.5-dark"
-                )}
-                disabled={actionDisabled}
-              >
-                {actionText}
-              </AD.Action>
+              {customAction || (
+                <AD.Action
+                  onClick={() => !actionDisabled && onAction()}
+                  className={twMerge(
+                    "font-fancy my-2 mx-2 ml-auto rounded-2xl p-2 px-6",
+                    dontClose ? "ml-2 w-full" : "",
+                    !actionDisabled ? "bg-brandBlue" : "bg-base-5.5-dark"
+                  )}
+                  disabled={actionDisabled}
+                >
+                  {actionText}
+                </AD.Action>
+              )}
             </div>
           </AD.Content>
         </div>

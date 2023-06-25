@@ -132,10 +132,20 @@ export default function MainPage() {
                 }
               />
             </div>
-            {numCols === 1 ? (
-              <OneColumnThemeView themes={sortedPresets} />
+            {themes.filter((e) => e.flags.includes(Flags.isPreset)).length > 0 ? (
+              <>
+                {numCols === 1 ? (
+                  <OneColumnThemeView themes={sortedPresets} />
+                ) : (
+                  <TwoColumnThemeView themes={sortedPresets} />
+                )}
+              </>
             ) : (
-              <TwoColumnThemeView themes={sortedPresets} />
+              <>
+                <span className="w-full max-w-[960px]">
+                  You have no presets, create them by mixing and matching themes
+                </span>
+              </>
             )}
           </div>
         </div>

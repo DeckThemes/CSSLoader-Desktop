@@ -34,6 +34,7 @@ export interface Patch {
 export enum Flags {
   "isPreset" = "PRESET",
   "dontDisableDeps" = "KEEP_DEPENDENCIES",
+  "optionalDeps" = "OPTIONAL_DEPENDENCIES",
 }
 
 // API TYPES
