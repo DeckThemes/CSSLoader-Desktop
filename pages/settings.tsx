@@ -1,10 +1,18 @@
 import { LabelledInput, Tooltip } from "@components/Primitives";
-import { C } from "@tauri-apps/api/event-2a9960e7";
-import { killBackend, storeRead, storeWrite, toast } from "backend";
-import { useState, useEffect } from "react";
+import {
+  getBackendVersion,
+  getStandaloneVersion,
+  killBackend,
+  startBackend,
+  storeRead,
+  storeWrite,
+  toast,
+} from "backend";
+import { useState, useEffect, useContext } from "react";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
 import { BsDiscord } from "react-icons/bs";
 import { FaPatreon } from "react-icons/fa";
+import { themeContext } from "./_app";
 
 export default function SettingsPage() {
   const [token, setToken] = useState<string>("");
@@ -20,6 +28,8 @@ export default function SettingsPage() {
       }
     });
   }, []);
+
+  const { themes } = useContext(themeContext);
 
   return (
     <>
@@ -73,6 +83,25 @@ export default function SettingsPage() {
             >
               Kill Backend
             </button>
+            <button
+              onClick={() => startBackend(() => console.log("Backend Started"))}
+              className="h-12 whitespace-nowrap rounded-xl bg-base-3-dark px-4"
+            >
+              Force Start Backend
+            </button>
+            <button
+              onClick={async () => {
+                console.log("Themes", themes);
+                console.log(
+                  "Highest Support Manifest Version",
+                  await getBackendVersion().then((res) => res.result)
+                );
+                console.log("AppData's Stored Standalone Version", await getStandaloneVersion());
+              }}
+              className="h-12 whitespace-nowrap rounded-xl bg-base-3-dark px-4"
+            >
+              Data Dump
+            </button>
           </div>
           <div className="flex w-full flex-col gap-4">
             <span className="text-lg font-bold">Credits</span>
@@ -81,7 +110,7 @@ export default function SettingsPage() {
               <li>Beebles - Frontend Dev</li>
               <li>Fero - Frontend Dev</li>
             </ul>
-            <div className="flex w-full flex-col items-start">
+            <div className="flex w-full flex-col items-start pb-8">
               <button
                 className="flex items-center justify-center gap-4 text-discordColor"
                 onClick={async () => {
