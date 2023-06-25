@@ -47,7 +47,7 @@ export function AlertDialog({
     <AD.Root
       open={open}
       onOpenChange={(open) => {
-        if (!dontClose || !dontCloseOnAction) {
+        if (!dontClose) {
           setOpen(open);
           onOpenChange(open);
         }
@@ -74,7 +74,10 @@ export function AlertDialog({
               {Footer}
               {customAction || (
                 <AD.Action
-                  onClick={() => !actionDisabled && onAction()}
+                  onClick={(event) => {
+                    dontCloseOnAction && event.preventDefault();
+                    !actionDisabled && onAction();
+                  }}
                   className={twMerge(
                     "font-fancy my-2 mx-2 ml-auto rounded-2xl p-2 px-6",
                     dontClose ? "ml-2 w-full" : "",

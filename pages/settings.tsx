@@ -90,6 +90,12 @@ export default function SettingsPage() {
               Force Start Backend
             </button>
             <button
+              onClick={() => startBackend(() => console.log("Backend Started"))}
+              className="h-12 whitespace-nowrap rounded-xl bg-base-3-dark px-4"
+            >
+              Install Backend From File
+            </button>
+            <button
               onClick={async () => {
                 console.log("Themes", themes);
                 console.log(
