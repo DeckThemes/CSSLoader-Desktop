@@ -3,9 +3,10 @@ import { OneColumnThemeView, TwoColumnThemeView, CreatePresetModal } from "../co
 import { useVW } from "../hooks/useVW";
 import { themeContext } from "./_app";
 import { useContext, useState, useEffect, useMemo } from "react";
-import { LabelledInput, RadioDropdown, TwoItemToggle } from "@components/Primitives";
+import { LabelledInput, RadioDropdown, Tooltip, TwoItemToggle } from "@components/Primitives";
 import { TbColumns1, TbColumns2 } from "react-icons/tb";
 import { Flags } from "ThemeTypes";
+import Link from "next/link";
 
 export default function MainPage() {
   const vw = useVW();
@@ -102,16 +103,34 @@ export default function MainPage() {
 
           <div className="mb-8 mt-6 flex h-full w-full flex-col items-center justify-center px-4">
             <span className="mb-6 w-full max-w-[960px] text-lg font-bold">Themes</span>
-            {numCols === 1 ? (
-              <OneColumnThemeView themes={sortedThemes} />
+            {themes.length > 0 ? (
+              <>
+                {numCols === 1 ? (
+                  <OneColumnThemeView themes={sortedThemes} />
+                ) : (
+                  <TwoColumnThemeView themes={sortedThemes} />
+                )}
+              </>
             ) : (
-              <TwoColumnThemeView themes={sortedThemes} />
+              <>
+                <span className="w-full max-w-[960px]">
+                  You have no themes installed. Download some from{" "}
+                  <Link href="/store" className="text-brandBlue underline">
+                    the store
+                  </Link>
+                </span>
+              </>
             )}
           </div>
           <div className="mb-8 flex h-full w-full flex-col items-center justify-center gap-2 px-4">
             <span className="w-full max-w-[960px] text-lg font-bold">Presets</span>
             <div className="mb-6 w-full max-w-[960px]">
-              <CreatePresetModal />
+              <Tooltip
+                triggerContent={<CreatePresetModal />}
+                content={
+                  <span className="text-sm">Enable at least 1 theme to create a preset.</span>
+                }
+              />
             </div>
             {numCols === 1 ? (
               <OneColumnThemeView themes={sortedPresets} />
@@ -120,7 +139,7 @@ export default function MainPage() {
             )}
           </div>
         </div>
-        <div className="mx-auto mt-8 flex w-full max-w-[960px] items-end justify-between pb-8">
+        <div className="mt-8 flex w-full max-w-[960px] items-end justify-between px-4 pb-8">
           <button
             className="flex h-full w-fit items-center justify-center gap-2 rounded-full border-2 border-[#2e2e2e] px-4 py-2"
             onClick={() => {

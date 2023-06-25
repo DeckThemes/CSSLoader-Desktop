@@ -6,7 +6,7 @@ export function AlertDialog({
   Trigger = null,
   title,
   description,
-  Content,
+  Content = null,
   Footer = null,
   defaultOpen = false,
   triggerDisabled = false,
@@ -22,14 +22,14 @@ export function AlertDialog({
   title: string;
   triggerDisabled?: boolean;
   description?: string;
-  Content: ReactNode;
+  Content?: ReactNode;
   dontClose?: boolean;
   Footer?: ReactNode;
   dontCloseOnAction?: boolean;
   cancelText?: string;
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
-  actionText?: string;
+  actionText?: string | ReactNode;
   actionDisabled?: boolean;
   onAction?: () => void;
 }) {
@@ -73,7 +73,8 @@ export function AlertDialog({
               <AD.Action
                 onClick={() => !actionDisabled && onAction()}
                 className={twMerge(
-                  "font-fancy my-2 mr-2 ml-auto rounded-2xl p-2 px-6",
+                  "font-fancy my-2 mx-2 ml-auto rounded-2xl p-2 px-6",
+                  dontClose ? "ml-2 w-full" : "",
                   !actionDisabled ? "bg-brandBlue" : "bg-base-5.5-dark"
                 )}
                 disabled={actionDisabled}

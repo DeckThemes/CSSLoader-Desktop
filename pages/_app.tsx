@@ -53,13 +53,13 @@ export default function App({ Component, pageProps }: AppProps) {
     // Checking for updates
     checkIfBackendIsStandalone().then((isStandalone) => {
       if (isStandalone) {
-        // checkForNewBackend().then((newStandalone) => {
-        //   console.log(newStandalone);
-        //   if (newStandalone) {
-        //     setNewBackend(newStandalone as string);
-        //     setShowNewBackend(true);
-        //   }
-        // });
+        checkForNewBackend().then((newStandalone) => {
+          console.log(newStandalone);
+          if (newStandalone) {
+            setNewBackend(newStandalone as string);
+            setShowNewBackend(true);
+          }
+        });
       }
     });
 
@@ -133,10 +133,11 @@ export default function App({ Component, pageProps }: AppProps) {
             pauseOnHover
             theme={"dark"}
           />
+          {dummyResult && <MainNav />}
           <main className="page-shadow ml-4 mt-2 mb-4 flex h-full flex-1 flex-grow flex-col rounded-3xl border-[1px] border-borders-base3-light bg-base-2-light dark:border-borders-base1-dark dark:bg-base-2-dark">
             {(showNewBackendPage || (!backendExists && !dummyResult)) && (
               <DownloadBackendPage
-                onboarding={true}
+                onboarding={!backendExists}
                 onUpdateFinish={onUpdateFinish}
                 hideWindow={() => setShowNewBackend(false)}
                 backendVersion={newBackendVersion}
@@ -144,7 +145,6 @@ export default function App({ Component, pageProps }: AppProps) {
             )}
             {dummyResult ? (
               <>
-                <MainNav />
                 <Component {...pageProps} />
               </>
             ) : (
