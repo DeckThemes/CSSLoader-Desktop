@@ -1,6 +1,8 @@
-import { LabelledInput } from "@components/Primitives";
+import { LabelledInput, Tooltip } from "@components/Primitives";
+import { C } from "@tauri-apps/api/event-2a9960e7";
 import { killBackend, storeRead, storeWrite, toast } from "backend";
 import { useState, useEffect } from "react";
+import { AiOutlineQuestionCircle } from "react-icons/ai";
 import { BsDiscord } from "react-icons/bs";
 import { FaPatreon } from "react-icons/fa";
 
@@ -28,7 +30,30 @@ export default function SettingsPage() {
             <div className="flex items-end justify-center gap-4">
               <LabelledInput
                 password
-                label="DeckThemes Token"
+                label={
+                  <div className="flex items-center gap-2">
+                    <span>DeckThemes Token</span>
+                    <Tooltip
+                      triggerContent={<AiOutlineQuestionCircle size={18} />}
+                      content={
+                        <span className="text-sm">
+                          A token enables you to star themes in the store.
+                          <br />
+                          You can create a token through your account page on{" "}
+                          <span
+                            className="cursor-pointer text-fore-9-dark"
+                            onClick={async () => {
+                              const { open } = await import("@tauri-apps/api/shell");
+                              open("https://deckthemes.com");
+                            }}
+                          >
+                            deckthemes.com
+                          </span>
+                        </span>
+                      }
+                    />
+                  </div>
+                }
                 value={token}
                 onValueChange={setToken}
               />

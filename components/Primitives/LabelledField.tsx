@@ -1,5 +1,5 @@
 import * as Label from "@radix-ui/react-label";
-import { useState } from "react";
+import { useState, ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
 export function LabelledInput({
@@ -12,7 +12,7 @@ export function LabelledInput({
   inputClass = "",
   password = false,
 }: {
-  label: string;
+  label: ReactNode | string;
   value: string;
   onValueChange: (e: string) => void;
   rootClass?: string;
