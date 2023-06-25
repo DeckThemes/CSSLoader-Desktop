@@ -20,7 +20,9 @@ export function Modal({
 
   return (
     <Dialog.Root modal>
-      <Dialog.Trigger disabled={triggerDisabled}>{Trigger}</Dialog.Trigger>
+      <Dialog.Trigger className="outline-none" disabled={triggerDisabled}>
+        {Trigger}
+      </Dialog.Trigger>
       <Dialog.Portal>
         <div className={`${montserrat} font-fancy dark`}>
           <Dialog.Overlay className="fixed inset-0 bg-app-backdropUmbra-dark" />
