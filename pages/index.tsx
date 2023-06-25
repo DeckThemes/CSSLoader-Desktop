@@ -17,7 +17,7 @@ export default function MainPage() {
 
   const [sortedThemes, sortedPresets] = useMemo(() => {
     const filteredAll = themes.filter(
-      (e) => e.name.toLowerCase().includes(search) || e.author.toLowerCase().includes(search)
+      (e) => e.name.toLowerCase().includes(search.toLowerCase()) || e.author.toLowerCase().includes(search)
     );
     const sortedAll = filteredAll.sort((a, b) => {
       switch (sortValue) {
