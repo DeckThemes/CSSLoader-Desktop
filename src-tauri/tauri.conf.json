@@ -12,6 +12,9 @@
   },
   "tauri": {
     "allowlist": {
+      "os": {
+        "all": true
+      },
       "path": {
         "all": true
       },
@@ -32,7 +35,7 @@
         ],
         "writeFile": true
       },
-	  "window": {
+      "window": {
         "all": false,
         "center": false,
         "close": true,
@@ -178,7 +181,7 @@
         "height": 600,
         "resizable": true,
         "title": "CSSLoader Desktop",
-		"decorations": false,
+        "decorations": false,
         "width": 800,
         "minWidth": 460,
         "minHeight": 300

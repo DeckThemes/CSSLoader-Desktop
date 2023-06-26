@@ -1,11 +1,8 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { Theme } from "../ThemeTypes";
-import { Montserrat, Open_Sans } from "next/font/google";
-import { createContext, useState, useEffect } from "react";
-import { ToastContainer } from "react-toastify";
+import { useState, useEffect, useMemo } from "react";
 import "react-toastify/dist/ReactToastify.css";
-import { BackendFailedPage, MainNav, DownloadBackendPage } from "../components";
 import {
   checkForNewBackend,
   checkIfStandaloneBackendExists,
@@ -15,27 +12,14 @@ import {
   startBackend,
   recursiveCheck,
   getInstalledThemes,
+  getOS,
 } from "../backend";
 import { themeContext } from "@contexts/themeContext";
 import { FontContext } from "@contexts/FontContext";
 import { backendStatusContext } from "@contexts/backendStatusContext";
 import { AppRoot } from "@components/AppRoot";
 import DynamicTitleBar from "@components/Native/DynamicTitlebar";
-
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  variable: "--montserrat",
-});
-
-const openSans = Open_Sans({
-  subsets: ["latin"],
-  variable: "--opensans",
-});
-
-export const fontContext = createContext({
-  montserrat: "",
-  openSans: "",
-});
+import { osContext } from "@contexts/osContext";
 
 export default function App(AppProps: AppProps) {
   const [themes, setThemes] = useState<Theme[]>([]);
@@ -44,8 +28,11 @@ export default function App(AppProps: AppProps) {
   const [backendExists, setBackendExists] = useState<boolean>(false);
   const [newBackendVersion, setNewBackend] = useState<string>("");
   const [showNewBackendPage, setShowNewBackend] = useState<boolean>(false);
+  const [OS, setOS] = useState<string>("");
+  const isWindows = useMemo(() => OS === "win32", [OS]);
   useEffect(() => {
     // Checking for updates
+    getOS().then(setOS);
     checkIfBackendIsStandalone().then((isStandalone) => {
       if (isStandalone) {
         checkForNewBackend().then((newStandalone) => {
@@ -64,11 +51,6 @@ export default function App(AppProps: AppProps) {
     recheckDummy();
   }, []);
 
-  // async function onUpdateFinish() {
-  //   refreshThemes();
-  //   setShowNewBackend(false);
-  //   setNewBackend("");
-  // }
   async function recheckDummy() {
     recursiveCheck(dummyFuncTest, () => refreshThemes(true), startBackend);
   }
@@ -118,46 +100,12 @@ export default function App(AppProps: AppProps) {
           setShowNewBackend,
         }}
       >
-        <FontContext>
-			<DynamicTitleBar />
-          <AppRoot {...AppProps} />
-          {/* <div
-            // A lot of this codebase is from the DeckThemes codebase, which has a light and dark mode, however this app only has a dark mode, so we put the dark class here incase we copy over things that have both styles
-            className={`dark relative flex min-h-screen flex-col bg-base-6-dark text-textDark ${montserrat.variable} ${openSans.variable}`}
-          >
-            <ToastContainer
-              position="bottom-center"
-              autoClose={3000}
-              hideProgressBar={false}
-              newestOnTop
-              closeOnClick
-              toastClassName="rounded-xl border-2 border-borders-base1-light bg-base-3-light transition hover:border-borders-base2-light dark:border-borders-base1-dark dark:bg-base-3-dark hover:dark:border-borders-base2-dark"
-              bodyClassName="rounded-xl font-fancy text-black dark:text-white text-sm"
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme={"dark"}
-            />
-            {dummyResult && <MainNav />}
-            <main className="page-shadow ml-4 mt-2 mb-4 flex h-full flex-1 flex-grow flex-col rounded-3xl border-[1px] border-borders-base3-light bg-base-2-light dark:border-borders-base1-dark dark:bg-base-2-dark">
-              {(showNewBackendPage || (!backendExists && !dummyResult)) && (
-                <DownloadBackendPage
-                  onboarding={!backendExists}
-                  onUpdateFinish={onUpdateFinish}
-                  hideWindow={() => setShowNewBackend(false)}
-                  backendVersion={newBackendVersion}
-                />
-              )}
-              {dummyResult ? (
-                <>
-                  <Component {...pageProps} />
-                </>
-              ) : (
-                <BackendFailedPage />
-              )}
-            </main>
-          </div> */}
-        </FontContext>
+        <osContext.Provider value={{ OS, isWindows }}>
+          <FontContext>
+            <DynamicTitleBar />
+            <AppRoot {...AppProps} />
+          </FontContext>
+        </osContext.Provider>
       </backendStatusContext.Provider>
     </themeContext.Provider>
   );
