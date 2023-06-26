@@ -1,9 +1,9 @@
-name: Beta Release
+name: Nightly Release
 
 on:
   push:
     branches:
-      - "dev"
+      - "nightly"
 
 jobs:
   create-release:
@@ -12,9 +12,7 @@ jobs:
     runs-on: ubuntu-20.04
     outputs:
       release_id: ${{ steps.create-release.outputs.result }}
-      change_log: ${{ steps.changelog.outputs.clean_changelog }}
-      version: ${{ steps.changelog.outputs.version }}
-      tag: ${{ steps.changelog.outputs.tag }}
+      tag: ${{ steps.create-release.outputs.tag }}
 
     steps:
       - name: Checkout Repository
@@ -37,13 +35,13 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               tag_name: `beta-${process.env.PACKAGE_VERSION}`,
-              name: `CSSLoader Desktop Beta ${process.env.PACKAGE_VERSION}`,
+              name: `CSSLoader Desktop Nightly ${process.env.PACKAGE_VERSION}`,
               body: `Download the release for your platform below`,
               draft: true,
               prerelease: true
             });
 
-            core.setOutput("tag", `beta-${process.env.PACKAGE_VERSION}`);
+            core.setOutput("tag", `nightly-${process.env.PACKAGE_VERSION}`);
 
             return data.id
 
