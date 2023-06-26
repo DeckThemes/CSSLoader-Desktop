@@ -19,28 +19,28 @@ export function DownloadBackendPage({
   const [installText, setInstallText] = useState<string>("");
   async function installBackend() {
     setInstallProg(1);
-    // function doTheInstall() {
-    //   setInstallText("Downloading Backend");
-    //   downloadBackend(async () => {
-    //     setInstallProg(50);
-    //     setInstallText("Starting Backend");
-    //     startBackend(() => {
-    //       setInstallProg(100);
-    //       setInstallText("Install Complete");
-    //       setTimeout(() => {
-    //         onUpdateFinish();
-    //       }, 1000);
-    //     });
-    //   });
-    // }
-    // if (onboarding) {
-    //   doTheInstall();
-    // } else {
-    //   setInstallText("Stopping Backend");
-    //   killBackend(() => {
-    //     doTheInstall();
-    //   });
-    // }
+    function doTheInstall() {
+      setInstallText("Downloading Backend");
+      downloadBackend(async () => {
+        setInstallProg(50);
+        setInstallText("Starting Backend");
+        startBackend(() => {
+          setInstallProg(100);
+          setInstallText("Install Complete");
+          setTimeout(() => {
+            onUpdateFinish();
+          }, 1000);
+        });
+      });
+    }
+    if (onboarding) {
+      doTheInstall();
+    } else {
+      setInstallText("Stopping Backend");
+      killBackend(() => {
+        doTheInstall();
+      });
+    }
   }
 
   return (

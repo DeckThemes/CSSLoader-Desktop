@@ -18,6 +18,7 @@ export function AlertDialog({
   dontClose = false,
   onAction = () => {},
   customAction = null,
+  actionClass = ""
 }: {
   Trigger?: ReactNode;
   title: string;
@@ -34,6 +35,7 @@ export function AlertDialog({
   actionDisabled?: boolean;
   customAction?: ReactNode;
   onAction?: () => void;
+  actionClass?: string
 }) {
   const { montserrat } = useContext(fontContext);
   const [open, setOpen] = useState<boolean>(false);
@@ -81,7 +83,8 @@ export function AlertDialog({
                   className={twMerge(
                     "font-fancy my-2 mx-2 ml-auto rounded-2xl p-2 px-6",
                     dontClose ? "ml-2 w-full" : "",
-                    !actionDisabled ? "bg-brandBlue" : "bg-base-5.5-dark"
+                    !actionDisabled ? "bg-brandBlue" : "bg-base-5.5-dark",
+                    actionClass
                   )}
                   disabled={actionDisabled}
                 >

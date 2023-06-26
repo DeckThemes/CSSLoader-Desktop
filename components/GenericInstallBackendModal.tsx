@@ -1,5 +1,6 @@
 import { ImSpinner5 } from "react-icons/im";
 import { AlertDialog } from "./Primitives";
+import { ReactNode } from "react";
 
 export function GenericInstallBackendModal({
   titleText,
@@ -9,8 +10,10 @@ export function GenericInstallBackendModal({
   onAction = () => {},
   descriptionText,
   onCloseWindow = () => {},
+  Trigger = null,
 }: {
   titleText: string;
+  Trigger?: ReactNode;
   // Install prog is an arbitrary number, not a real "progress percent", it just need to be >0 to convey an install is underway
   installProg: number;
   installText: string;
@@ -22,7 +25,8 @@ export function GenericInstallBackendModal({
   return (
     <>
       <AlertDialog
-        defaultOpen
+        defaultOpen={!Trigger}
+        Trigger={Trigger}
         dontCloseOnAction
         onAction={onAction}
         actionDisabled={installProg > 0}

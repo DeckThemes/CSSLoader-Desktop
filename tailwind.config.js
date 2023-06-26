@@ -177,6 +177,7 @@ module.exports = {
           light: "hsla(264, 3%, 94%, 1)",
         },
         brandBlue: "#2563eb",
+        dangerRed: "#EB3431",
         cssPurple: "#de2cf7",
         audioBlue: "rgb(26,159,255)",
         discordColor: "#5865F2",

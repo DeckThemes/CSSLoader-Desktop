@@ -1,5 +1,6 @@
-import { LabelledInput, Tooltip } from "@components/Primitives";
+import { AlertDialog, LabelledInput, Tooltip } from "@components/Primitives";
 import {
+  copyBackend,
   getBackendVersion,
   getStandaloneVersion,
   killBackend,
@@ -13,6 +14,8 @@ import { AiOutlineQuestionCircle } from "react-icons/ai";
 import { BsDiscord } from "react-icons/bs";
 import { FaPatreon } from "react-icons/fa";
 import { themeContext } from "./_app";
+import { GenericInstallBackendModal } from "@components/GenericInstallBackendModal";
+import { open } from "@tauri-apps/api/dialog";
 
 export default function SettingsPage() {
   const [token, setToken] = useState<string>("");
@@ -29,7 +32,11 @@ export default function SettingsPage() {
     });
   }, []);
 
-  const { themes } = useContext(themeContext);
+  const { themes, refreshThemes } = useContext(themeContext);
+
+  const [showBackendInstallModal, setShowBackendInstallModal] = useState<boolean>(false);
+  const [installText, setInstallText] = useState<string>("");
+  const [installModalDesc, setInstallModalDesc] = useState<string>("");
 
   return (
     <>
@@ -89,12 +96,71 @@ export default function SettingsPage() {
             >
               Force Start Backend
             </button>
-            <button
-              onClick={() => startBackend(() => console.log("Backend Started"))}
-              className="h-12 whitespace-nowrap rounded-xl bg-base-3-dark px-4"
-            >
-              Install Backend From File
-            </button>
+            <AlertDialog
+              cancelText="Go Back"
+              title="Wait A Second!"
+              description="This feature is meant for developers. If you do not understand exactly what you're doing, cancel this popup. Do not install files from untrusted sources."
+              actionText="I Know What I'm Doing"
+              actionClass="bg-dangerRed"
+              onAction={() => {
+                open({
+                  directory: false,
+                  multiple: false,
+                  filters: [
+                    {
+                      name: "CSSLoader-Standalone-Headless.exe",
+                      extensions: ["exe"],
+                    },
+                  ],
+                  //  @ts-ignore
+                }).then((path: string) => {
+                  setInstallModalDesc("Installing " + path.slice(path.lastIndexOf("\\") + 1));
+                  // TODO: This function assumes each function never fails, add some failsafes/error messages
+                  setShowBackendInstallModal(true);
+                  setInstallText("Stopping Backend");
+                  killBackend(() => {
+                    setTimeout(() => {
+                      setInstallText("Installing New Backend");
+                      copyBackend(path, () => {
+                        setTimeout(() => {
+                          // TODO: THIS IS HORRIBLY JANK!
+                          // For some reason, it appears the first time you start the new backend, it always fails, it is only after it fails once that it then starts the next time
+                          setInstallText("Pausing To Allow Windows To Figure Itself Out");
+                          startBackend(() => {});
+                          setTimeout(() => {
+                            startBackend(() => {
+                              setTimeout(() => {
+                                setShowBackendInstallModal(false);
+                                setInstallModalDesc("");
+                                refreshThemes();
+                              }, 1000);
+                            });
+                          }, 10000);
+                        }, 1000);
+                      });
+                    }, 1000);
+                  });
+                });
+              }}
+              Trigger={
+                <>
+                  <button className="h-12 w-full whitespace-nowrap rounded-xl bg-base-3-dark px-4">
+                    Install Backend From File
+                  </button>
+                </>
+              }
+            />
+
+            {showBackendInstallModal && (
+              <GenericInstallBackendModal
+                titleText="Installed Backend From File"
+                descriptionText={installModalDesc}
+                installProg={1}
+                installText={installText}
+                dontClose
+              />
+            )}
+
             <button
               onClick={async () => {
                 console.log("Themes", themes);
