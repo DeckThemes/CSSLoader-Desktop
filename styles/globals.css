@@ -129,3 +129,7 @@ input[type="color"]::-webkit-color-swatch {
 	/* right: calc(-1 * (var(--removed-body-scroll-bar-size, 29.92px))); */
 	right: 0;
 }
+
+.radio-dropdown {
+    box-shadow: 0 0 30px #000;
+}
