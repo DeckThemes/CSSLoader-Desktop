@@ -29,7 +29,7 @@ const Titlebar = () => {
       <>
         <div
           data-tauri-drag-region
-          className="fixed top-0 left-0 right-0 z-[2147483647] flex h-8 cursor-default select-none flex-row dark:bg-base-6-dark"
+          className="cssloader-titlebar fixed z-[2147483647] flex h-8 cursor-default select-none flex-row bg-base-6-dark"
         >
           <div className="absolute top-0 left-0 flex h-full">
             <Link

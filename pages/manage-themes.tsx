@@ -1,4 +1,4 @@
-import { themeContext } from "./_app";
+import { themeContext } from "@contexts/themeContext";
 import { useContext, useEffect, useState } from "react";
 import { MinimalCSSThemeInfo, Theme } from "../ThemeTypes";
 import { deleteTheme, downloadThemeFromUrl, toast } from "../backend";

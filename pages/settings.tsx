@@ -13,7 +13,7 @@ import { useState, useEffect, useContext } from "react";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
 import { BsDiscord } from "react-icons/bs";
 import { FaPatreon } from "react-icons/fa";
-import { themeContext } from "./_app";
+import { themeContext } from "@contexts/themeContext";
 import { GenericInstallBackendModal } from "@components/GenericInstallBackendModal";
 import { open } from "@tauri-apps/api/dialog";
 

@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef } from "react";
-import { themeContext } from "./_app";
+import { themeContext } from "@contexts/themeContext";
 import { allowedStoreOrigins, storeUrl } from "../constants";
 import { downloadThemeFromUrl, storeRead, toast } from "../backend";
 

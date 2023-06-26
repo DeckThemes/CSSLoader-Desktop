@@ -1,7 +1,7 @@
 import { BiReset } from "react-icons/bi";
 import { OneColumnThemeView, TwoColumnThemeView, CreatePresetModal } from "../components";
 import { useVW } from "../hooks/useVW";
-import { themeContext } from "./_app";
+import { themeContext } from "@contexts/themeContext";
 import { useContext, useState, useEffect, useMemo } from "react";
 import { LabelledInput, RadioDropdown, Tooltip, TwoItemToggle } from "@components/Primitives";
 import { TbColumns1, TbColumns2 } from "react-icons/tb";
