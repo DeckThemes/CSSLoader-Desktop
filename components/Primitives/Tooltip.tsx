@@ -1,4 +1,4 @@
-import { fontContext } from "@pages/_app";
+import { fontContext } from "@contexts/FontContext";
 import * as RadixTooltip from "@radix-ui/react-tooltip";
 import { ReactElement, useContext } from "react";
 import { twMerge } from "tailwind-merge";

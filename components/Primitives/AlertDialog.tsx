@@ -1,5 +1,5 @@
 import * as AD from "@radix-ui/react-alert-dialog";
-import { fontContext } from "@pages/_app";
+import { fontContext } from "@contexts/FontContext";
 import { ReactNode, useContext, useState, useEffect } from "react";
 import { twMerge } from "tailwind-merge";
 export function AlertDialog({

@@ -1,4 +1,4 @@
-import { fontContext } from "@pages/_app";
+import { fontContext } from "@contexts/FontContext";
 import * as Dialog from "@radix-ui/react-dialog";
 import { ReactNode, useContext } from "react";
 export function Modal({

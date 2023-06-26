@@ -2,7 +2,7 @@ import { useState, useMemo, useContext, useEffect } from "react";
 import { Flags, Theme } from "../../ThemeTypes";
 import { ThemePatch } from "./ThemePatch";
 import { RiArrowDownSFill, RiArrowUpSFill } from "react-icons/ri";
-import { themeContext } from "../../pages/_app";
+import { themeContext } from "@contexts/themeContext";
 import { setThemeState, toast } from "../../backend";
 import { AlertDialog, ToggleSwitch } from "..";
 

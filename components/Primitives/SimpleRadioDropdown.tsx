@@ -3,7 +3,7 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 import { twMerge } from "tailwind-merge";
 import { BsDot } from "react-icons/bs";
 import { useState, useContext } from "react";
-import { fontContext } from "@pages/_app";
+import { fontContext } from "@contexts/FontContext";
 
 export function SimpleRadioDropdown({
   options,
