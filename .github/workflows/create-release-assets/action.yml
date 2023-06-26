@@ -78,7 +78,10 @@ runs:
           }
 
 
-          const versionNoV = process.env.release_tag.substring(1);
+          let versionNoV = process.env.release_tag.substring(1);
+          if (process.env.git_branch === "nightly") {
+            versionNoV = process.env.release_tag
+          }
           const GENERIC_NAMES = {
             "windowsInstaller": `CSSLoader.Desktop_${versionNoV}.msi`,
             "windowsUpdater": `CSSLoader.Desktop_${versionNoV}.msi.zip`,
