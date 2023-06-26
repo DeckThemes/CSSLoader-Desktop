@@ -5,7 +5,6 @@ import { Montserrat, Open_Sans } from "next/font/google";
 import { createContext, useState, useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useRouter } from "next/router";
 import { BackendFailedPage, MainNav, DownloadBackendPage } from "../components";
 import {
   checkForNewBackend,
@@ -46,16 +45,17 @@ export const fontContext = createContext({
 
 export default function App({ Component, pageProps }: AppProps) {
   const [themes, setThemes] = useState<Theme[]>([]);
-  const [dummyResult, setDummyResult] = useState<boolean>(false);
+  // This is now undefined before the initial check, that way things can use dummyResult !== undefined to see if the app has properly loaded
+  const [dummyResult, setDummyResult] = useState<boolean | undefined>(undefined);
   const [backendExists, setBackendExists] = useState<boolean>(false);
   const [newBackendVersion, setNewBackend] = useState<string>("");
   const [showNewBackendPage, setShowNewBackend] = useState<boolean>(false);
-  const router = useRouter();
   useEffect(() => {
     // Checking for updates
     checkIfBackendIsStandalone().then((isStandalone) => {
       if (isStandalone) {
         checkForNewBackend().then((newStandalone) => {
+          console.log(newStandalone);
           if (newStandalone) {
             setNewBackend(newStandalone as string);
             setShowNewBackend(true);
@@ -135,29 +135,24 @@ export default function App({ Component, pageProps }: AppProps) {
             pauseOnHover
             theme={"dark"}
           />
-          {showNewBackendPage || (!backendExists && !dummyResult) ? (
-            <>
+          {dummyResult && <MainNav />}
+          <main className="page-shadow ml-4 mt-2 mb-4 flex h-full flex-1 flex-grow flex-col rounded-3xl border-[1px] border-borders-base3-light bg-base-2-light dark:border-borders-base1-dark dark:bg-base-2-dark">
+            {(showNewBackendPage || (!backendExists && !dummyResult)) && (
               <DownloadBackendPage
                 onboarding={!backendExists}
                 onUpdateFinish={onUpdateFinish}
                 hideWindow={() => setShowNewBackend(false)}
                 backendVersion={newBackendVersion}
               />
-            </>
-          ) : (
-            <>
-              {dummyResult ? (
-                <>
-                  <MainNav />
-                  <main className="overflow-y-auto page-shadow ml-4 mr-4 mb-4 h-min flex flex-1 flex-grow flex-col rounded-3xl border-[1px] border-borders-base3-light bg-base-2-light dark:border-borders-base1-dark dark:bg-base-2-dark">
-                    <Component {...pageProps} />
-                  </main>
-                </>
-              ) : (
-                <BackendFailedPage />
-              )}
-            </>
-          )}
+            )}
+            {dummyResult ? (
+              <>
+                <Component {...pageProps} />
+              </>
+            ) : (
+              <BackendFailedPage />
+            )}
+          </main>
         </div>
       </fontContext.Provider>
     </themeContext.Provider>

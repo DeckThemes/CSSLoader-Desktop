@@ -1,13 +1,69 @@
-import { useState, useMemo, useContext } from "react";
+import { useState, useMemo, useContext, useEffect } from "react";
 import { Flags, Theme } from "../../ThemeTypes";
 import { ThemePatch } from "./ThemePatch";
 import { RiArrowDownSFill, RiArrowUpSFill } from "react-icons/ri";
 import { themeContext } from "../../pages/_app";
 import { setThemeState, toast } from "../../backend";
+import { AlertDialog, ToggleSwitch } from "..";
+
+function OptionalDepsModal({
+  themeData,
+  closeModal,
+}: {
+  themeData: Theme;
+  closeModal: () => void;
+}) {
+  const { refreshThemes } = useContext(themeContext);
+
+  const [enableDeps, setEnableDeps] = useState(true);
+  const [enableDepValues, setEnableDepValues] = useState(true);
+  useEffect(() => {
+    if (!enableDeps) setEnableDepValues(false);
+  }, [enableDeps]);
+
+  function enableThemeOptDeps() {
+    setThemeState(themeData.name, true, enableDeps, enableDepValues).then(() => {
+      refreshThemes();
+    });
+  }
+  return (
+    <>
+      <AlertDialog
+        dontClose
+        onOpenChange={(open) => {
+          if (!open) {
+            enableThemeOptDeps();
+            closeModal();
+          }
+        }}
+        defaultOpen
+        title="Optional Dependencies"
+        description={`${themeData.name} enables other themes to enhance its functionality. Disabling these dependencies is allowed but it may cause the theme to break in unexpected ways`}
+        Content={
+          <div className="flex flex-col items-start gap-2 px-4 pb-4 text-sm">
+            <div className="flex items-center justify-center gap-2">
+              <ToggleSwitch checked={enableDeps} onValueChange={setEnableDeps} />
+              <span>Enable dependencies</span>
+            </div>
+            <div className="flex items-center justify-center gap-2">
+              <ToggleSwitch
+                disabled={!enableDeps}
+                checked={enableDepValues}
+                onValueChange={setEnableDepValues}
+              />
+              <span>Enable pre-configured settings for dependencies</span>
+            </div>
+          </div>
+        }
+        actionText={`Enable ${themeData.name}`}
+      />
+    </>
+  );
+}
 
 export function ThemeToggle({ data, collapsible = false }: { data: Theme; collapsible?: boolean }) {
   const { refreshThemes } = useContext(themeContext);
-
+  const [showOptDepsModal, setShowOptDepsModal] = useState<boolean>(false);
   const [collapsed, setCollapsed] = useState<boolean>(true);
   const isPreset = useMemo(() => {
     if (data.flags.includes(Flags.isPreset)) {
@@ -19,6 +75,9 @@ export function ThemeToggle({ data, collapsible = false }: { data: Theme; collap
 
   return (
     <div className="flex w-full max-w-[960px] flex-col gap-1 rounded-xl border-2 border-borders-base1-dark bg-cardLight p-6 transition hover:border-borders-base2-dark dark:bg-base-3-dark">
+      {showOptDepsModal && (
+        <OptionalDepsModal themeData={data} closeModal={() => setShowOptDepsModal(false)} />
+      )}
       <div className="flex justify-between gap-4">
         <div className="flex flex-col">
           <span className="font-fancy text-md font-bold">{data.name}</span>
@@ -26,53 +85,53 @@ export function ThemeToggle({ data, collapsible = false }: { data: Theme; collap
             {isPreset ? `Preset` : `${data.version} • ${data.author}`}
           </span>
         </div>
-        <label className="relative flex cursor-pointer items-center">
-          <input
-            className="peer sr-only"
-            checked={data.enabled}
-            type="checkbox"
-            onChange={(event) => {
-              const switchValue = event.target.checked;
-              // Actually enabling the theme
-              setThemeState(data.name, switchValue).then(() => {
-                refreshThemes();
-              });
-              // Re-collapse menu
-              setCollapsed(true);
-              // Dependency Toast
-              if (data.dependencies.length > 0) {
-                if (switchValue === true) {
-                  toast(
-                    `${data.name} enabled other themes`,
-                    `${
-                      data.dependencies.length === 1
-                        ? `1 other theme is required by ${data.name}`
-                        : `${data.dependencies.length} other themes are required by ${data.name}`
-                    }`
-                  );
-                  return;
-                }
-                if (!data.flags.includes(Flags.dontDisableDeps)) {
-                  toast(
-                    `${data.name} disabled other themes`,
-                    // @ts-ignore
-                    `${
-                      data.dependencies.length === 1
-                        ? `1 theme was originally enabled by ${data.name}`
-                        : `${data.dependencies.length} themes were originally enabled by ${data.name}`
-                    }`
-                  );
-                  return;
-                }
+        <ToggleSwitch
+          checked={data.enabled}
+          onValueChange={(switchValue) => {
+            // Re-collapse menu
+            setCollapsed(true);
+            // If theme has optional dependency flag
+            if (switchValue === true && data.flags.includes(Flags.optionalDeps)) {
+              setShowOptDepsModal(true);
+              return;
+            }
+            // Actually enabling the theme
+            setThemeState(data.name, switchValue).then(() => {
+              refreshThemes();
+            });
+
+            // Dependency Toast
+            if (data.dependencies.length > 0) {
+              if (switchValue === true) {
+                toast(
+                  `${data.name} enabled other themes`,
+                  `${
+                    data.dependencies.length === 1
+                      ? `1 other theme is required by ${data.name}`
+                      : `${data.dependencies.length} other themes are required by ${data.name}`
+                  }`
+                );
+                return;
               }
-            }}
-          />
-          <div className="peer relative h-6 w-11 rounded-full bg-gray-200 after:absolute after:top-[2px] after:left-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white dark:border-gray-600 dark:bg-gray-700" />
-        </label>
+              if (!data.flags.includes(Flags.dontDisableDeps)) {
+                toast(
+                  `${data.name} disabled other themes`,
+                  // @ts-ignore
+                  `${
+                    data.dependencies.length === 1
+                      ? `1 theme was originally enabled by ${data.name}`
+                      : `${data.dependencies.length} themes were originally enabled by ${data.name}`
+                  }`
+                );
+                return;
+              }
+            }
+          }}
+        />
       </div>
       {data.enabled && data.patches.length > 0 && (
         <>
-          <div className="mt-4 flex w-full max-w-[480px] flex-col gap-2 rounded-lg px-4 py-2 dark:bg-cardDark">
+          <div className="mt-4 flex w-full max-w-[960px] flex-col gap-2 rounded-lg px-4 py-2 dark:bg-cardDark">
             {collapsible && (
               <div className="relative flex flex-row items-center py-2">
                 <h3 className="font-fancy flex flex-1 items-center gap-2 text-xs font-bold">

@@ -74,6 +74,17 @@
             "args": ["taskkill", "/IM", "CssLoader-Standalone-Headless.exe", "/F"]
           },
           {
+            "name": "copyBackend",
+            "cmd": "powershell.exe",
+            "args": [
+              "Copy-Item",
+              "-Path",
+              { "validator": "." },
+              "-Destination",
+              "([Environment]::GetFolderPath('Startup') + '\\CssLoader-Standalone-Headless.exe')"
+            ]
+          },
+          {
             "name": "downloadBackend",
             "cmd": "powershell.exe",
             "args": [

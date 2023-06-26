@@ -5,3 +5,4 @@ export * from "./BackendFailedPage";
 export * from "./CreatePresetModal";
 export * from "./YourThemes";
 export * from "./ManageThemes";
+export * from "./Primitives";
