@@ -3,7 +3,7 @@ import { useMemo, useContext } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { twMerge } from "tailwind-merge";
 import { BsDot } from "react-icons/bs";
-import { fontContext } from "@pages/_app";
+import { fontContext } from "@contexts/FontContext";
 
 // This primitive accepts either an array of {value: string, displayName: string, bubbleValue: string | number}
 // Or, just an array of {value: string}

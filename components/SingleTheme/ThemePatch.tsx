@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { Patch } from "../../ThemeTypes";
 import { PatchComponent } from "./PatchComponent";
-import { themeContext } from "../../pages/_app";
+import { themeContext } from "@contexts/themeContext";
 import { setPatchOfTheme } from "../../backend";
 import { SimpleRadioDropdown } from "@components/Primitives";
 

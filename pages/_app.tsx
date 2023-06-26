@@ -16,6 +16,10 @@ import {
   recursiveCheck,
   getInstalledThemes,
 } from "../backend";
+import { themeContext } from "@contexts/themeContext";
+import { FontContext } from "@contexts/FontContext";
+import { backendStatusContext } from "@contexts/backendStatusContext";
+import { AppRoot } from "@components/AppRoot";
 import DynamicTitleBar from "@components/Native/DynamicTitlebar";
 
 const montserrat = Montserrat({
@@ -28,22 +32,12 @@ const openSans = Open_Sans({
   variable: "--opensans",
 });
 
-export const themeContext = createContext<{
-  themes: Theme[];
-  setThemes: any;
-  refreshThemes: any;
-}>({
-  themes: [],
-  setThemes: () => {},
-  refreshThemes: () => {},
-});
-
 export const fontContext = createContext({
   montserrat: "",
   openSans: "",
 });
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App(AppProps: AppProps) {
   const [themes, setThemes] = useState<Theme[]>([]);
   // This is now undefined before the initial check, that way things can use dummyResult !== undefined to see if the app has properly loaded
   const [dummyResult, setDummyResult] = useState<boolean | undefined>(undefined);
@@ -70,11 +64,11 @@ export default function App({ Component, pageProps }: AppProps) {
     recheckDummy();
   }, []);
 
-  async function onUpdateFinish() {
-    refreshThemes();
-    setShowNewBackend(false);
-    setNewBackend("");
-  }
+  // async function onUpdateFinish() {
+  //   refreshThemes();
+  //   setShowNewBackend(false);
+  //   setNewBackend("");
+  // }
   async function recheckDummy() {
     recursiveCheck(dummyFuncTest, () => refreshThemes(true), startBackend);
   }
@@ -114,47 +108,57 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <themeContext.Provider value={{ themes, setThemes, refreshThemes }}>
-      <fontContext.Provider
-        value={{ montserrat: montserrat.variable, openSans: openSans.variable }}
+      <backendStatusContext.Provider
+        value={{
+          dummyResult,
+          backendExists,
+          showNewBackendPage,
+          newBackendVersion,
+          setNewBackend,
+          setShowNewBackend,
+        }}
       >
-		<DynamicTitleBar />
-        <div
-          // A lot of this codebase is from the DeckThemes codebase, which has a light and dark mode, however this app only has a dark mode, so we put the dark class here incase we copy over things that have both styles
-          className={`dark relative flex h-screen max-h-[calc(100vh-96px)] mt-[96px] flex-col bg-base-6-light text-textLight dark:bg-base-6-dark dark:text-textDark ${montserrat.variable} ${openSans.variable}`}
-        >
-          <ToastContainer
-            position="bottom-center"
-            autoClose={3000}
-            hideProgressBar={false}
-            newestOnTop
-            closeOnClick
-            toastClassName="rounded-xl border-2 border-borders-base1-light bg-base-3-light transition hover:border-borders-base2-light dark:border-borders-base1-dark dark:bg-base-3-dark hover:dark:border-borders-base2-dark"
-            bodyClassName="rounded-xl font-fancy text-black dark:text-white text-sm"
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme={"dark"}
-          />
-          {dummyResult && <MainNav />}
-          <main className="page-shadow ml-4 mt-2 mb-4 flex h-full flex-1 flex-grow flex-col rounded-3xl border-[1px] border-borders-base3-light bg-base-2-light dark:border-borders-base1-dark dark:bg-base-2-dark">
-            {(showNewBackendPage || (!backendExists && !dummyResult)) && (
-              <DownloadBackendPage
-                onboarding={!backendExists}
-                onUpdateFinish={onUpdateFinish}
-                hideWindow={() => setShowNewBackend(false)}
-                backendVersion={newBackendVersion}
-              />
-            )}
-            {dummyResult ? (
-              <>
-                <Component {...pageProps} />
-              </>
-            ) : (
-              <BackendFailedPage />
-            )}
-          </main>
-        </div>
-      </fontContext.Provider>
+        <FontContext>
+			<DynamicTitleBar />
+          <AppRoot {...AppProps} />
+          {/* <div
+            // A lot of this codebase is from the DeckThemes codebase, which has a light and dark mode, however this app only has a dark mode, so we put the dark class here incase we copy over things that have both styles
+            className={`dark relative flex min-h-screen flex-col bg-base-6-dark text-textDark ${montserrat.variable} ${openSans.variable}`}
+          >
+            <ToastContainer
+              position="bottom-center"
+              autoClose={3000}
+              hideProgressBar={false}
+              newestOnTop
+              closeOnClick
+              toastClassName="rounded-xl border-2 border-borders-base1-light bg-base-3-light transition hover:border-borders-base2-light dark:border-borders-base1-dark dark:bg-base-3-dark hover:dark:border-borders-base2-dark"
+              bodyClassName="rounded-xl font-fancy text-black dark:text-white text-sm"
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme={"dark"}
+            />
+            {dummyResult && <MainNav />}
+            <main className="page-shadow ml-4 mt-2 mb-4 flex h-full flex-1 flex-grow flex-col rounded-3xl border-[1px] border-borders-base3-light bg-base-2-light dark:border-borders-base1-dark dark:bg-base-2-dark">
+              {(showNewBackendPage || (!backendExists && !dummyResult)) && (
+                <DownloadBackendPage
+                  onboarding={!backendExists}
+                  onUpdateFinish={onUpdateFinish}
+                  hideWindow={() => setShowNewBackend(false)}
+                  backendVersion={newBackendVersion}
+                />
+              )}
+              {dummyResult ? (
+                <>
+                  <Component {...pageProps} />
+                </>
+              ) : (
+                <BackendFailedPage />
+              )}
+            </main>
+          </div> */}
+        </FontContext>
+      </backendStatusContext.Provider>
     </themeContext.Provider>
   );
 }

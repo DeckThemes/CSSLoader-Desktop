@@ -1,5 +1,5 @@
 import { useContext, useMemo, useState } from "react";
-import { themeContext } from "../pages/_app";
+import { themeContext } from "@contexts/themeContext";
 import { generatePreset } from "../backend";
 import { BiPlus } from "react-icons/bi";
 import { LabelledInput, Modal } from "./Primitives";

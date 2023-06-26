@@ -5,7 +5,6 @@
 html {
   height: 100%;
   width: 100%;
-  overflow: hidden;
 }
 
 html,
@@ -16,8 +15,12 @@ body {
   margin: 0;
   font-family: var(--montserrat), BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
     Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  border-radius: 12px;
+	overflow: hidden;
 }
+
+/* body {
+	overflow-y: scroll;
+} */
 
 a {
   color: inherit;
@@ -118,4 +121,11 @@ input[type="color"]::-webkit-color-swatch {
 
   animation: load-in 0.2s ease forwards;
   animation-delay: 0.4s;
+}
+
+.cssloader-titlebar {
+	top: 0;
+	left: 0;
+	/* right: calc(-1 * (var(--removed-body-scroll-bar-size, 29.92px))); */
+	right: 0;
 }
