@@ -34,7 +34,7 @@ const Titlebar = () => {
           <div className="absolute top-0 left-0 flex h-full">
             <Link
               href="/"
-              className="group flex items-center gap-2 transition duration-150 hover:scale-95 hover:active:scale-90 p-2"
+              className="group flex items-center gap-2 transition duration-150 hover:scale-95 hover:active:scale-90 p-2 !cursor-default"
             >
               <Image
                 src="logo_css_darkmode.png"
