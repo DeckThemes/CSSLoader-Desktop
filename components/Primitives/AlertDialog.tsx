@@ -18,7 +18,7 @@ export function AlertDialog({
   dontClose = false,
   onAction = () => {},
   customAction = null,
-  actionClass = ""
+  actionClass = "",
 }: {
   Trigger?: ReactNode;
   title: string;
@@ -35,7 +35,7 @@ export function AlertDialog({
   actionDisabled?: boolean;
   customAction?: ReactNode;
   onAction?: () => void;
-  actionClass?: string
+  actionClass?: string;
 }) {
   const { montserrat } = useContext(fontContext);
   const [open, setOpen] = useState<boolean>(false);
