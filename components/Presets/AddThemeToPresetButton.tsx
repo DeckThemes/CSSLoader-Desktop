@@ -45,7 +45,6 @@ export function AddThemeToPresetButton() {
           actionText="Add To Preset"
           onAction={() => {
             if (themeToAdd) {
-              console.log(selectedPreset.name, [...selectedPreset.dependencies, themeToAdd]);
               generatePresetFromThemeNames(selectedPreset.name, [
                 ...selectedPreset.dependencies,
                 themeToAdd,

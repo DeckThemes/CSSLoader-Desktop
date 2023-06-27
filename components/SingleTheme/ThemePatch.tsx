@@ -16,7 +16,7 @@ export function ThemePatch({
   fullArr: Patch[];
   themeName: string;
 }) {
-  const { themes, refreshThemes, selectedPreset } = useContext(themeContext);
+  const { refreshThemes, selectedPreset } = useContext(themeContext);
   const [selectedIndex, setIndex] = useState(data.options.indexOf(data.value));
 
   const [selectedLabel, setLabel] = useState(data.value);
@@ -24,10 +24,15 @@ export function ThemePatch({
   const bottomSeparatorValue = fullArr.length - 1 !== index;
 
   async function setPatchValue(value: string) {
-    if (selectedPreset && selectedPreset.dependencies.includes(themeName)) {
-      generatePresetFromThemeNames(selectedPreset.name, selectedPreset.dependencies);
-    }
-    return setPatchOfTheme(themeName, data.name, value);
+    return setPatchOfTheme(themeName, data.name, value).then(() => {
+      if (selectedPreset && selectedPreset.dependencies.includes(themeName)) {
+        return generatePresetFromThemeNames(selectedPreset.name, selectedPreset.dependencies).then(
+          () => {
+            // return refreshThemes();
+          }
+        );
+      }
+    });
   }
 
   function ComponentContainer() {
@@ -106,9 +111,7 @@ export function ThemePatch({
                       onChange={(event) => {
                         const bool = event.target.checked;
                         const newValue = bool ? "Yes" : "No";
-                        setPatchValue(newValue).then(() => {
-                          refreshThemes();
-                        });
+                        setPatchValue(newValue);
                         setLabel(newValue);
                         setIndex(data.options.findIndex((e) => e === newValue));
                       }}

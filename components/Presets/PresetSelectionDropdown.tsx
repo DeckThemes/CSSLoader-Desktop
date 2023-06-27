@@ -21,6 +21,9 @@ export function PresetSelectionDropdown() {
           if (oldPresets.length > 0) {
             await Promise.all(oldPresets.map((e) => setThemeState(e, false)));
           }
+          // If you've changed patches/components of the preset, those are saved to the folder, but not the backend's version of the prest
+          // This refreshes it all so that the patch values actually are what they should be
+          await refreshThemes(true);
           // Enable the new preset
           setThemeState(e, true).then(() => {
             refreshThemes();

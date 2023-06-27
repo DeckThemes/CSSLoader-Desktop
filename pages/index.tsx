@@ -21,7 +21,7 @@ export default function MainPage() {
   const [numCols, setNumCols] = useState<number>(1);
   const [sortValue, setSort] = useState<any>("nameAZ");
 
-  const [sortedThemes, sortedPresets] = useMemo(() => {
+  const [sortedThemes] = useMemo(() => {
     const filteredAll = themes.filter(
       (e) =>
         e.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -52,9 +52,9 @@ export default function MainPage() {
         }
       }
     });
-    const sortedPresets = sortedAll.filter((e) => e.flags.includes(Flags.isPreset));
+    // const sortedPresets = sortedAll.filter((e) => e.flags.includes(Flags.isPreset));
     const sortedThemes = sortedAll.filter((e) => !e.flags.includes(Flags.isPreset));
-    return [sortedThemes, sortedPresets];
+    return [sortedThemes];
   }, [themes, search, sortValue]);
 
   useEffect(() => {
@@ -133,7 +133,9 @@ export default function MainPage() {
           <div className="mb-8 flex h-full w-full flex-col items-center justify-center gap-2 px-4">
             <span className="w-full max-w-[960px] text-lg font-bold">Presets</span>
             <div className="flex w-full max-w-[960px] items-center justify-between gap-4">
-              <PresetSelectionDropdown />
+              {themes.filter((e) => e.flags.includes(Flags.isPreset)).length > 0 && (
+                <PresetSelectionDropdown />
+              )}
               <div className="self-end">
                 <Tooltip
                   triggerContent={<CreatePresetModal />}
@@ -146,7 +148,7 @@ export default function MainPage() {
             <PresetFolderView />
           </div>
         </div>
-        <div className="mt-8 flex w-full max-w-[960px] items-end justify-between px-4 pb-8">
+        <div className="mt-8 flex w-full max-w-[960px] items-end justify-between pb-8">
           <button
             className="flex h-full w-fit items-center justify-center gap-2 rounded-full border-2 border-[#2e2e2e] px-4 py-2"
             onClick={() => {

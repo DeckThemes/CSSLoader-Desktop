@@ -63,7 +63,7 @@ export default function App(AppProps: AppProps) {
   }
 
   async function refreshBackendExists() {
-    checkIfStandaloneBackendExists().then((value) => setBackendExists(value));
+    await checkIfStandaloneBackendExists().then((value) => setBackendExists(value));
   }
 
   async function dummyFuncTest() {
@@ -83,16 +83,15 @@ export default function App(AppProps: AppProps) {
   }
 
   async function refreshThemes(reset: boolean = false) {
-    refreshBackendExists();
-    dummyFuncTest();
+    await refreshBackendExists();
+    await dummyFuncTest();
 
     const promise = reset ? reloadBackend() : getInstalledThemes();
-    promise.then((data) => {
+    return promise.then((data) => {
       if (data) {
         setThemes(data.sort());
       }
     });
-    return;
   }
 
   return (
