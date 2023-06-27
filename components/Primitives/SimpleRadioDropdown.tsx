@@ -17,6 +17,7 @@ export function SimpleRadioDropdown({
   triggerClass?: string;
 }) {
   const { montserrat } = useContext(fontContext);
+  const [boundary, setBoundary] = useState(null);
 
   const [selected, setSelected] = useState<string>(value);
   function handleChange(newValue: string) {
@@ -41,11 +42,16 @@ export function SimpleRadioDropdown({
       </DropdownMenu.Trigger>
 
       <DropdownMenu.Portal>
-        <div className={`dark ${montserrat} contents`}>
+        <div
+          // @ts-ignore
+          ref={setBoundary}
+          className={`dark absolute top-8 left-0 right-0 bottom-0 h-full w-full ${montserrat}`}
+        >
           {/* bg-base-3-light dark:bg-base-3-dark w-[250px] text-black dark:text-white rounded-xl border-2 border-borders-base2-light dark:border-borders-base2-dark  */}
           <DropdownMenu.Content
             align="end"
             avoidCollisions
+            collisionBoundary={boundary}
             collisionPadding={16}
             className="font-fancy radio-dropdown z-[9999] my-1 h-max w-[250px] cursor-default select-none overflow-hidden overflow-y-auto rounded-xl bg-base-3-light text-sm text-black transition-all dark:bg-base-3-dark dark:text-white"
           >

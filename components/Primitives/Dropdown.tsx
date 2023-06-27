@@ -1,5 +1,5 @@
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import { useMemo, useContext } from "react";
+import { useMemo, useContext, useRef, useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { twMerge } from "tailwind-merge";
 import { BsDot } from "react-icons/bs";
@@ -36,6 +36,7 @@ export function RadioDropdown({
   ariaLabel: string;
 }) {
   const { montserrat } = useContext(fontContext);
+  const [boundary, setBoundary] = useState(null);
 
   const formattedOptions = useMemo(() => {
     if (typeof options[0] === "string") {
@@ -98,10 +99,15 @@ export function RadioDropdown({
 
       <DropdownMenu.Portal>
         {/* hot take, i actually think that forcing the dropdowns to be in dark mode has better contrast */}
-        <div className={`dark contents ${montserrat}`}>
+        <div
+          // @ts-ignore
+          ref={setBoundary}
+          className={`dark absolute top-8 left-0 right-0 bottom-0 h-full w-full ${montserrat}`}
+        >
           {/* bg-base-3-light dark:bg-base-3-dark w-[250px] text-black dark:text-white rounded-xl border-2 border-borders-base2-light dark:border-borders-base2-dark  */}
           <DropdownMenu.Content
             avoidCollisions
+            collisionBoundary={boundary}
             collisionPadding={16}
             className="font-fancy radio-dropdown z-[9999] my-1 h-max w-[250px] cursor-default select-none overflow-hidden overflow-y-auto rounded-xl bg-base-3-light text-sm text-black transition-all dark:bg-base-3-dark dark:text-white"
           >
