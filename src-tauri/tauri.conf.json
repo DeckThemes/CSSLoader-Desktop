@@ -32,7 +32,7 @@
           "$CONFIG\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\*",
           "$APPDATA/standaloneVersion.txt",
           "$APPDATA",
-          "$HOME/homebrew/themes"
+          "$HOME/homebrew/themes/*"
         ],
         "writeFile": true
       },
@@ -183,7 +183,7 @@
         "resizable": true,
         "title": "CSSLoader Desktop",
         "decorations": false,
-		"transparent": true,
+        "transparent": true,
         "width": 800,
         "minWidth": 460,
         "minHeight": 300

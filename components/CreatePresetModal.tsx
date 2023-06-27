@@ -1,6 +1,6 @@
 import { useContext, useMemo, useState } from "react";
 import { themeContext } from "@contexts/themeContext";
-import { generatePreset } from "../backend";
+import { checkIfThemeExists, generatePreset, toast } from "../backend";
 import { BiPlus } from "react-icons/bi";
 import { LabelledInput, Modal } from "./Primitives";
 import { twMerge } from "tailwind-merge";
@@ -12,9 +12,16 @@ export function CreatePresetModal() {
     [localThemeList]
   );
   const [presetName, setPresetName] = useState<string>("");
-  function createPreset() {
+  async function createPreset() {
     if (presetName) {
+      const alreadyExists = await checkIfThemeExists(presetName);
+      if (alreadyExists) {
+        toast("Theme Already Exists!");
+        setPresetName("");
+        return;
+      }
       generatePreset(presetName).then(() => {
+        toast("Preset Created Successfully");
         refreshThemes(true);
         setPresetName("");
       });
