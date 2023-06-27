@@ -16,6 +16,8 @@ body {
   font-family: var(--montserrat), BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
     Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 	overflow: hidden;
+	/* background: transparent !important; */
+	border-radius: 8px;
 }
 
 /* body {
@@ -40,7 +42,6 @@ a {
 
   body {
     color: white;
-    background: #090a0c;
   }
 }
 
@@ -126,7 +127,6 @@ input[type="color"]::-webkit-color-swatch {
 .cssloader-titlebar {
 	top: 0;
 	left: 0;
-	/* right: calc(-1 * (var(--removed-body-scroll-bar-size, 29.92px))); */
 	right: 0;
 }
 
