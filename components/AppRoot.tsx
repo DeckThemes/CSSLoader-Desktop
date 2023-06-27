@@ -64,7 +64,7 @@ export function AppRoot({ Component, pageProps }: AppProps) {
 						<Component {...pageProps} />
 					</>
 					) : (
-					<BackendFailedPage />
+						<BackendFailedPage />
 					)}
 				</main>
 			</div>
