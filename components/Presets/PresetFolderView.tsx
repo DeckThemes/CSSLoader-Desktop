@@ -4,8 +4,7 @@ import { useContext } from "react";
 import { AddThemeToPresetButton, ThemeToggle } from "..";
 
 export function PresetFolderView() {
-  const { themes } = useContext(themeContext);
-  const selectedPreset = themes.find((e) => e.flags.includes(Flags.isPreset) && e.enabled);
+  const { themes, selectedPreset } = useContext(themeContext);
   if (selectedPreset) {
     return (
       <div className="flex h-full w-full max-w-[960px] flex-col rounded-2xl bg-base-3-dark p-4">

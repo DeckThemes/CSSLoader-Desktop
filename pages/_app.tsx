@@ -1,6 +1,6 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { Theme } from "../ThemeTypes";
+import { Flags, Theme } from "../ThemeTypes";
 import { useState, useEffect, useMemo } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import {
@@ -19,7 +19,7 @@ import { FontContext } from "@contexts/FontContext";
 import { backendStatusContext } from "@contexts/backendStatusContext";
 import { AppRoot } from "@components/AppRoot";
 import DynamicTitleBar from "@components/Native/DynamicTitlebar";
-import { AppFrame } from "@components/Native/AppFrame"
+import { AppFrame } from "@components/Native/AppFrame";
 import { osContext } from "@contexts/osContext";
 
 export default function App(AppProps: AppProps) {
@@ -31,6 +31,12 @@ export default function App(AppProps: AppProps) {
   const [showNewBackendPage, setShowNewBackend] = useState<boolean>(false);
   const [OS, setOS] = useState<string>("");
   const isWindows = useMemo(() => OS === "win32", [OS]);
+
+  const selectedPreset = useMemo(
+    () => themes.find((e) => e.flags.includes(Flags.isPreset) && e.enabled),
+    [themes]
+  );
+
   useEffect(() => {
     // Checking for updates
     getOS().then(setOS);
@@ -90,7 +96,7 @@ export default function App(AppProps: AppProps) {
   }
 
   return (
-    <themeContext.Provider value={{ themes, setThemes, refreshThemes }}>
+    <themeContext.Provider value={{ themes, setThemes, refreshThemes, selectedPreset }}>
       <backendStatusContext.Provider
         value={{
           dummyResult,
@@ -103,10 +109,10 @@ export default function App(AppProps: AppProps) {
       >
         <osContext.Provider value={{ OS, isWindows }}>
           <FontContext>
-			<AppFrame>
-				<DynamicTitleBar />
-				<AppRoot {...AppProps} />
-			</AppFrame>
+            <AppFrame>
+              <DynamicTitleBar />
+              <AppRoot {...AppProps} />
+            </AppFrame>
           </FontContext>
         </osContext.Provider>
       </backendStatusContext.Provider>

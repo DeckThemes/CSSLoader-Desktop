@@ -16,10 +16,9 @@ export function ThemePatch({
   fullArr: Patch[];
   themeName: string;
 }) {
-  const { themes, refreshThemes } = useContext(themeContext);
+  const { themes, refreshThemes, selectedPreset } = useContext(themeContext);
   const [selectedIndex, setIndex] = useState(data.options.indexOf(data.value));
 
-  const selectedPreset = themes.find((e) => e.enabled && e.flags.includes(Flags.isPreset));
   const [selectedLabel, setLabel] = useState(data.value);
 
   const bottomSeparatorValue = fullArr.length - 1 !== index;

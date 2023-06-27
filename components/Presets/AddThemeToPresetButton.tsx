@@ -5,8 +5,7 @@ import { Flags } from "ThemeTypes";
 import { generatePreset, generatePresetFromThemeNames } from "backend";
 
 export function AddThemeToPresetButton() {
-  const { themes, refreshThemes } = useContext(themeContext);
-  const selectedPreset = themes.find((e) => e.flags.includes(Flags.isPreset) && e.enabled);
+  const { themes, refreshThemes, selectedPreset } = useContext(themeContext);
   const dropdownOptions = themes
     .filter(
       (e) => !selectedPreset?.dependencies.includes(e.name) && !e.flags.includes(Flags.isPreset)
