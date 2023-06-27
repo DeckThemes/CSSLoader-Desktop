@@ -55,7 +55,7 @@ export function MainNav() {
         style={{ boxShadow: "0px 0px 15px #090a0c, 0px 4px 15px #090a0c" }}
       >
         <div className="mx-auto flex w-full max-w-5xl flex-col px-4 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex select-none items-center">
+          {/* <div className="flex select-none items-center">
             <Link
               href="/"
               className="group my-4 flex items-center gap-2 transition duration-150 hover:scale-95 hover:active:scale-90"
@@ -69,10 +69,10 @@ export function MainNav() {
               />
               <h1 className={`font-fancy text-xl font-semibold`}>CSSLoader</h1>
             </Link>
-          </div>
+          </div> */}
           <div
             id="navContainer"
-            className="font-fancy relative my-4 flex h-full items-center gap-2 overflow-hidden sm:my-0"
+            className="font-fancy relative my-4 flex h-full items-center gap-2 overflow-hidden"
           >
             <button
               className={`absolute left-0 top-1/2 z-20 flex -translate-y-1/2 items-center justify-center rounded-full bg-base-5-dark p-2 backdrop-blur-lg transition ${

@@ -29,6 +29,7 @@ export function AppRoot({ Component, pageProps }: AppProps) {
 
   return (
 
+	// overflow-hidden rounded-b-lg
 	<div className="absolute top-0 left-0 right-0 bottom-0">
 		<div className="relative mt-8">
 			<div

@@ -19,6 +19,7 @@ import { FontContext } from "@contexts/FontContext";
 import { backendStatusContext } from "@contexts/backendStatusContext";
 import { AppRoot } from "@components/AppRoot";
 import DynamicTitleBar from "@components/Native/DynamicTitlebar";
+import { AppFrame } from "@components/Native/AppFrame"
 import { osContext } from "@contexts/osContext";
 
 export default function App(AppProps: AppProps) {
@@ -102,8 +103,10 @@ export default function App(AppProps: AppProps) {
       >
         <osContext.Provider value={{ OS, isWindows }}>
           <FontContext>
-            <DynamicTitleBar />
-            <AppRoot {...AppProps} />
+			<AppFrame>
+				<DynamicTitleBar />
+				<AppRoot {...AppProps} />
+			</AppFrame>
           </FontContext>
         </osContext.Provider>
       </backendStatusContext.Provider>

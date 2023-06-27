@@ -182,6 +182,7 @@
         "resizable": true,
         "title": "CSSLoader Desktop",
         "decorations": false,
+		"transparent": true,
         "width": 800,
         "minWidth": 460,
         "minHeight": 300
