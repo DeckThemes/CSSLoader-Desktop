@@ -31,7 +31,7 @@ export function AppRoot({ Component, pageProps }: AppProps) {
 
 	// overflow-hidden rounded-b-lg
 	<div className="absolute top-0 left-0 right-0 bottom-0">
-		<div className="relative mt-8">
+		<div className="relative top-8">
 			<div
 			// A lot of this codebase is from the DeckThemes codebase, which has a light and dark mode, however this app only has a dark mode, so we put the dark class here incase we copy over things that have both styles
 			className={`dark relative flex overflow-y-scroll h-[calc(100vh-32px)] flex-col bg-base-6-dark text-textDark ${montserrat} ${openSans}`}
