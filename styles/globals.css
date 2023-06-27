@@ -133,3 +133,23 @@ input[type="color"]::-webkit-color-swatch {
 .radio-dropdown {
     box-shadow: 0 0 30px #000;
 }
+
+@keyframes hue-rotate {
+	0% {
+		transform: rotate(0deg);
+	  filter: hue-rotate(0deg) brightness(135%);
+	}
+	
+	50% {
+	  filter: hue-rotate(360deg) brightness(135%);
+	}
+	
+	100% {
+	  filter: hue-rotate(0deg) brightness(135%);
+	  transform: rotate(20deg);
+	}
+  }
+
+  .backend-loading-animation {
+	animation: hue-rotate 4s linear infinite forwards;
+  }
