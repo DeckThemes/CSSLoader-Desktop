@@ -2,10 +2,11 @@ import { useContext, useEffect, useRef } from "react";
 import { themeContext } from "@contexts/themeContext";
 import { allowedStoreOrigins, storeUrl } from "../constants";
 import { downloadThemeFromUrl, storeRead, toast } from "../backend";
+import { useRouter } from "next/router";
 
 export default function Store() {
   const storeRef = useRef<HTMLIFrameElement>();
-
+  const router = useRouter();
   const { refreshThemes } = useContext(themeContext);
 
   useEffect(() => {
@@ -18,6 +19,9 @@ export default function Store() {
           storeRef.current?.contentWindow?.postMessage({ action: "themeInstalled" }, event.origin);
         });
       }
+      if (event.data.action === "tokenRedirect") {
+        router.push("/settings");
+      }
     }
     window.addEventListener("message", listener);
     return () => {
@@ -26,7 +30,7 @@ export default function Store() {
   }, []);
   return (
     <>
-      <main className="w-full h-full flex flex-1 flex-grow flex-col items-center gap-4">
+      <main className="flex h-full w-full flex-1 flex-grow flex-col items-center gap-4">
         <iframe
           // @ts-ignore
           ref={storeRef}
