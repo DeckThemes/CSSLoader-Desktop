@@ -136,7 +136,6 @@ input[type="color"]::-webkit-color-swatch {
 
 @keyframes hue-rotate {
 	0% {
-		transform: rotate(0deg);
 	  filter: hue-rotate(0deg) brightness(135%);
 	}
 	
@@ -146,7 +145,6 @@ input[type="color"]::-webkit-color-swatch {
 	
 	100% {
 	  filter: hue-rotate(0deg) brightness(135%);
-	  transform: rotate(20deg);
 	}
   }
 
