@@ -30,12 +30,6 @@ function OptionalDepsModal({
     <>
       <AlertDialog
         dontClose
-        onOpenChange={(open) => {
-          if (!open) {
-            enableThemeOptDeps();
-            closeModal();
-          }
-        }}
         defaultOpen
         title="Optional Dependencies"
         description={`${themeData.name} enables other themes to enhance its functionality. Disabling these dependencies is allowed but it may cause the theme to break in unexpected ways`}
@@ -56,6 +50,10 @@ function OptionalDepsModal({
           </div>
         }
         actionText={`Enable ${themeData.name}`}
+        onAction={() => {
+          enableThemeOptDeps();
+          closeModal();
+        }}
       />
     </>
   );
