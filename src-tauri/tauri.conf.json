@@ -31,7 +31,8 @@
         "scope": [
           "$CONFIG\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\*",
           "$APPDATA/standaloneVersion.txt",
-          "$APPDATA"
+          "$APPDATA",
+          "$HOME/homebrew/themes"
         ],
         "writeFile": true
       },

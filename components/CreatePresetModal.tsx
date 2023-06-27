@@ -33,19 +33,9 @@ export function CreatePresetModal() {
             />
           </div>
         }
-        Footer={
-          <button
-            onClick={createPreset}
-            className={twMerge(
-              "font-fancy my-2 mr-2 ml-auto rounded-2xl p-2 px-6 transition-all",
-              presetName.length > 0 ? "bg-brandBlue" : "bg-base-5.5-dark"
-            )}
-            style={{ opacity: presetName.length === 0 ? "0.5" : "1" }}
-            disabled={presetName.length === 0}
-          >
-            Create
-          </button>
-        }
+        actionDisabled={presetName.length === 0}
+        actionText="Create"
+        onAction={createPreset}
         title="Create Preset"
         description={`This preset will combine ${
           enabledThemes === 1 ? "the " : "all "

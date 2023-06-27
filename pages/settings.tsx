@@ -16,6 +16,9 @@ import { FaPatreon } from "react-icons/fa";
 import { themeContext } from "@contexts/themeContext";
 import { GenericInstallBackendModal } from "@components/GenericInstallBackendModal";
 import { open } from "@tauri-apps/api/dialog";
+import { osContext } from "@contexts/osContext";
+import { ImSpinner5 } from "react-icons/im";
+import { CreateTemplateTheme } from "@components/Settings";
 
 export default function SettingsPage() {
   const [token, setToken] = useState<string>("");
@@ -33,6 +36,9 @@ export default function SettingsPage() {
   }, []);
 
   const { themes, refreshThemes } = useContext(themeContext);
+  const { isWindows } = useContext(osContext);
+
+  const [ongoingAction, setOngoingAction] = useState<boolean>(false);
 
   const [showBackendInstallModal, setShowBackendInstallModal] = useState<boolean>(false);
   const [installText, setInstallText] = useState<string>("");
@@ -84,84 +90,111 @@ export default function SettingsPage() {
           </div>
           <div className="flex w-full flex-col gap-4">
             <span className="text-lg font-bold">Developer Settings</span>
-            <button
-              onClick={() => killBackend(() => console.log("Backend Killed"))}
-              className="h-12 whitespace-nowrap rounded-xl bg-base-3-dark px-4"
-            >
-              Kill Backend
-            </button>
-            <button
-              onClick={() => startBackend(() => console.log("Backend Started"))}
-              className="h-12 whitespace-nowrap rounded-xl bg-base-3-dark px-4"
-            >
-              Force Start Backend
-            </button>
-            <AlertDialog
-              cancelText="Go Back"
-              title="Wait A Second!"
-              description="This feature is meant for developers. If you do not understand exactly what you're doing, cancel this popup. Do not install files from untrusted sources."
-              actionText="I Know What I'm Doing"
-              actionClass="bg-dangerRed"
-              onAction={() => {
-                open({
-                  directory: false,
-                  multiple: false,
-                  filters: [
-                    {
-                      name: "CSSLoader-Standalone-Headless.exe",
-                      extensions: ["exe"],
-                    },
-                  ],
-                  //  @ts-ignore
-                }).then((path: string) => {
-                  setInstallModalDesc("Installing " + path.slice(path.lastIndexOf("\\") + 1));
-                  // TODO: This function assumes each function never fails, add some failsafes/error messages
-                  setShowBackendInstallModal(true);
-                  setInstallText("Stopping Backend");
-                  killBackend(() => {
-                    setTimeout(() => {
-                      setInstallText("Installing New Backend");
-                      copyBackend(path, () => {
+            <CreateTemplateTheme {...{ ongoingAction }} />
+            {isWindows && (
+              <>
+                <button
+                  disabled={ongoingAction}
+                  onClick={() => {
+                    setOngoingAction(true);
+                    killBackend(() => {
+                      setOngoingAction(false);
+                      console.log("Backend Killed");
+                    });
+                  }}
+                  className="flex h-12 items-center justify-center whitespace-nowrap rounded-xl bg-base-3-dark px-4"
+                >
+                  {ongoingAction ? <ImSpinner5 /> : "Kill Backend"}
+                </button>
+                <button
+                  disabled={ongoingAction}
+                  onClick={() => {
+                    setOngoingAction(true);
+                    startBackend(() => {
+                      setOngoingAction(false);
+                      console.log("Backend Started");
+                    });
+                  }}
+                  className="flex h-12 items-center justify-center whitespace-nowrap rounded-xl bg-base-3-dark px-4"
+                >
+                  {ongoingAction ? <ImSpinner5 /> : "Force Start Backend"}
+                </button>
+                <AlertDialog
+                  cancelText="Go Back"
+                  title="Wait A Second!"
+                  description="This feature is meant for developers. If you do not understand exactly what you're doing, cancel this popup. Do not install files from untrusted sources."
+                  actionText="I Know What I'm Doing"
+                  actionClass="bg-dangerRed"
+                  onAction={() => {
+                    open({
+                      directory: false,
+                      multiple: false,
+                      filters: [
+                        {
+                          name: "CSSLoader-Standalone-Headless.exe",
+                          extensions: ["exe"],
+                        },
+                      ],
+                      //  @ts-ignore
+                    }).then((path: string) => {
+                      if (!path) {
+                        toast("Invalid Selection");
+                        return;
+                      }
+                      setOngoingAction(true);
+                      setInstallModalDesc("Installing " + path.slice(path.lastIndexOf("\\") + 1));
+                      // TODO: This function assumes each function never fails, add some failsafes/error messages
+                      setShowBackendInstallModal(true);
+                      setInstallText("Stopping Backend");
+                      killBackend(() => {
                         setTimeout(() => {
-                          // TODO: THIS IS HORRIBLY JANK!
-                          // For some reason, it appears the first time you start the new backend, it always fails, it is only after it fails once that it then starts the next time
-                          setInstallText("Pausing To Allow Windows To Figure Itself Out");
-                          startBackend(() => {});
-                          setTimeout(() => {
-                            startBackend(() => {
+                          setInstallText("Installing New Backend");
+                          copyBackend(path, () => {
+                            setTimeout(() => {
+                              // TODO: THIS IS HORRIBLY JANK!
+                              // For some reason, it appears the first time you start the new backend, it always fails, it is only after it fails once that it then starts the next time
+                              setInstallText("Pausing To Allow Windows To Figure Itself Out");
+                              startBackend(() => {});
                               setTimeout(() => {
-                                setShowBackendInstallModal(false);
-                                setInstallModalDesc("");
-                                refreshThemes();
-                              }, 1000);
-                            });
-                          }, 10000);
+                                startBackend(() => {
+                                  setTimeout(() => {
+                                    setOngoingAction(false);
+                                    setShowBackendInstallModal(false);
+                                    setInstallModalDesc("");
+                                    refreshThemes();
+                                  }, 1000);
+                                });
+                              }, 10000);
+                            }, 1000);
+                          });
                         }, 1000);
                       });
-                    }, 1000);
-                  });
-                });
-              }}
-              Trigger={
-                <>
-                  <button className="h-12 w-full whitespace-nowrap rounded-xl bg-base-3-dark px-4">
-                    Install Backend From File
-                  </button>
-                </>
-              }
-            />
-
-            {showBackendInstallModal && (
-              <GenericInstallBackendModal
-                titleText="Installed Backend From File"
-                descriptionText={installModalDesc}
-                installProg={1}
-                installText={installText}
-                dontClose
-              />
+                    });
+                  }}
+                  Trigger={
+                    <>
+                      <button
+                        disabled={ongoingAction}
+                        className="flex h-12 w-full items-center justify-center whitespace-nowrap rounded-xl bg-base-3-dark px-4"
+                      >
+                        {ongoingAction ? <ImSpinner5 /> : "Install Backend From File"}
+                      </button>
+                    </>
+                  }
+                />
+                {showBackendInstallModal && (
+                  <GenericInstallBackendModal
+                    titleText="Installed Backend From File"
+                    descriptionText={installModalDesc}
+                    installProg={1}
+                    installText={installText}
+                    dontClose
+                  />
+                )}
+              </>
             )}
-
-            <button
+            {/* This was a WIP thing that would print out the current app state to a txt file, doesn't seem needed */}
+            {/* <button
               onClick={async () => {
                 console.log("Themes", themes);
                 console.log(
@@ -173,7 +206,7 @@ export default function SettingsPage() {
               className="h-12 whitespace-nowrap rounded-xl bg-base-3-dark px-4"
             >
               Data Dump
-            </button>
+            </button> */}
           </div>
           <div className="flex w-full flex-col gap-4">
             <span className="text-lg font-bold">Credits</span>

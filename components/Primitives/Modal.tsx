@@ -1,6 +1,7 @@
 import { fontContext } from "@contexts/FontContext";
 import * as Dialog from "@radix-ui/react-dialog";
 import { ReactNode, useContext } from "react";
+import { twMerge } from "tailwind-merge";
 export function Modal({
   Trigger = null,
   title,
@@ -8,6 +9,9 @@ export function Modal({
   Content,
   Footer = null,
   triggerDisabled = false,
+  actionDisabled = false,
+  actionText = "",
+  onAction = () => {},
 }: {
   Trigger?: ReactNode;
   title: string;
@@ -15,6 +19,9 @@ export function Modal({
   description?: string;
   Content: ReactNode;
   Footer?: ReactNode;
+  actionDisabled?: boolean;
+  actionText?: string;
+  onAction?: () => void;
 }) {
   const { montserrat } = useContext(fontContext);
 
@@ -43,6 +50,16 @@ export function Modal({
                 </button>
               </Dialog.Close>
               {Footer}
+              <Dialog.Close
+                onClick={onAction}
+                disabled={actionDisabled}
+                className={twMerge(
+                  "font-fancy my-2 mr-2 ml-auto rounded-2xl p-2 px-6 transition-all",
+                  !actionDisabled ? "bg-brandBlue" : "bg-base-5.5-dark opacity-50"
+                )}
+              >
+                {actionText}
+              </Dialog.Close>
             </div>
           </Dialog.Content>
         </div>
