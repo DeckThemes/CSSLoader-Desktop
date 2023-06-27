@@ -6,3 +6,4 @@ export * from "./CreatePresetModal";
 export * from "./YourThemes";
 export * from "./ManageThemes";
 export * from "./Primitives";
+export * from "./Presets";

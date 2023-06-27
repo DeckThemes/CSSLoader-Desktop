@@ -78,7 +78,7 @@ export function RadioDropdown({
         )}
         <div
           className={twMerge(
-            "flex h-12 w-full min-w-[250px] items-center justify-center rounded-xl border-2 border-borders-base1-light bg-base-3-light px-4 transition-all hover:border-borders-base2-light dark:border-borders-base1-dark dark:bg-base-3-dark hover:dark:border-borders-base2-dark",
+            "flex h-12 w-full min-w-[250px] items-center justify-center rounded-xl border-2 border-borders-base1-light bg-base-3-dark px-4 transition-all hover:border-borders-base2-light dark:border-borders-base1-dark hover:dark:border-borders-base2-dark",
             triggerClass
           )}
         >

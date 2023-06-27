@@ -5,9 +5,7 @@ export interface Server {
     args: TArgs
   ): Promise<ServerResponse<TRes>>;
 }
-export type ServerResponse<TRes> =
-  | ServerResponseSuccess<TRes>
-  | ServerResponseError;
+export type ServerResponse<TRes> = ServerResponseSuccess<TRes> | ServerResponseError;
 interface ServerResponseSuccess<TRes> {
   success: true;
   result: TRes;
@@ -26,6 +24,7 @@ export const server: Server = {
       }),
     })
       .then((res) => {
+        console.log(res);
         return res.data;
       })
       .then((json: any) => {

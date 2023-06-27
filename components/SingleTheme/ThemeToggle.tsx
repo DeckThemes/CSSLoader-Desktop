@@ -3,8 +3,9 @@ import { Flags, Theme } from "../../ThemeTypes";
 import { ThemePatch } from "./ThemePatch";
 import { RiArrowDownSFill, RiArrowUpSFill } from "react-icons/ri";
 import { themeContext } from "@contexts/themeContext";
-import { setThemeState, toast } from "../../backend";
+import { generatePreset, generatePresetFromThemeNames, setThemeState, toast } from "../../backend";
 import { AlertDialog, ToggleSwitch } from "..";
+import { twMerge } from "tailwind-merge";
 
 function OptionalDepsModal({
   themeData,
@@ -59,7 +60,15 @@ function OptionalDepsModal({
   );
 }
 
-export function ThemeToggle({ data, collapsible = false }: { data: Theme; collapsible?: boolean }) {
+export function ThemeToggle({
+  data,
+  collapsible = false,
+  rootClass = "",
+}: {
+  data: Theme;
+  collapsible?: boolean;
+  rootClass?: string;
+}) {
   const { refreshThemes } = useContext(themeContext);
   const [showOptDepsModal, setShowOptDepsModal] = useState<boolean>(false);
   const [collapsed, setCollapsed] = useState<boolean>(true);
@@ -72,7 +81,12 @@ export function ThemeToggle({ data, collapsible = false }: { data: Theme; collap
   }, [data.flags]);
 
   return (
-    <div className="flex w-full max-w-[960px] flex-col gap-1 rounded-xl border-2 border-borders-base1-dark bg-cardLight p-6 transition hover:border-borders-base2-dark dark:bg-base-3-dark">
+    <div
+      className={twMerge(
+        "flex w-full max-w-[960px] flex-col gap-1 rounded-xl border-2 border-borders-base1-dark bg-base-3-dark p-6 transition hover:border-borders-base2-dark",
+        rootClass
+      )}
+    >
       {showOptDepsModal && (
         <OptionalDepsModal themeData={data} closeModal={() => setShowOptDepsModal(false)} />
       )}

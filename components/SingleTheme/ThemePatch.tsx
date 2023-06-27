@@ -1,8 +1,8 @@
 import { useState, useContext } from "react";
-import { Patch } from "../../ThemeTypes";
+import { Flags, Patch } from "../../ThemeTypes";
 import { PatchComponent } from "./PatchComponent";
 import { themeContext } from "@contexts/themeContext";
-import { setPatchOfTheme } from "../../backend";
+import { generatePresetFromThemeNames, setPatchOfTheme } from "../../backend";
 import { SimpleRadioDropdown } from "@components/Primitives";
 
 export function ThemePatch({
@@ -16,12 +16,20 @@ export function ThemePatch({
   fullArr: Patch[];
   themeName: string;
 }) {
-  const { refreshThemes } = useContext(themeContext);
+  const { themes, refreshThemes } = useContext(themeContext);
   const [selectedIndex, setIndex] = useState(data.options.indexOf(data.value));
 
+  const selectedPreset = themes.find((e) => e.enabled && e.flags.includes(Flags.isPreset));
   const [selectedLabel, setLabel] = useState(data.value);
 
   const bottomSeparatorValue = fullArr.length - 1 !== index;
+
+  async function setPatchValue(value: string) {
+    if (selectedPreset && selectedPreset.dependencies.includes(themeName)) {
+      generatePresetFromThemeNames(selectedPreset.name, selectedPreset.dependencies);
+    }
+    return setPatchOfTheme(themeName, data.name, value);
+  }
 
   function ComponentContainer() {
     return (
@@ -63,7 +71,7 @@ export function ThemePatch({
                       value={selectedIndex}
                       onChange={(event) => {
                         const value = Number(event.target.value);
-                        setPatchOfTheme(themeName, data.name, data.options[value]);
+                        setPatchValue(data.options[value]);
                         setIndex(value);
                         setLabel(data.options[value]);
                       }}
@@ -99,8 +107,7 @@ export function ThemePatch({
                       onChange={(event) => {
                         const bool = event.target.checked;
                         const newValue = bool ? "Yes" : "No";
-                        setPatchOfTheme(themeName, data.name, newValue).then(() => {
-                          // TODO: This is a shim, should fix some other way
+                        setPatchValue(newValue).then(() => {
                           refreshThemes();
                         });
                         setLabel(newValue);
@@ -121,7 +128,7 @@ export function ThemePatch({
                     options={data.options}
                     value={data.value}
                     onValueChange={(e) => {
-                      setPatchOfTheme(themeName, data.name, e);
+                      setPatchValue(e);
                       setLabel(e);
                     }}
                   />

@@ -1,5 +1,11 @@
 import { BiReset } from "react-icons/bi";
-import { OneColumnThemeView, TwoColumnThemeView, CreatePresetModal } from "../components";
+import {
+  OneColumnThemeView,
+  TwoColumnThemeView,
+  CreatePresetModal,
+  PresetSelectionDropdown,
+  PresetFolderView,
+} from "../components";
 import { useVW } from "../hooks/useVW";
 import { themeContext } from "@contexts/themeContext";
 import { useContext, useState, useEffect, useMemo } from "react";
@@ -17,7 +23,9 @@ export default function MainPage() {
 
   const [sortedThemes, sortedPresets] = useMemo(() => {
     const filteredAll = themes.filter(
-      (e) => e.name.toLowerCase().includes(search.toLowerCase()) || e.author.toLowerCase().includes(search)
+      (e) =>
+        e.name.toLowerCase().includes(search.toLowerCase()) ||
+        e.author.toLowerCase().includes(search)
     );
     const sortedAll = filteredAll.sort((a, b) => {
       switch (sortValue) {
@@ -124,29 +132,18 @@ export default function MainPage() {
           </div>
           <div className="mb-8 flex h-full w-full flex-col items-center justify-center gap-2 px-4">
             <span className="w-full max-w-[960px] text-lg font-bold">Presets</span>
-            <div className="mb-6 w-full max-w-[960px]">
-              <Tooltip
-                triggerContent={<CreatePresetModal />}
-                content={
-                  <span className="text-sm">Enable at least 1 theme to create a preset.</span>
-                }
-              />
+            <div className="flex w-full max-w-[960px] items-center justify-between gap-4">
+              <PresetSelectionDropdown />
+              <div className="self-end">
+                <Tooltip
+                  triggerContent={<CreatePresetModal />}
+                  content={
+                    <span className="text-sm">Enable at least 1 theme to create a preset.</span>
+                  }
+                />
+              </div>
             </div>
-            {themes.filter((e) => e.flags.includes(Flags.isPreset)).length > 0 ? (
-              <>
-                {numCols === 1 ? (
-                  <OneColumnThemeView themes={sortedPresets} />
-                ) : (
-                  <TwoColumnThemeView themes={sortedPresets} />
-                )}
-              </>
-            ) : (
-              <>
-                <span className="w-full max-w-[960px]">
-                  You have no presets, create them by mixing and matching themes
-                </span>
-              </>
-            )}
+            <PresetFolderView />
           </div>
         </div>
         <div className="mt-8 flex w-full max-w-[960px] items-end justify-between px-4 pb-8">
