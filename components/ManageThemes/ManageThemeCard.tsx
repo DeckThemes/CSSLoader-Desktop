@@ -1,5 +1,5 @@
 import { BsFillCloudDownloadFill, BsTrashFill } from "react-icons/bs";
-import { MinimalCSSThemeInfo, Theme } from "../../ThemeTypes";
+import { Flags, MinimalCSSThemeInfo, Theme } from "../../ThemeTypes";
 import { LocalThemeStatus } from "../../pages/manage-themes";
 import { UpdateStatus } from "../../logic";
 
@@ -31,11 +31,17 @@ export function ManageThemeCard({
       <div className="flex flex-col">
         <span className="font-fancy text-md font-bold">{themeData.name}</span>
         <span className="font-fancy text-muted text-sm">
-          {themeData.version} • {themeData.author}
-          {updateStatus === "local" ? (
-            <span className="italic text-slate-200"> - Local Theme</span>
+          {themeData.flags.includes(Flags.isPreset) ? (
+            <span>Preset</span>
           ) : (
-            ""
+            <>
+              {themeData.version} • {themeData.author}
+              {updateStatus === "local" ? (
+                <span className="text-fore-9-dark"> - Local Theme</span>
+              ) : (
+                ""
+              )}
+            </>
           )}
         </span>
       </div>
