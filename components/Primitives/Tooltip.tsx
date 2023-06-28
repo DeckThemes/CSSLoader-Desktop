@@ -1,6 +1,6 @@
 import { fontContext } from "@contexts/FontContext";
 import * as RadixTooltip from "@radix-ui/react-tooltip";
-import { ReactElement, useContext } from "react";
+import { ReactElement, useContext, useState } from "react";
 import { twMerge } from "tailwind-merge";
 export function Tooltip({
   triggerContent,
@@ -8,19 +8,26 @@ export function Tooltip({
   tooltipSide = "bottom",
   contentClass = "",
   arrow = false,
+  disabled = false,
   content,
 }: {
   triggerContent: ReactElement;
   delayDuration?: number;
   tooltipSide?: "top" | "bottom" | "left" | "right";
   contentClass?: string;
+  disabled?: boolean;
   arrow?: boolean;
   content: ReactElement | string;
 }) {
   const { montserrat } = useContext(fontContext);
+  const [open, setOpen] = useState(false);
   return (
     <RadixTooltip.Provider>
-      <RadixTooltip.Root delayDuration={delayDuration}>
+      <RadixTooltip.Root
+        open={open}
+        onOpenChange={(open) => !disabled && setOpen(open)}
+        delayDuration={delayDuration}
+      >
         <RadixTooltip.Trigger>{triggerContent}</RadixTooltip.Trigger>
         <RadixTooltip.Portal>
           <div className={`dark ${montserrat} font-fancy`}>

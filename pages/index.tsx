@@ -142,6 +142,7 @@ export default function MainPage() {
               <div className="h-min w-full max-w-[960px] text-lg font-bold">Presets</div>
               <div className="self-end">
                 <Tooltip
+                  disabled={themes.filter((e) => e.enabled).length > 0}
                   triggerContent={<CreatePresetModal />}
                   content={
                     <span className="text-sm">Enable at least 1 theme to create a preset.</span>
