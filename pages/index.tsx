@@ -16,7 +16,7 @@ import Link from "next/link";
 
 export default function MainPage() {
   const vw = useVW();
-  const { refreshThemes, themes } = useContext(themeContext);
+  const { refreshThemes, themes, selectedPreset } = useContext(themeContext);
   const [search, setSearch] = useState<string>("");
   const [numCols, setNumCols] = useState<number>(1);
   const [sortValue, setSort] = useState<any>("nameAZ");
@@ -110,7 +110,13 @@ export default function MainPage() {
           </div>
 
           <div className="mb-8 mt-6 flex h-full w-full flex-col items-center justify-center px-4">
-            <span className="mb-6 w-full max-w-[960px] text-lg font-bold">Themes</span>
+            <span className="mb-3 w-full max-w-[960px] text-lg font-bold">Themes</span>
+            {selectedPreset && (
+              <span className="mb-6 w-full max-w-[960px] text-sm">
+                Some themes are enabled by a preset, any changes to the theme's settings will be
+                saved to your preset
+              </span>
+            )}
             {themes.length > 0 ? (
               <>
                 {numCols === 1 ? (

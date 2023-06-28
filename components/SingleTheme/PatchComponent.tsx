@@ -1,9 +1,16 @@
-import { VFC } from "react";
+import { VFC, useContext } from "react";
 
 import { open } from "@tauri-apps/api/dialog";
 import { ThemePatchComponent } from "../../ThemeTypes";
 import { FaFolder } from "react-icons/fa";
-import { fetchThemePath, getInstalledThemes, setComponentOfThemePatch, toast } from "../../backend";
+import {
+  fetchThemePath,
+  generatePresetFromThemeNames,
+  getInstalledThemes,
+  setComponentOfThemePatch,
+  toast,
+} from "../../backend";
+import { themeContext } from "@contexts/themeContext";
 
 export const PatchComponent = ({
   data,
@@ -18,6 +25,7 @@ export const PatchComponent = ({
   patchName: string;
   bottomSeparatorValue: any;
 }) => {
+  const { selectedPreset } = useContext(themeContext);
   function setComponentAndReload(value: string) {
     setComponentOfThemePatch(
       themeName,
@@ -25,6 +33,9 @@ export const PatchComponent = ({
       data.name, // componentName
       value
     ).then(() => {
+      if (selectedPreset && selectedPreset.dependencies.includes(themeName)) {
+        generatePresetFromThemeNames(selectedPreset.name, selectedPreset.dependencies);
+      }
       getInstalledThemes();
     });
   }

@@ -14,7 +14,14 @@ export function PresetFolderView() {
           {selectedPreset.dependencies.map((e) => {
             const themeEntry = themes.find((f) => f.name === e);
             if (themeEntry) {
-              return <ThemeToggle collapsible data={themeEntry} rootClass="bg-base-5.5-dark" />;
+              return (
+                <ThemeToggle
+                  inPresetView
+                  collapsible
+                  data={themeEntry}
+                  rootClass="bg-base-5.5-dark"
+                />
+              );
             }
             return null;
           })}

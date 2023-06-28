@@ -26,11 +26,7 @@ export function ThemePatch({
   async function setPatchValue(value: string) {
     return setPatchOfTheme(themeName, data.name, value).then(() => {
       if (selectedPreset && selectedPreset.dependencies.includes(themeName)) {
-        return generatePresetFromThemeNames(selectedPreset.name, selectedPreset.dependencies).then(
-          () => {
-            // return refreshThemes();
-          }
-        );
+        return generatePresetFromThemeNames(selectedPreset.name, selectedPreset.dependencies);
       }
     });
   }
@@ -111,7 +107,9 @@ export function ThemePatch({
                       onChange={(event) => {
                         const bool = event.target.checked;
                         const newValue = bool ? "Yes" : "No";
-                        setPatchValue(newValue);
+                        setPatchValue(newValue).then(() => {
+                          refreshThemes();
+                        });
                         setLabel(newValue);
                         setIndex(data.options.findIndex((e) => e === newValue));
                       }}
