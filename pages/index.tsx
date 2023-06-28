@@ -136,25 +136,29 @@ export default function MainPage() {
               </>
             )}
           </div>
+
           <div className="mb-8 flex h-full w-full flex-col items-center justify-center gap-2 px-4">
-            <span className="w-full max-w-[960px] text-lg font-bold">Presets</span>
-            <div className="flex w-full max-w-[960px] items-center justify-between gap-4">
-              {themes.filter((e) => e.flags.includes(Flags.isPreset)).length > 0 && (
-                <PresetSelectionDropdown />
-              )}
-              <div className="self-end">
-                <Tooltip
-                  triggerContent={<CreatePresetModal />}
-                  content={
-                    <span className="text-sm">Enable at least 1 theme to create a preset.</span>
-                  }
-                />
+            <div className="mb-2 h-min w-full max-w-[960px] text-lg font-bold">Presets</div>
+            <div className="w-full max-w-[960px] rounded-xl border-2 border-[#2e2e2e] bg-base-3-dark p-4">
+              <div className="flex w-full max-w-[960px] items-center justify-between gap-4">
+                {themes.filter((e) => e.flags.includes(Flags.isPreset)).length > 0 && (
+                  <PresetSelectionDropdown />
+                )}
+                <div className="self-end">
+                  <Tooltip
+                    triggerContent={<CreatePresetModal />}
+                    content={
+                      <span className="text-sm">Enable at least 1 theme to create a preset.</span>
+                    }
+                  />
+                </div>
               </div>
+              <PresetFolderView />
             </div>
-            <PresetFolderView />
           </div>
         </div>
-        <div className="px-4 mt-8 flex w-full max-w-[960px] items-end justify-between pb-8">
+
+        <div className="mt-8 flex w-full max-w-[960px] items-end justify-between px-4 pb-8">
           <button
             className="flex h-full w-fit items-center justify-center gap-2 rounded-full border-2 border-[#2e2e2e] px-4 py-2"
             onClick={() => {

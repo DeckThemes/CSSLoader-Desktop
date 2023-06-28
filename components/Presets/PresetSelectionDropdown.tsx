@@ -11,6 +11,7 @@ export function PresetSelectionDropdown() {
   return (
     <>
       <RadioDropdown
+	  	triggerClass="bg-base-5.5-dark"
         headingText="Selected Preset"
         ariaLabel="Preset Selection Dropdown"
         value={presets.find((e) => e.enabled)?.name || "None"}
