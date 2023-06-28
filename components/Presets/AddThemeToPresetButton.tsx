@@ -64,7 +64,7 @@ export function AddThemeToPresetButton() {
                 ...selectedPreset.dependencies,
                 themeToAdd,
               ]).then(() => {
-                refreshThemes(true);
+                refreshThemes();
               });
             }
           }}
