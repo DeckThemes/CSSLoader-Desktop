@@ -2,7 +2,7 @@ import { themeContext } from "@contexts/themeContext";
 import { Modal, RadioDropdown } from "..";
 import { useContext, useState, useMemo, useEffect } from "react";
 import { Flags } from "ThemeTypes";
-import { generatePresetFromThemeNames } from "backend";
+import { generatePresetFromThemeNames, setThemeState } from "backend";
 import { twMerge } from "tailwind-merge";
 
 export function AddThemeToPresetButton() {
@@ -64,6 +64,9 @@ export function AddThemeToPresetButton() {
                 ...selectedPreset.dependencies,
                 themeToAdd,
               ]).then(() => {
+                if (!themes.find((e) => e.name === themeToAdd).enabled) {
+                  await setThemeState(themeToAdd, true)
+                }
                 refreshThemes();
               });
             }
