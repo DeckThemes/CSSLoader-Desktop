@@ -1,14 +1,14 @@
-import { Command } from "@tauri-apps/api/shell";
-import { useEffect, useState } from "react";
-import { ImSpinner5 } from "react-icons/im";
+import { useEffect, useState, useContext } from "react";
 import { startBackend } from "../backend";
 import Image from "next/image";
+import { backendStatusContext } from "@contexts/backendStatusContext";
 
 export function BackendFailedPage() {
+  const { recheckDummy } = useContext(backendStatusContext);
   const [hasWaited, setWaited] = useState<boolean>(false);
-
   const [canRestart, setCanRestart] = useState(true);
   useEffect(() => {
+    recheckDummy();
     setTimeout(() => {
       setWaited(true);
     }, 10000);

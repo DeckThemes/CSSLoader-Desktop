@@ -43,7 +43,6 @@ export default function App(AppProps: AppProps) {
     checkIfBackendIsStandalone().then((isStandalone) => {
       if (isStandalone) {
         checkForNewBackend().then((newStandalone) => {
-          console.log(newStandalone);
           if (newStandalone) {
             setNewBackend(newStandalone as string);
             setShowNewBackend(true);
@@ -102,6 +101,7 @@ export default function App(AppProps: AppProps) {
           backendExists,
           showNewBackendPage,
           newBackendVersion,
+          recheckDummy,
           setNewBackend,
           setShowNewBackend,
         }}
