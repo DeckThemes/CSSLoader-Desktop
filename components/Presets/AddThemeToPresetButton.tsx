@@ -1,19 +1,30 @@
 import { themeContext } from "@contexts/themeContext";
 import { Modal, RadioDropdown } from "..";
-import { useContext, useState } from "react";
+import { useContext, useState, useMemo, useEffect } from "react";
 import { Flags } from "ThemeTypes";
-import { generatePreset, generatePresetFromThemeNames } from "backend";
+import { generatePresetFromThemeNames } from "backend";
 import { twMerge } from "tailwind-merge";
 
 export function AddThemeToPresetButton() {
   const { themes, refreshThemes, selectedPreset } = useContext(themeContext);
-  const dropdownOptions = themes
-    .filter(
-      (e) => !selectedPreset?.dependencies.includes(e.name) && !e.flags.includes(Flags.isPreset)
-    )
-    .map((e) => e.name);
+  const dropdownOptions = useMemo(
+    () =>
+      themes
+        .filter(
+          (e) => !selectedPreset?.dependencies.includes(e.name) && !e.flags.includes(Flags.isPreset)
+        )
+        .map((e) => e.name),
+    [themes]
+  );
 
-  console.log(themes);
+  // This fixes the issue where if you selected an option and added it, the value would not reset to a new one
+  // There may be a way to do this that doesn't involve a useEffect
+  useEffect(() => {
+    if (selectedPreset?.dependencies.includes(themeToAdd)) {
+      setThemeToAdd(dropdownOptions[0]);
+    }
+  }, [themes, selectedPreset]);
+
   const [themeToAdd, setThemeToAdd] = useState<string>(dropdownOptions[0]);
 
   if (selectedPreset) {
