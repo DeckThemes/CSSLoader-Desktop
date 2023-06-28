@@ -63,9 +63,9 @@ export function AddThemeToPresetButton() {
               generatePresetFromThemeNames(selectedPreset.name, [
                 ...selectedPreset.dependencies,
                 themeToAdd,
-              ]).then(() => {
-                if (!themes.find((e) => e.name === themeToAdd).enabled) {
-                  await setThemeState(themeToAdd, true)
+              ]).then(async () => {
+                if (!themes.find((e) => e.name === themeToAdd)!.enabled) {
+                  await setThemeState(themeToAdd, true);
                 }
                 refreshThemes();
               });
