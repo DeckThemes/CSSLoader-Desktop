@@ -3,6 +3,36 @@ import { startBackend } from "../backend";
 import Image from "next/image";
 import { backendStatusContext } from "@contexts/backendStatusContext";
 
+function BackendLoadingTagline() {
+  const [tagline, setTagline] = useState<string>("");
+  const taglines: string[] = [
+    `Creating a color pallete...`,
+    `Busy setting gradients...`,
+    `Preparing the store now...`,
+    `Breaking all of your settings...`,
+    `Waking up the backend...`,
+    `Janking up Steam...`,
+    `Switching font-fancy and fancy-font around...`,
+	`Spilling paint all over...`,
+	`Inspecting class names...`
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(getTagline, 2500);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+  const getTagline = () => {
+    const i = Math.floor(Math.random() * taglines.length);
+    setTagline(taglines[i]);
+  };
+
+  return <>{tagline && <h3 className="text-xs font-medium text-fore-9-dark">{tagline}</h3>}</>;
+}
+
 export function BackendFailedPage() {
   const { recheckDummy } = useContext(backendStatusContext);
   const [hasWaited, setWaited] = useState<boolean>(false);
@@ -33,9 +63,7 @@ export function BackendFailedPage() {
             draggable={false}
           />
           <h1 className="font-fancy text-xl font-extrabold tracking-tight">Welcome to CSSLoader</h1>
-          <h3 className="text-xs font-medium text-fore-9-dark">
-            We're loading right now, sit tight.
-          </h3>
+          <BackendLoadingTagline />
         </div>
         <button
           disabled={!hasWaited}
