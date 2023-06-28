@@ -33,11 +33,13 @@ export function BackendFailedPage() {
             draggable={false}
           />
           <h1 className="font-fancy text-xl font-extrabold tracking-tight">Welcome to CSSLoader</h1>
-		  <h3 className="text-xs font-medium text-fore-9-dark">We're loading the backend now, sit tight.</h3>
+          <h3 className="text-xs font-medium text-fore-9-dark">
+            We're loading right now, sit tight.
+          </h3>
         </div>
         <button
           disabled={!hasWaited}
-          className="font-fancy absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full font-bold text-xs border-2 border-borders-base1-dark bg-base-3-dark p-2 px-4 transition-all duration-300 hover:border-borders-base2-dark"
+          className="font-fancy absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full border-2 border-borders-base1-dark bg-base-3-dark p-2 px-4 text-xs font-bold transition-all duration-300 hover:border-borders-base2-dark"
           style={{ opacity: hasWaited ? 1 : 0 }}
           onClick={() => hasWaited && forceRestart()}
         >
