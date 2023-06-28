@@ -138,7 +138,7 @@ export default function MainPage() {
           </div>
 
           <div className="mb-8 flex h-full w-full flex-col items-center justify-center gap-2 px-4">
-            <div className="mb-2 flex w-full items-center justify-between">
+            <div className="mb-2 flex w-full items-center justify-between max-w-[960px]">
               <div className="h-min w-full max-w-[960px] text-lg font-bold">Presets</div>
               <div className="self-end">
                 <Tooltip
