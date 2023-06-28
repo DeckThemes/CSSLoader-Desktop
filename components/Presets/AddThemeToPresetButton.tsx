@@ -3,6 +3,7 @@ import { Modal, RadioDropdown } from "..";
 import { useContext, useState } from "react";
 import { Flags } from "ThemeTypes";
 import { generatePreset, generatePresetFromThemeNames } from "backend";
+import { twMerge } from "tailwind-merge";
 
 export function AddThemeToPresetButton() {
   const { themes, refreshThemes, selectedPreset } = useContext(themeContext);
@@ -32,14 +33,17 @@ export function AddThemeToPresetButton() {
               />
             </div>
           }
+          triggerDisabled={dropdownOptions.length === 0}
           Trigger={
             <>
-              <button
-                onClick={() => {}}
-                className="flex h-full w-fit items-center justify-center gap-2 rounded-full border-2 border-[#2e2e2e] bg-base-5.5-dark px-4 py-2 outline-none"
+              <div
+                className={twMerge(
+                  "flex h-full w-fit items-center justify-center gap-2 rounded-full border-2 border-[#2e2e2e] bg-base-5.5-dark px-4 py-2 outline-none",
+                  dropdownOptions.length === 0 ? "opacity-50" : ""
+                )}
               >
                 <span className="text-sm font-bold">Add more themes</span>
-              </button>
+              </div>
             </>
           }
           actionText="Add To Preset"
