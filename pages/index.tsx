@@ -138,20 +138,22 @@ export default function MainPage() {
           </div>
 
           <div className="mb-8 flex h-full w-full flex-col items-center justify-center gap-2 px-4">
-            <div className="mb-2 h-min w-full max-w-[960px] text-lg font-bold">Presets</div>
+            <div className="mb-2 flex w-full items-center justify-between">
+              <div className="h-min w-full max-w-[960px] text-lg font-bold">Presets</div>
+              <div className="self-end">
+                <Tooltip
+                  triggerContent={<CreatePresetModal />}
+                  content={
+                    <span className="text-sm">Enable at least 1 theme to create a preset.</span>
+                  }
+                />
+              </div>
+            </div>
             <div className="w-full max-w-[960px] rounded-xl border-2 border-[#2e2e2e] bg-base-3-dark p-4">
               <div className="flex w-full max-w-[960px] items-center justify-between gap-4">
                 {themes.filter((e) => e.flags.includes(Flags.isPreset)).length > 0 && (
                   <PresetSelectionDropdown />
                 )}
-                <div className="self-end">
-                  <Tooltip
-                    triggerContent={<CreatePresetModal />}
-                    content={
-                      <span className="text-sm">Enable at least 1 theme to create a preset.</span>
-                    }
-                  />
-                </div>
               </div>
               <PresetFolderView />
             </div>

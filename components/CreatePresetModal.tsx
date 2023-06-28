@@ -53,12 +53,12 @@ export function CreatePresetModal() {
         Trigger={
           <button
             disabled={enabledThemes === 0}
-            className={`flex h-12 w-fit items-center justify-center gap-2 whitespace-nowrap rounded-full border-2 border-[#2e2e2e] px-4 py-2 text-sm font-bold ring-brandBlue transition duration-100 focus:ring-2 ${
+            className={`flex h-8 w-fit items-center justify-center gap-2 whitespace-nowrap rounded-full border-2 border-[#2e2e2e] px-4 py-2 text-sm font-bold ring-brandBlue transition duration-100 focus:ring-2 ${
               enabledThemes > 0 ? "bg-[#2563eb]" : "pointer-events-none opacity-50"
             }`}
           >
             <BiPlus />
-            <span>Create Preset</span>
+            <span>New Preset</span>
           </button>
         }
       />
