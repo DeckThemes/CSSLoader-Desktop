@@ -1,21 +1,22 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { KeyboardEvent } from "react";
 
 export function NavTab({ href, name, icon }: { href: string; name: string; icon: any }) {
   const router = useRouter();
 
-  const handleKeyDown = (e: KeyboardEvent, href: string) => {
-	if (e.key === "Enter") {
-		router.push(href)
-	}
-  }
+  const handleKeyDown = (e: KeyboardEvent<HTMLButtonElement>, href: string) => {
+    if (e.key === "Enter") {
+      router.push(href);
+    }
+  };
 
   return (
     <>
       <button
-	  	role="link"
-	  	onClick={() => router.push(href)}
-		onKeyDown={(e) => handleKeyDown(e, href)}
+        role="link"
+        onClick={() => router.push(href)}
+        onKeyDown={(e) => handleKeyDown(e, href)}
         style={{
           background: router.pathname === href ? "rgb(37, 99, 235)" : "#1e2024",
         }}
