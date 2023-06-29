@@ -27,10 +27,10 @@ export function SimpleRadioDropdown({
 
   return (
     <DropdownMenu.Root>
-      <DropdownMenu.Trigger className="flex w-full select-none flex-col items-end gap-2">
+      <DropdownMenu.Trigger className="flex select-none flex-col items-end gap-2">
         <div
           className={twMerge(
-            "px-4transition-all flex h-8 max-w-[250px] items-center justify-center rounded-xl border-2  border-borders-base1-light bg-base-3-light hover:border-borders-base2-light dark:border-borders-base1-dark dark:bg-base-3-dark hover:dark:border-borders-base2-dark",
+            "flex h-8 max-w-[250px] items-center justify-center rounded-xl border-2 border-borders-base1-light bg-base-3-light px-2 transition-all hover:border-borders-base2-light dark:border-borders-base1-dark dark:bg-base-3-dark hover:dark:border-borders-base2-dark",
             triggerClass
           )}
         >

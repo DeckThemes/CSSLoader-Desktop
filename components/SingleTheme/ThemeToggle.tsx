@@ -15,7 +15,7 @@ function OptionalDepsModal({
   themeData: Theme;
   closeModal: () => void;
 }) {
-  const { refreshThemes } = useContext(themeContext);
+  const { refreshThemes, selectedPreset } = useContext(themeContext);
 
   const [enableDeps, setEnableDeps] = useState(true);
   const [enableDepValues, setEnableDepValues] = useState(true);
@@ -23,10 +23,14 @@ function OptionalDepsModal({
     if (!enableDeps) setEnableDepValues(false);
   }, [enableDeps]);
 
-  function enableThemeOptDeps() {
-    setThemeState(themeData.name, true, enableDeps, enableDepValues).then(() => {
-      refreshThemes();
-    });
+  async function enableThemeOptDeps() {
+    await setThemeState(themeData.name, true, enableDeps, enableDepValues);
+    await refreshThemes();
+    if (!selectedPreset) return;
+    generatePresetFromThemeNames(selectedPreset.name, [
+      ...selectedPreset.dependencies,
+      themeData.name,
+    ]);
   }
   return (
     <>
