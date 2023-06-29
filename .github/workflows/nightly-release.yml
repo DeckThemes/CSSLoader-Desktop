@@ -1,9 +1,9 @@
-name: Beta Release
+name: Nightly Release
 
 on:
   push:
     branches:
-      - "dev"
+      - "nightly"
 
 jobs:
   create-release:
@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-20.04
     outputs:
       release_id: ${{ steps.create-release.outputs.result }}
+      tag: ${{ steps.create-release.outputs.tag }}
 
     steps:
       - name: Checkout Repository
@@ -21,6 +22,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
+
+      - name: Get Commit Hash
+        run: echo "COMMIT_HASH=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_ENV
 
       - name: Get Package Version
         run: echo "PACKAGE_VERSION=$(node -p "require('./package.json').version")" >> $GITHUB_ENV
@@ -33,14 +37,14 @@ jobs:
             const { data } = await github.rest.repos.createRelease({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              tag_name: `beta-${process.env.PACKAGE_VERSION}`,
-              name: `CSSLoader Desktop Beta ${process.env.PACKAGE_VERSION}`,
+              tag_name: `nightly-${process.env.COMMIT_HASH}`,
+              name: `CSSLoader Desktop Nightly ${process.env.COMMIT_HASH}`,
               body: `Download the release for your platform below`,
               draft: true,
-              prerelease: false
+              prerelease: true
             });
 
-            core.setOutput("tag", `beta-${process.env.PACKAGE_VERSION}`);
+            core.setOutput("tag", `nightly-${process.env.COMMIT_HASH}`);
 
             return data.id
 
@@ -59,7 +63,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          ref: "dev"
+          ref: "nightly"
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -91,7 +95,7 @@ jobs:
           releaseDraft: true
           includeDebug: true
           includeRelease: false
-          includeUpdaterJson: false
+          includeUpdaterJson: true
 
   publish-release:
     needs: [create-release, build-tauri]
@@ -104,7 +108,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          ref: "dev"
+          ref: "nightly"
 
       - name: Update Release Assets
         uses: ./.github/workflows/create-release-assets
@@ -112,7 +116,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           release_id: ${{ needs.create-release.outputs.release_id }}
           release_tag: ${{ needs.create-release.outputs.tag }}
-          git_branch: "dev"
+          git_branch: "nightly"
 
       - name: Publish Release
         id: publish-release
@@ -126,5 +130,5 @@ jobs:
               repo: context.repo.repo,
               release_id: process.env.release_id,
               draft: false,
-              prerelease: false
+              prerelease: true
             })
