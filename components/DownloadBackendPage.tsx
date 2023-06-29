@@ -1,53 +1,62 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { ImSpinner5 } from "react-icons/im";
-import { themeContext } from "../pages/_app";
-import { downloadBackend, startBackend } from "../backend";
+import { downloadBackend, killBackend, startBackend } from "../backend";
+import { AlertDialog } from "./Primitives";
+import { GenericInstallBackendModal } from "./GenericInstallBackendModal";
 
 export function DownloadBackendPage({
   onboarding = false,
+  hideWindow,
+  backendVersion,
+  onUpdateFinish,
 }: {
   onboarding?: boolean;
+  hideWindow?: any;
+  backendVersion?: string;
+  onUpdateFinish?: any;
 }) {
-  const { refreshThemes } = useContext(themeContext);
   const [installProg, setInstallProg] = useState<number>(0);
   const [installText, setInstallText] = useState<string>("");
   async function installBackend() {
     setInstallProg(1);
-    setInstallText("Downloading Backend");
-    downloadBackend(async () => {
-      setInstallProg(50);
-      setInstallText("Starting Backend");
-      startBackend(() => {
-        setInstallProg(100);
-        setInstallText("Install Complete");
-        setTimeout(() => {
-          refreshThemes();
-        }, 1000);
+    function doTheInstall() {
+      setInstallText("Downloading Backend");
+      downloadBackend(async () => {
+        setInstallProg(50);
+        setInstallText("Starting Backend");
+        startBackend(() => {
+          setInstallProg(100);
+          setInstallText("Install Complete");
+          setTimeout(() => {
+            onUpdateFinish();
+          }, 1000);
+        });
       });
-    });
+    }
+    if (onboarding) {
+      doTheInstall();
+    } else {
+      setInstallText("Stopping Backend");
+      killBackend(() => {
+        doTheInstall();
+      });
+    }
   }
 
   return (
     <>
-      <main className="flex flex-col w-full h-full items-center justify-center flex-grow gap-4">
-        <h1 className="fancy-font text-5xl font-semibold">
-          {onboarding ? "Welcome To CSSLoader" : "Backend Update Available"}
-        </h1>
-        <button
-          onClick={() => installProg <= 0 && installBackend()}
-          disabled={installProg > 0}
-          className="p-4 bg-cardDark rounded-3xl transition-all"
-        >
-          {installProg > 0 ? (
-            <div className="flex items-center justify-center gap-4">
-              <ImSpinner5 className="animate-spin" size={64} />
-              <span className="fancy-font text-2xl">{installText}</span>
-            </div>
-          ) : (
-            <h2 className="fancy-font text-3xl">Install Backend</h2>
-          )}
-        </button>
-      </main>
+      <GenericInstallBackendModal
+        titleText={onboarding ? "Install CSSLoader's Backend" : "Backend Update Available"}
+        dontClose={installProg > 0 || onboarding}
+        descriptionText={
+          onboarding
+            ? "CSSLoader's backend allows it to inject your CSS into Steam. You must install it to use CSSLoader Desktop"
+            : "We recommend installing backend updates as soon as they're available in order to maintain compatibility with new themes."
+        }
+        {...{ installProg, installText }}
+        onAction={() => installBackend()}
+        onCloseWindow={() => hideWindow()}
+      />
     </>
   );
 }

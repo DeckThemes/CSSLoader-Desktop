@@ -2,13 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  height: 100%;
+  width: 100%;
+}
+
 html,
 body {
+  /* I'm not sure why you removed the width and height at 100%, but it's super important */
+  height: 100%;
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: var(--montserrat), BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
+    Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+	overflow: hidden;
+	/* background: transparent !important; */
+	border-radius: 8px;
 }
+
+/* body {
+	overflow-y: scroll;
+} */
 
 a {
   color: inherit;
@@ -17,22 +31,123 @@ a {
 
 * {
   box-sizing: border-box;
-}
-
-.fancy-font {
+  user-select: none;
   font-family: var(--montserrat);
-}
-
-main {
-  font-family: var(--opensans);
 }
 
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
   }
+
   body {
     color: white;
-    background: black;
   }
 }
+
+.font-fancy {
+  font-family: var(--montserrat);
+}
+
+.font-notfancy {
+  font-family: var(--opensans);
+}
+
+main {
+  font-family: var(--opensans);
+}
+
+iframe {
+  background: transparent !important;
+}
+
+input[type="color"] {
+  -webkit-appearance: none;
+  border: none;
+  width: 32px;
+  height: 32px;
+}
+input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+input[type="color"]::-webkit-color-swatch {
+  border: none;
+}
+
+::-webkit-scrollbar {
+  width: 15px;
+  height: 0px;
+  background: transparent;
+  padding-right: 8px;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 9999px;
+  background: #484848;
+  background-clip: padding-box;
+  border: 5px solid rgba(0, 0, 0, 0);
+  border-width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 9999px;
+  background: transparent;
+}
+
+.page-shadow {
+  box-shadow: 0px 0px 30px hsl(220, 5%, 0%);
+}
+
+.modal-shadow {
+  box-shadow: 0px 0px 20px hsl(220, 5%, 0%);
+}
+
+@keyframes load-in {
+  0% {
+    opacity: 0;
+    pointer-events: none;
+  }
+  100% {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+.iframe-load-animation {
+  opacity: 0;
+
+  animation: load-in 0.2s ease forwards;
+  animation-delay: 0.4s;
+}
+
+.cssloader-titlebar {
+	top: 0;
+	left: 0;
+	right: 0;
+}
+
+.radio-dropdown {
+    box-shadow: 0 0 30px #000;
+}
+
+@keyframes hue-rotate {
+	0% {
+	  filter: hue-rotate(0deg) brightness(135%);
+	}
+	
+	50% {
+	  filter: hue-rotate(360deg) brightness(135%);
+	}
+	
+	100% {
+	  filter: hue-rotate(0deg) brightness(135%);
+	}
+  }
+
+  .backend-loading-animation {
+	animation: hue-rotate 4s linear infinite forwards;
+  }

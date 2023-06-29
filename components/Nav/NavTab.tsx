@@ -1,29 +1,29 @@
-import Link from "next/link";
 import { useRouter } from "next/router";
+import { KeyboardEvent } from "react";
 
-export function NavTab({
-  href,
-  name,
-  icon,
-}: {
-  href: string;
-  name: string;
-  icon: any;
-}) {
+export function NavTab({ href, name, icon }: { href: string; name: string; icon: any }) {
   const router = useRouter();
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLButtonElement>, href: string) => {
+    if (e.key === "Enter") {
+      router.push(href);
+    }
+  };
 
   return (
     <>
-      <Link
-        href={href}
+      <button
+        role="link"
+        onClick={() => router.push(href)}
+        onKeyDown={(e) => handleKeyDown(e, href)}
         style={{
-          borderColor: router.pathname === href ? "rgb(26,159,255)" : "#2e2e2e",
+          background: router.pathname === href ? "rgb(37, 99, 235)" : "#1e2024",
         }}
-        className="transition-all duration-300 gap-2 flex items-center justify-center px-4 bg-elevation-2-dark h-3/4 rounded-t-xl border-t-4 border-t-bgDark"
+        className="flex h-fit items-center justify-center gap-2 rounded-full bg-elevation-2-dark px-4 py-2 transition-all duration-150 hover:scale-95 hover:active:scale-90"
       >
         <div className="flex">{icon}</div>
-        <span className="hidden 2cols:flex text-sm">{name}</span>
-      </Link>
+        <span className="text-sm font-bold">{name}</span>
+      </button>
     </>
   );
 }

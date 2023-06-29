@@ -1,8 +1,9 @@
-import * as python from "../backend";
 import { useState, useContext } from "react";
-import { Patch } from "../ThemeTypes";
+import { Flags, Patch } from "../../ThemeTypes";
 import { PatchComponent } from "./PatchComponent";
-import { themeContext } from "../pages/_app";
+import { themeContext } from "@contexts/themeContext";
+import { generatePresetFromThemeNames, setPatchOfTheme } from "../../backend";
+import { SimpleRadioDropdown } from "@components/Primitives";
 
 export function ThemePatch({
   data,
@@ -15,23 +16,28 @@ export function ThemePatch({
   fullArr: Patch[];
   themeName: string;
 }) {
-  const { refreshThemes } = useContext(themeContext);
+  const { refreshThemes, selectedPreset } = useContext(themeContext);
   const [selectedIndex, setIndex] = useState(data.options.indexOf(data.value));
 
   const [selectedLabel, setLabel] = useState(data.value);
 
   const bottomSeparatorValue = fullArr.length - 1 !== index;
 
+  async function setPatchValue(value: string) {
+    return setPatchOfTheme(themeName, data.name, value).then(() => {
+      if (selectedPreset && selectedPreset.dependencies.includes(themeName)) {
+        return generatePresetFromThemeNames(selectedPreset.name, selectedPreset.dependencies);
+      }
+    });
+  }
+
   function ComponentContainer() {
     return (
       <>
         {data.components.length > 0 ? (
-          <div className="pl-4">
+          <div className="">
             {data.components.map((e) => (
-              <div
-                className="flex gap-2"
-                key={`component_${themeName}_${data.name}_${e.name}`}
-              >
+              <div className="flex gap-2" key={`component_${themeName}_${data.name}_${e.name}`}>
                 <PatchComponent
                   data={e}
                   selectedLabel={selectedLabel}
@@ -55,8 +61,8 @@ export function ThemePatch({
             return (
               <>
                 <div>
-                  <span>{data.name}</span>
-                  <div className="w-[300px] max-w-[300px] flex flex-col">
+                  <span className="font-fancy mb-4 font-medium">{data.name}</span>
+                  <div className="flex w-full flex-col">
                     <input
                       type="range"
                       min={0}
@@ -65,24 +71,21 @@ export function ThemePatch({
                       value={selectedIndex}
                       onChange={(event) => {
                         const value = Number(event.target.value);
-                        python.setPatchOfTheme(
-                          themeName,
-                          data.name,
-                          data.options[value]
-                        );
+                        setPatchValue(data.options[value]);
                         setIndex(value);
                         setLabel(data.options[value]);
                       }}
                     />
-                    <div className="flex justify-between w-[300px]">
-                      {data.options.map((e) => {
+                    <div className="flex w-full justify-between">
+                      {data.options.map((e, i) => {
                         return (
                           <div
+                            key={`ThemePatch_Slider_${data.name}_${i}`}
                             className="flex flex-col items-center justify-between overflow-hidden"
                             style={{ maxWidth: 300 / data.options.length }}
                           >
-                            <span>|</span>
-                            <span>{e}</span>
+                            <span className="-mt-2 text-xs opacity-50">|</span>
+                            <span className="text-xs font-bold uppercase">{e}</span>
                           </div>
                         );
                       })}
@@ -96,25 +99,22 @@ export function ThemePatch({
               <>
                 <div className="flex items-center justify-between">
                   <span>{data.name}</span>
-                  <label className="relative inline-flex items-center cursor-pointer">
+                  <label className="relative inline-flex cursor-pointer items-center">
                     <input
-                      className="sr-only peer"
+                      className="peer sr-only"
                       type="checkbox"
                       checked={data.value === "Yes"}
                       onChange={(event) => {
                         const bool = event.target.checked;
                         const newValue = bool ? "Yes" : "No";
-                        python
-                          .setPatchOfTheme(themeName, data.name, newValue)
-                          .then(() => {
-                            // TODO: This is a shim, should fix some other way
-                            refreshThemes();
-                          });
+                        setPatchValue(newValue).then(() => {
+                          refreshThemes();
+                        });
                         setLabel(newValue);
                         setIndex(data.options.findIndex((e) => e === newValue));
                       }}
                     />
-                    <div className="w-9 h-5 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600" />
+                    <div className="peer h-5 w-9 rounded-full bg-gray-200 after:absolute after:top-[2px] after:left-[2px] after:h-4 after:w-4 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white dark:border-gray-600 dark:bg-gray-700" />
                   </label>
                 </div>
               </>
@@ -124,22 +124,14 @@ export function ThemePatch({
               <>
                 <div className="flex items-center justify-between">
                   <span>{data.name}</span>
-                  <select
-                    className="rounded-md"
-                    defaultValue={data.value}
-                    onChange={(e) => {
-                      python.setPatchOfTheme(
-                        themeName,
-                        data.name,
-                        e.target.value
-                      );
-                      setLabel(e.target.value);
+                  <SimpleRadioDropdown
+                    options={data.options}
+                    value={data.value}
+                    onValueChange={(e) => {
+                      setPatchValue(e);
+                      setLabel(e);
                     }}
-                  >
-                    {data.options.map((x, i) => {
-                      return <option value={x}>{x}</option>;
-                    })}
-                  </select>
+                  />
                 </div>
               </>
             );
@@ -157,7 +149,7 @@ export function ThemePatch({
       })()}
       <ComponentContainer />
       {bottomSeparatorValue && (
-        <div className="h-1 my-2 bg-cardLight dark:bg-cardDark" />
+        <div className="my-4 h-[2px] rounded-full bg-cardLight opacity-50 dark:bg-cardDark" />
       )}
     </>
   );
