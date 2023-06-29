@@ -93,7 +93,6 @@ jobs:
           tagName: ${{ needs.create-release.outputs.tag }}
           releaseBody: "Download the release for your platform below"
           releaseDraft: true
-          includeDebug: true
           includeRelease: false
           includeUpdaterJson: true
 
