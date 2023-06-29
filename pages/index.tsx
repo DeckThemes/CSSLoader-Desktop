@@ -109,15 +109,11 @@ export default function MainPage() {
             <div className="flex w-full max-w-5xl items-end justify-center gap-4"></div>
           </div>
 
-          <div className="mb-8 mt-6 flex h-full w-full flex-col items-center justify-center px-4">
-            <span className="mb-3 w-full max-w-[960px] text-lg font-bold">Themes</span>
-            {selectedPreset && (
-              <div className="mb-6 flex w-full max-w-[960px] flex-row items-center rounded-xl border-2 border-brandBlue bg-brandBlueTransparent p-4 text-sm font-medium">
-                <BiInfoCircle className="mr-4" />
-                Some themes are currently managed by a preset. Changes to their settings will be
-                saved to the preset.
-              </div>
-            )}
+          <div className="mb-8 mt-6 flex h-full w-full flex-col items-center justify-center gap-4 px-4">
+            <span className="w-full max-w-[960px] text-lg font-bold">Themes</span>
+            <div className="flex w-full items-center justify-between">
+              <PresetSelectionDropdown />
+            </div>
             {themes.length > 0 ? (
               <>
                 {numCols === 1 ? (
@@ -138,7 +134,7 @@ export default function MainPage() {
             )}
           </div>
 
-          <div className="mb-8 flex h-full w-full flex-col items-center justify-center gap-2 px-4">
+          {/* <div className="mb-8 flex h-full w-full flex-col items-center justify-center gap-2 px-4">
             <div className="mb-2 flex w-full max-w-[960px] items-center justify-between">
               <div className="h-min w-full max-w-[960px] text-lg font-bold">Presets</div>
               <div className="self-end">
@@ -159,7 +155,7 @@ export default function MainPage() {
               </div>
               <PresetFolderView />
             </div>
-          </div>
+          </div> */}
         </div>
 
         <div className="mt-8 flex w-full max-w-[960px] items-end justify-between px-4 pb-8">

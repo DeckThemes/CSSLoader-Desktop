@@ -100,52 +100,62 @@ export function ThemeToggle({
         </div>
 
         <>
-          {/* Removes the toggle switch if theme is being enabled by a preset */}
-          {(!selectedPreset || !selectedPreset.dependencies.includes(data.name)) && (
-            <ToggleSwitch
-              checked={data.enabled}
-              onValueChange={(switchValue) => {
-                // Re-collapse menu
-                setCollapsed(true);
-                // If theme has optional dependency flag
-                if (switchValue === true && data.flags.includes(Flags.optionalDeps)) {
-                  setShowOptDepsModal(true);
+          <ToggleSwitch
+            checked={data.enabled}
+            onValueChange={async (switchValue) => {
+              // TODO: redo this!
+
+              // Re-collapse menu
+              setCollapsed(true);
+              // If theme has optional dependency flag
+              if (switchValue === true && data.flags.includes(Flags.optionalDeps)) {
+                setShowOptDepsModal(true);
+                return;
+              }
+              // Actually enabling the theme
+              await setThemeState(data.name, switchValue);
+              await refreshThemes();
+
+              // Dependency Toast
+              if (data.dependencies.length > 0) {
+                if (switchValue === true) {
+                  toast(
+                    `${data.name} enabled other themes`,
+                    `${
+                      data.dependencies.length === 1
+                        ? `1 other theme is required by ${data.name}`
+                        : `${data.dependencies.length} other themes are required by ${data.name}`
+                    }`
+                  );
                   return;
                 }
-                // Actually enabling the theme
-                setThemeState(data.name, switchValue).then(() => {
-                  refreshThemes();
-                });
-
-                // Dependency Toast
-                if (data.dependencies.length > 0) {
-                  if (switchValue === true) {
-                    toast(
-                      `${data.name} enabled other themes`,
-                      `${
-                        data.dependencies.length === 1
-                          ? `1 other theme is required by ${data.name}`
-                          : `${data.dependencies.length} other themes are required by ${data.name}`
-                      }`
-                    );
-                    return;
-                  }
-                  if (!data.flags.includes(Flags.dontDisableDeps)) {
-                    toast(
-                      `${data.name} disabled other themes`,
-                      // @ts-ignore
-                      `${
-                        data.dependencies.length === 1
-                          ? `1 theme was originally enabled by ${data.name}`
-                          : `${data.dependencies.length} themes were originally enabled by ${data.name}`
-                      }`
-                    );
-                    return;
-                  }
+                if (!data.flags.includes(Flags.dontDisableDeps)) {
+                  toast(
+                    `${data.name} disabled other themes`,
+                    // @ts-ignore
+                    `${
+                      data.dependencies.length === 1
+                        ? `1 theme was originally enabled by ${data.name}`
+                        : `${data.dependencies.length} themes were originally enabled by ${data.name}`
+                    }`
+                  );
+                  return;
                 }
-              }}
-            />
-          )}
+              }
+
+              if (!selectedPreset) return;
+              if (switchValue) {
+                generatePresetFromThemeNames(selectedPreset.name, [
+                  ...selectedPreset.dependencies,
+                  data.name,
+                ]);
+              } else {
+                generatePresetFromThemeNames(selectedPreset.name, [
+                  ...selectedPreset.dependencies.filter((e) => e !== data.name),
+                ]);
+              }
+            }}
+          />
         </>
       </div>
       {data.enabled && data.patches.length > 0 && (

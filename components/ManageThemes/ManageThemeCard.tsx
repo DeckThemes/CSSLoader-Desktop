@@ -32,7 +32,7 @@ export function ManageThemeCard({
         <span className="font-fancy text-md font-bold">{themeData.name}</span>
         <span className="font-fancy text-muted text-sm">
           {themeData.flags.includes(Flags.isPreset) ? (
-            <span>Preset</span>
+            <span>Profile</span>
           ) : (
             <>
               {themeData.version} • {themeData.author}

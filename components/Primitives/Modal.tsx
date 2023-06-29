@@ -12,9 +12,11 @@ export function Modal({
   actionDisabled = false,
   actionText = "",
   onAction = () => {},
+  defaultOpen = false,
 }: {
   Trigger?: ReactNode;
   title: string;
+  defaultOpen?: boolean;
   triggerDisabled?: boolean;
   description?: string;
   Content: ReactNode;
@@ -26,7 +28,7 @@ export function Modal({
   const { montserrat } = useContext(fontContext);
 
   return (
-    <Dialog.Root modal>
+    <Dialog.Root modal defaultOpen={defaultOpen}>
       <Dialog.Trigger className="outline-none" disabled={triggerDisabled}>
         {Trigger}
       </Dialog.Trigger>

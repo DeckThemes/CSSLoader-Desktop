@@ -1,5 +1,3 @@
-import Image from "next/image";
-import Link from "next/link";
 import { NavTab } from "./NavTab";
 import { RiArrowLeftLine, RiArrowRightLine, RiPaintFill, RiSettings2Fill } from "react-icons/ri";
 import { AiOutlineCloudDownload } from "react-icons/ai";

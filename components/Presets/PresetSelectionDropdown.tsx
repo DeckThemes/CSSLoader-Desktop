@@ -1,5 +1,5 @@
-import { useContext, useMemo } from "react";
-import { RadioDropdown } from "..";
+import { useContext, useMemo, useState } from "react";
+import { CreatePresetModal, RadioDropdown } from "..";
 import { themeContext } from "@contexts/themeContext";
 import { Flags } from "ThemeTypes";
 import { setThemeState } from "backend";
@@ -7,27 +7,31 @@ import { setThemeState } from "backend";
 export function PresetSelectionDropdown() {
   const { themes, refreshThemes } = useContext(themeContext);
   const presets = useMemo(() => themes.filter((e) => e.flags.includes(Flags.isPreset)), [themes]);
+  const [showModal, setShowModal] = useState(false);
+
+  console.log(showModal);
 
   return (
     <>
+      {showModal && <CreatePresetModal closeModal={() => setShowModal(false)} />}
       <RadioDropdown
-	  	triggerClass="bg-base-5.5-dark"
-        headingText="Selected Preset"
-        ariaLabel="Preset Selection Dropdown"
+        triggerClass="bg-base-5.5-dark"
+        headingText="Selected Profile"
+        ariaLabel="Profile Selection Dropdown"
         value={presets.find((e) => e.enabled)?.name || "None"}
-        options={["None", ...presets.map((e) => e.name)]}
+        options={["None", ...presets.map((e) => e.name), "New Profile"]}
         onValueChange={async (e) => {
-          // Disable the previously enabled preset(s)
-          const oldPresets = presets.filter((e) => e.enabled).map((e) => e.name);
-          if (oldPresets.length > 0) {
-            await Promise.all(oldPresets.map((e) => setThemeState(e, false)));
+          if (e === "New Profile") {
+            setShowModal(true);
+            return;
           }
-          // If you've changed patches/components of the preset, those are saved to the folder, but not the backend's version of the prest
-          // This refreshes it all so that the patch values actually are what they should be
-          // Enable the new preset
-          setThemeState(e, true).then(() => {
-            refreshThemes();
-          });
+          // Disables all themes before enabling the preset
+          await Promise.all(
+            themes.filter((e) => e.enabled).map((e) => setThemeState(e.name, false))
+          );
+
+          await setThemeState(e, true);
+          refreshThemes();
         }}
       />
     </>
