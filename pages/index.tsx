@@ -111,7 +111,7 @@ export default function MainPage() {
 
           <div className="mb-8 mt-6 flex h-full w-full flex-col items-center justify-center gap-4 px-4">
             <span className="w-full max-w-[960px] text-lg font-bold">Themes</span>
-            <div className="flex w-full items-center justify-between">
+            <div className="flex w-full max-w-[960px] items-center justify-between">
               <PresetSelectionDropdown />
             </div>
             {themes.length > 0 ? (

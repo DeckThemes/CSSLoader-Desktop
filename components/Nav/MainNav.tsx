@@ -52,7 +52,7 @@ export function MainNav() {
         className="sticky top-0 isolate z-[9998] w-full dark:bg-base-6-dark"
         style={{ boxShadow: "0px 0px 15px #090a0c, 0px 4px 15px #090a0c" }}
       >
-        <div className="mx-auto flex w-full max-w-5xl flex-col px-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mx-auto flex w-full max-w-5xl justify-center px-4 sm:items-center">
           {/* <div className="flex select-none items-center">
             <Link
               href="/"

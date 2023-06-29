@@ -15,9 +15,9 @@ body {
   margin: 0;
   font-family: var(--montserrat), BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
     Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-	overflow: hidden;
-	/* background: transparent !important; */
-	border-radius: 8px;
+  overflow: hidden;
+  /* background: transparent !important; */
+  border-radius: 8px;
 }
 
 /* body {
@@ -32,6 +32,7 @@ a {
 * {
   box-sizing: border-box;
   user-select: none;
+  outline: none;
   font-family: var(--montserrat);
 }
 
@@ -125,29 +126,29 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 .cssloader-titlebar {
-	top: 0;
-	left: 0;
-	right: 0;
+  top: 0;
+  left: 0;
+  right: 0;
 }
 
 .radio-dropdown {
-    box-shadow: 0 0 30px #000;
+  box-shadow: 0 0 30px #000;
 }
 
 @keyframes hue-rotate {
-	0% {
-	  filter: hue-rotate(0deg) brightness(135%);
-	}
-	
-	50% {
-	  filter: hue-rotate(360deg) brightness(135%);
-	}
-	
-	100% {
-	  filter: hue-rotate(0deg) brightness(135%);
-	}
+  0% {
+    filter: hue-rotate(0deg) brightness(135%);
   }
 
-  .backend-loading-animation {
-	animation: hue-rotate 4s linear infinite forwards;
+  50% {
+    filter: hue-rotate(360deg) brightness(135%);
   }
+
+  100% {
+    filter: hue-rotate(0deg) brightness(135%);
+  }
+}
+
+.backend-loading-animation {
+  animation: hue-rotate 4s linear infinite forwards;
+}

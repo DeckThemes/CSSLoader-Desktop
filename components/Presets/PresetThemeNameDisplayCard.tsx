@@ -9,7 +9,7 @@ import { Tooltip } from "..";
 export function PresetThemeNameDisplayCard({ themeName }: { themeName: string }) {
   const { selectedPreset, refreshThemes } = useContext(themeContext);
   return (
-    <div className="flex h-12 w-full items-center justify-between gap-2 rounded-xl bg-base-5.5-dark px-4 py-2 outline-none">
+    <div className="flex h-12 w-full items-center justify-between gap-2 rounded-xl bg-base-5.5-dark px-4 py-2 ">
       <span className="truncate">{themeName}</span>
       <Tooltip
         delayDuration={500}

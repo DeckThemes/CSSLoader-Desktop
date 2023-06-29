@@ -49,7 +49,7 @@ export function AddThemeToPresetButton() {
             <>
               <div
                 className={twMerge(
-                  "flex h-full w-fit items-center justify-center gap-2 rounded-full border-2 border-[#2e2e2e] bg-base-5.5-dark px-4 py-2 outline-none",
+                  "flex h-full w-fit items-center justify-center gap-2 rounded-full border-2 border-[#2e2e2e] bg-base-5.5-dark px-4 py-2 ",
                   dropdownOptions.length === 0 ? "opacity-50" : ""
                 )}
               >

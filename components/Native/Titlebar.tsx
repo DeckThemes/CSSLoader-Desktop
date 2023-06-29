@@ -31,14 +31,14 @@ const Titlebar = () => {
         <Portal.Root style={{ pointerEvents: "all", cursor: "default" }}>
           <div
             data-tauri-drag-region
-            className="cssloader-titlebar rounded-t-lg overflow-hidden fixed z-[2147483647] flex h-8 !cursor-default select-none flex-row bg-base-6-dark"
+            className="cssloader-titlebar fixed z-[2147483647] flex h-8 !cursor-default select-none flex-row overflow-hidden rounded-t-lg bg-base-6-dark"
           >
             <div draggable={false} className="absolute top-0 left-0 flex h-full select-none">
               <Link
                 href="/"
                 tabIndex={-1}
-				draggable={false}
-                className="group flex !cursor-default items-center gap-2 p-2 transition duration-150 hover:scale-95 hover:active:scale-90 !outline-none !border-0"
+                draggable={false}
+                className="group flex !cursor-default items-center gap-2 !border-0 p-2 !outline-none transition duration-150 hover:scale-95 hover:active:scale-90"
               >
                 <Image
                   src="logo_css_darkmode.png"
@@ -46,15 +46,15 @@ const Titlebar = () => {
                   height={16}
                   alt="CSSLoader Logo"
                   className="transition duration-[750ms] group-hover:brightness-150 group-hover:hue-rotate-180"
-				  draggable={false}
+                  draggable={false}
                 />
-				<Image
+                <Image
                   src="CSSLoaderWordmark.svg"
                   width={70}
                   height={16}
                   alt="CSSLoader Logo"
                   className="transition duration-[750ms]"
-				  draggable={false}
+                  draggable={false}
                 />
               </Link>
             </div>

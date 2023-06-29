@@ -118,7 +118,7 @@ export function RadioDropdown({
                     disabled={e.disabled}
                     value={e.value}
                     key={e.value}
-                    className="relative m-1 flex items-center justify-center rounded-lg px-4 py-2 pl-8 outline-none hover:bg-brandBlue focus:bg-brandBlue dark:hover:bg-brandBlue dark:focus:bg-brandBlue"
+                    className="relative m-1 flex items-center justify-center rounded-lg px-4 py-2 pl-8  hover:bg-brandBlue focus:bg-brandBlue dark:hover:bg-brandBlue dark:focus:bg-brandBlue"
                   >
                     <DropdownMenu.ItemIndicator className="absolute -left-1 top-1/2 -translate-y-1/2">
                       <BsDot size={36} />
