@@ -10,7 +10,7 @@ export function ToggleSwitch({
   onChange: (value: boolean) => void;
   disabled?: boolean;
 }) {
-	// because checked is controlled by prop and by state, we have to do this
+  // because checked is controlled by prop and by state, we have to do this
   const [stateChecked, setStateChecked] = useState(false);
 
   useEffect(() => {
@@ -26,6 +26,7 @@ export function ToggleSwitch({
   return (
     <Switch.Root
       checked={stateChecked}
+      disabled={disabled}
       onCheckedChange={() => handleToggle()}
       className="relative h-[25px] w-[42px] cursor-default rounded-full bg-base-6-dark shadow-[0_2px_10px] shadow-base-2-dark outline-none focus-visible:shadow-[0_0_0_2px] focus-visible:shadow-[hsl(43_100%_64.0%)] data-[state=checked]:bg-brandBlue"
     >
