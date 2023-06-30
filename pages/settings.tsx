@@ -4,6 +4,7 @@ import {
   getBackendVersion,
   getStandaloneVersion,
   killBackend,
+  sleep,
   startBackend,
   storeRead,
   storeWrite,
@@ -95,12 +96,11 @@ export default function SettingsPage() {
               <>
                 <button
                   disabled={ongoingAction}
-                  onClick={() => {
+                  onClick={async () => {
                     setOngoingAction(true);
-                    killBackend(() => {
-                      setOngoingAction(false);
-                      console.log("Backend Killed");
-                    });
+                    await killBackend();
+                    setOngoingAction(false);
+                    console.log("Backend Killed");
                   }}
                   className="flex h-12 items-center justify-center whitespace-nowrap rounded-xl bg-base-3-dark px-4"
                 >
@@ -108,12 +108,11 @@ export default function SettingsPage() {
                 </button>
                 <button
                   disabled={ongoingAction}
-                  onClick={() => {
+                  onClick={async () => {
                     setOngoingAction(true);
-                    startBackend(() => {
-                      setOngoingAction(false);
-                      console.log("Backend Started");
-                    });
+                    await startBackend();
+                    setOngoingAction(false);
+                    console.log("Backend Started");
                   }}
                   className="flex h-12 items-center justify-center whitespace-nowrap rounded-xl bg-base-3-dark px-4"
                 >
@@ -136,7 +135,7 @@ export default function SettingsPage() {
                         },
                       ],
                       //  @ts-ignore
-                    }).then((path: string) => {
+                    }).then(async (path: string) => {
                       if (!path) {
                         toast("Invalid Selection");
                         return;
@@ -146,29 +145,18 @@ export default function SettingsPage() {
                       // TODO: This function assumes each function never fails, add some failsafes/error messages
                       setShowBackendInstallModal(true);
                       setInstallText("Stopping Backend");
-                      killBackend(() => {
-                        setTimeout(() => {
-                          setInstallText("Installing New Backend");
-                          copyBackend(path, () => {
-                            setTimeout(() => {
-                              // TODO: THIS IS HORRIBLY JANK!
-                              // For some reason, it appears the first time you start the new backend, it always fails, it is only after it fails once that it then starts the next time
-                              setInstallText("Pausing To Allow Windows To Figure Itself Out");
-                              startBackend(() => {});
-                              setTimeout(() => {
-                                startBackend(() => {
-                                  setTimeout(() => {
-                                    setOngoingAction(false);
-                                    setShowBackendInstallModal(false);
-                                    setInstallModalDesc("");
-                                    refreshThemes();
-                                  }, 1000);
-                                });
-                              }, 10000);
-                            }, 1000);
-                          });
-                        }, 1000);
-                      });
+                      await killBackend();
+                      await sleep(2000);
+                      setInstallText("Installing New Backend");
+                      await copyBackend(path);
+                      setInstallText("Pausing To Allow Windows To Figure Itself Out");
+                      await startBackend();
+                      await sleep(10000);
+                      await startBackend();
+                      setOngoingAction(false);
+                      setShowBackendInstallModal(false);
+                      setInstallModalDesc("");
+                      refreshThemes();
                     });
                   }}
                   Trigger={

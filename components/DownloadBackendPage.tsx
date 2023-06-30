@@ -24,22 +24,20 @@ export function DownloadBackendPage({
       downloadBackend(async () => {
         setInstallProg(50);
         setInstallText("Starting Backend");
-        startBackend(() => {
-          setInstallProg(100);
-          setInstallText("Install Complete");
-          setTimeout(() => {
-            onUpdateFinish();
-          }, 1000);
-        });
+        await startBackend();
+        setInstallProg(100);
+        setInstallText("Install Complete");
+        setTimeout(() => {
+          onUpdateFinish();
+        }, 1000);
       });
     }
     if (onboarding) {
       doTheInstall();
     } else {
       setInstallText("Stopping Backend");
-      killBackend(() => {
-        doTheInstall();
-      });
+      await killBackend();
+      doTheInstall();
     }
   }
 

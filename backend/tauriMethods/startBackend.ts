@@ -1,16 +1,14 @@
-import { Command } from "@tauri-apps/api/shell";
 import { dummyFunction } from "backend/pythonMethods";
-export async function startBackend(onClose: any = () => {}) {
+import { wrappedInvoke } from "backend/wrappedInvoke";
+export async function startBackend() {
   const isRunning = await dummyFunction();
   if (!isRunning) {
-    const command = new Command("startBackend", [
+    return await wrappedInvoke("startBackend", [
       "Start-Process",
       "-FilePath",
       "([Environment]::GetFolderPath('Startup')",
       "+",
       "'\\CssLoader-Standalone-Headless.exe')",
     ]);
-    command.on("close", onClose);
-    await command.spawn();
   }
 }

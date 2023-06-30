@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 export default function Store() {
   const storeRef = useRef<HTMLIFrameElement>();
   const router = useRouter();
-  const { refreshThemes } = useContext(themeContext);
+  const { refreshThemes, themes } = useContext(themeContext);
 
   useEffect(() => {
     function listener(event: any) {
@@ -36,6 +36,13 @@ export default function Store() {
           ref={storeRef}
           src={storeUrl}
           onLoad={() => {
+            storeRef.current?.contentWindow?.postMessage(
+              {
+                action: "provideInstallState",
+                payload: themes.map((e) => ({ name: e.name, id: e.id, version: e.version })),
+              },
+              "*"
+            );
             storeRead("shortToken").then((res) => {
               if (res.success && res.result !== undefined) {
                 storeRef.current?.contentWindow?.postMessage(
