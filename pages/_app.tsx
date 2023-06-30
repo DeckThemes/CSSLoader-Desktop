@@ -68,7 +68,7 @@ export default function App(AppProps: AppProps) {
   async function dummyFuncTest() {
     return dummyFunction()
       .then((data) => {
-        if (data.success) {
+        if (data && data.success) {
           setDummyResult(data.result);
           return true;
         }
