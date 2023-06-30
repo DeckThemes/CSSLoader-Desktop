@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef } from "react";
 import { themeContext } from "@contexts/themeContext";
 import { allowedStoreOrigins, storeUrl } from "../constants";
-import { downloadThemeFromUrl, storeRead, toast } from "../backend";
+import { downloadThemeFromUrl, sleep, storeRead, toast } from "../backend";
 import { useRouter } from "next/router";
 
 export default function Store() {
@@ -35,7 +35,10 @@ export default function Store() {
           // @ts-ignore
           ref={storeRef}
           src={storeUrl}
-          onLoad={() => {
+          onLoad={async () => {
+            // Not sure if theres a better version of onLoad that waits until the iframe can receive messages
+            // This works though
+            await sleep(1000);
             storeRef.current?.contentWindow?.postMessage(
               {
                 action: "provideInstallState",

@@ -47,12 +47,9 @@ export function CreateTemplateTheme({ ongoingAction }: { ongoingAction: boolean 
         description={`This will create a blank theme in your themes folder that you can use as the starting point for your own theme.`}
         triggerDisabled={ongoingAction}
         Trigger={
-          <button
-            disabled={ongoingAction}
-            className="flex h-12 w-full items-center justify-center whitespace-nowrap rounded-xl bg-base-3-dark px-4"
-          >
+          <div className="flex h-12 w-full items-center justify-center whitespace-nowrap rounded-xl bg-base-3-dark px-4">
             {ongoingAction ? <ImSpinner5 /> : "Create Template Theme"}
-          </button>
+          </div>
         }
       />
     </>
