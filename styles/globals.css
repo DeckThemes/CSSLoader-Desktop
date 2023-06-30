@@ -36,6 +36,10 @@ a {
   font-family: var(--montserrat);
 }
 
+/* *:focus-visible {
+	box-shadow: 0 0 0 2px transparent, 0 0 0 4px hsl(39 100% 57.0%);
+} */
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;

@@ -32,6 +32,15 @@ function OptionalDepsModal({
       themeData.name,
     ]);
   }
+
+  const handleEnableDepsToggle = (v: boolean) => {
+    setEnableDeps(v);
+  };
+
+  const handleEnableDepValuesToggle = (v: boolean) => {
+    setEnableDepValues(v);
+  };
+
   return (
     <>
       <AlertDialog
@@ -42,14 +51,14 @@ function OptionalDepsModal({
         Content={
           <div className="flex flex-col items-start gap-2 px-4 pb-4 text-sm">
             <div className="flex items-center justify-center gap-2">
-              <ToggleSwitch checked={enableDeps} onValueChange={setEnableDeps} />
+              <ToggleSwitch onChange={handleEnableDepsToggle} />
               <span>Enable dependencies</span>
             </div>
             <div className="flex items-center justify-center gap-2">
               <ToggleSwitch
-                disabled={!enableDeps}
                 checked={enableDepValues}
-                onValueChange={setEnableDepValues}
+                disabled={!enableDeps}
+                onChange={handleEnableDepValuesToggle}
               />
               <span>Enable pre-configured settings for dependencies</span>
             </div>
@@ -106,7 +115,7 @@ export function ThemeToggle({
         <>
           <ToggleSwitch
             checked={data.enabled}
-            onValueChange={async (switchValue) => {
+            onChange={async (switchValue) => {
               // TODO: redo this!
 
               // Re-collapse menu
