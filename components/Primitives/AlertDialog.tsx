@@ -57,9 +57,9 @@ export function AlertDialog({
     >
       {Trigger && <AD.Trigger disabled={triggerDisabled}>{Trigger}</AD.Trigger>}
       <AD.Portal>
-        <div className={`${montserrat} font-fancy dark`}>
-          <AD.Overlay className="fixed top-0 left-0 right-0 bottom-0 bg-app-backdropUmbra-dark z-[9998] rounded-lg" />
-          <AD.Content className="modal-shadow fixed top-1/2 left-1/2 flex w-96 -translate-y-1/2 -translate-x-1/2 flex-col items-start justify-start gap-2 rounded-3xl border-borders-base3-light bg-base-3-light  dark:border-borders-base1-dark dark:bg-base-3-dark sm:w-[500px] z-[9999]">
+        <div className={`${montserrat} font-fancy dark text-white`}>
+          <AD.Overlay className="fixed top-0 left-0 right-0 bottom-0 z-[9998] rounded-lg bg-app-backdropUmbra-dark" />
+          <AD.Content className="modal-shadow fixed top-1/2 left-1/2 z-[9999] flex w-96 -translate-y-1/2 -translate-x-1/2 flex-col items-start justify-start gap-2 rounded-3xl border-borders-base3-light  bg-base-3-light dark:border-borders-base1-dark dark:bg-base-3-dark sm:w-[500px]">
             <div className="flex w-full items-center justify-between px-4 pt-4">
               <AD.Title className="text-lg font-bold">{title}</AD.Title>
             </div>

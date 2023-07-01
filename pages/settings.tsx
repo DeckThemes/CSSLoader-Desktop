@@ -1,8 +1,6 @@
 import { AlertDialog, LabelledInput, Tooltip } from "@components/Primitives";
 import {
   copyBackend,
-  getBackendVersion,
-  getStandaloneVersion,
   killBackend,
   sleep,
   startBackend,
@@ -36,7 +34,7 @@ export default function SettingsPage() {
     });
   }, []);
 
-  const { themes, refreshThemes } = useContext(themeContext);
+  const { refreshThemes } = useContext(themeContext);
   const { isWindows } = useContext(osContext);
 
   const [ongoingAction, setOngoingAction] = useState<boolean>(false);

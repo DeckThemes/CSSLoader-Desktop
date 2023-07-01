@@ -31,9 +31,9 @@ export function Modal({
     <Dialog.Root modal defaultOpen={defaultOpen}>
       <Dialog.Trigger disabled={triggerDisabled}>{Trigger}</Dialog.Trigger>
       <Dialog.Portal>
-        <div className={`${montserrat} font-fancy dark`}>
-          <Dialog.Overlay className="fixed inset-0 bg-app-backdropUmbra-dark z-[9998] rounded-lg" />
-          <Dialog.Content className="modal-shadow fixed top-1/2 left-1/2 flex w-96 -translate-y-1/2 -translate-x-1/2 flex-col items-start justify-start gap-2 rounded-3xl border-borders-base3-light bg-base-3-light  dark:border-borders-base1-dark dark:bg-base-3-dark sm:w-[500px] z-[9999]">
+        <div className={`${montserrat} font-fancy dark text-white`}>
+          <Dialog.Overlay className="fixed inset-0 z-[9998] rounded-lg bg-app-backdropUmbra-dark" />
+          <Dialog.Content className="modal-shadow fixed top-1/2 left-1/2 z-[9999] flex w-96 -translate-y-1/2 -translate-x-1/2 flex-col items-start justify-start gap-2 rounded-3xl border-borders-base3-light  bg-base-3-light dark:border-borders-base1-dark dark:bg-base-3-dark sm:w-[500px]">
             <div className="flex w-full items-center justify-between px-4 pt-4">
               <Dialog.Title className="text-lg font-bold">{title}</Dialog.Title>
             </div>

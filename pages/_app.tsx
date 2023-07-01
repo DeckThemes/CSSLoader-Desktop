@@ -58,7 +58,11 @@ export default function App(AppProps: AppProps) {
   }, []);
 
   async function recheckDummy() {
-    recursiveCheck(dummyFuncTest, () => refreshThemes(true), startBackend);
+    recursiveCheck(
+      dummyFuncTest,
+      () => refreshThemes(true),
+      () => isWindows && startBackend()
+    );
   }
 
   async function refreshBackendExists() {
@@ -82,7 +86,7 @@ export default function App(AppProps: AppProps) {
   }
 
   async function refreshThemes(reset: boolean = false) {
-    await refreshBackendExists();
+    isWindows && (await refreshBackendExists());
     await dummyFuncTest();
 
     const promise = reset ? reloadBackend() : getInstalledThemes();
