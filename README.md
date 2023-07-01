@@ -1,34 +1,21 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<p align="center">
+    <img src="https://github.com/beebls/CSSLoader-Desktop/assets/52982404/172047f5-0682-4d1e-8e0d-3acb6ae958f6">
+    <br><br>
+    <h1 align="center">CSSLoader Desktop</h1>
+    <h4 align="center">A native standalone styling engine for Steam on Windows and Linux</h4>
+    <p align="center">Inject custom styles into Steam's desktop and Big Picture Mode interfaces, browse an ever-growing storefront of community creations, easily manage your themes' settings and updates, and more.</p>
+</p>
 
-## Getting Started
+<br><br><br>
 
-First, run the development server:
+<h2>Installation</h2>
+<p> CSSLoader Desktop uses a lightweight backend to apply themes to your Steam, meaning Decky isn't a requirement if you want to use the standalone app. Follow the instructions for your preferred platform.</p>
+<a href='https://docs.deckthemes.com/CSSLoader/Install/#linux-or-steam-deck'>Install for Linux or Steam Deck</a>
+<br><br>
+<a href='https://docs.deckthemes.com/CSSLoader/Install/#windows'>Install for Windows</a>
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+<h2>Development</h2>
+<p>TBD - merge with Contributing section if we decide to make a contributing.md file with local development instructions</p>
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+<h2>Contributing</h2>
+<p>TBD</p>
