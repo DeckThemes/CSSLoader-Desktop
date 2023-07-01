@@ -58,7 +58,7 @@ const Titlebar = () => {
                 />
               </Link>
             </div>
-            <div className="absolute top-0 right-0 flex h-full">
+            <div className="absolute top-0 right-0 flex h-full text-white">
               {/* window icons */}
               <div
                 className={`grid h-full w-[47.5px] place-content-center hover:bg-[#3f3f3f] hover:active:bg-[#333333]`}
