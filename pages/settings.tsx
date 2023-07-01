@@ -18,14 +18,11 @@ import { open } from "@tauri-apps/api/dialog";
 import { osContext } from "@contexts/osContext";
 import { ImSpinner5 } from "react-icons/im";
 import { CreateTemplateTheme } from "@components/Settings";
+import { fetch, Body } from "@tauri-apps/api/http";
 
 export default function SettingsPage() {
   const [token, setToken] = useState<string>("");
-  function onSaveToken() {
-    storeWrite("shortToken", token).then(() => {
-      toast("Token Saved");
-    });
-  }
+
   useEffect(() => {
     storeRead("shortToken").then((res) => {
       if (res.success && res.result) {
@@ -42,6 +39,32 @@ export default function SettingsPage() {
   const [showBackendInstallModal, setShowBackendInstallModal] = useState<boolean>(false);
   const [installText, setInstallText] = useState<string>("");
   const [installModalDesc, setInstallModalDesc] = useState<string>("");
+
+  function onSaveToken() {
+    if (token.length !== 12) {
+      toast("Invalid Token Length");
+      return;
+    }
+    setOngoingAction(true);
+    fetch("https://api.deckthemes.com/auth/authenticate_token", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: Body.json({ token: token }),
+    })
+      .then((res) => {
+        if (res.ok) {
+          storeWrite("shortToken", token).then(() => {});
+          toast("Token Saved");
+          setOngoingAction(false);
+        } else {
+          throw new Error("Invalid Token");
+        }
+      })
+      .catch(() => {
+        toast("Error Validating Token");
+        setOngoingAction(false);
+      });
+  }
 
   return (
     <>
@@ -80,10 +103,11 @@ export default function SettingsPage() {
                 onValueChange={setToken}
               />
               <button
+                disabled={ongoingAction}
                 onClick={onSaveToken}
                 className="h-12 whitespace-nowrap rounded-xl bg-brandBlue px-4"
               >
-                Save Token
+                {ongoingAction ? <ImSpinner5 /> : "Save Token"}
               </button>
             </div>
           </div>
