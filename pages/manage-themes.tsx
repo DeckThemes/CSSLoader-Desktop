@@ -1,9 +1,9 @@
 import { themeContext } from "@contexts/themeContext";
 import { useContext, useEffect, useState } from "react";
-import { MinimalCSSThemeInfo, Theme } from "../ThemeTypes";
+import { Flags, MinimalCSSThemeInfo, Theme } from "../ThemeTypes";
 import { deleteTheme, downloadThemeFromUrl, toast } from "../backend";
 import { bulkThemeUpdateCheck } from "../logic";
-import { ManageThemeCard } from "../components";
+import { ManageThemeCard, YourProfilesList } from "../components";
 import { BiFolderOpen } from "react-icons/bi";
 
 export type LocalThemeStatus = "installed" | "outdated" | "local";
@@ -34,7 +34,7 @@ export default function ManageThemes() {
   }, [localThemeList]);
 
   return (
-    <main className="flex flex-1 flex-col items-center gap-4 px-4">
+    <main className="flex flex-1 flex-col items-center gap-8 px-4">
       <div className="mt-12 w-full max-w-[960px]">
         <h2 className="font-fancy mb-4 text-sm font-bold">Theme Directory</h2>
         <button
@@ -52,20 +52,25 @@ export default function ManageThemes() {
           <span>Open Themes Directory</span>
         </button>
       </div>
-      <h2 className="font-fancy mx-auto mt-12 mb-4 w-full max-w-[960px] text-sm font-bold">
-        Installed Themes
-      </h2>
-      <div className="mx-auto mb-4 flex w-full max-w-[960px] flex-col gap-4">
-        {localThemeList.map((e) => (
-          <ManageThemeCard
-            themeData={e}
-            updateStatuses={updateStatuses}
-            uninstalling={uninstalling}
-            handleUninstall={handleUninstall}
-            handleUpdate={handleUpdate}
-          />
-        ))}
+      <div className="flex w-full flex-col">
+        <h2 className="font-fancy mx-auto mb-4 w-full max-w-[960px] text-sm font-bold">
+          Installed Themes
+        </h2>
+        <div className="mx-auto flex w-full max-w-[960px] flex-col gap-4">
+          {localThemeList
+            .filter((e) => !e.flags.includes(Flags.isPreset))
+            .map((e) => (
+              <ManageThemeCard
+                themeData={e}
+                updateStatuses={updateStatuses}
+                uninstalling={uninstalling}
+                handleUninstall={handleUninstall}
+                handleUpdate={handleUpdate}
+              />
+            ))}
+        </div>
       </div>
+      <YourProfilesList {...{ updateStatuses, uninstalling, handleUninstall, handleUpdate }} />
     </main>
   );
 }

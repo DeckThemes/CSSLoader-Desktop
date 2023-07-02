@@ -1,7 +1,7 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { Flags, Theme } from "../ThemeTypes";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, use } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import {
   checkForNewBackend,
@@ -13,6 +13,8 @@ import {
   recursiveCheck,
   getInstalledThemes,
   getOS,
+  generatePresetFromThemeNames,
+  changePreset,
 } from "../backend";
 import { themeContext } from "@contexts/themeContext";
 import { FontContext } from "@contexts/FontContext";
@@ -69,6 +71,18 @@ export default function App(AppProps: AppProps) {
     const backendExists = await checkIfStandaloneBackendExists();
     setBackendExists(backendExists);
   }
+
+  // This will likely only run on a user's first run
+  // todo: potentially there's a way to make this run without an expensive stringify useEffect running always
+  // however, I want to make sure that someone can't delete the folder "Default Profile", as that would be bad
+  useEffect(() => {
+    if (!themes.find((e) => e.name === "Default Profile")) {
+      generatePresetFromThemeNames("Default Profile", []).then(async () => {
+        await changePreset("Default Profile", themes);
+        refreshThemes(true);
+      });
+    }
+  }, [JSON.stringify(themes.filter((e) => e.flags.includes(Flags.isPreset)))]);
 
   async function dummyFuncTest() {
     try {
