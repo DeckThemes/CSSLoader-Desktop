@@ -1,7 +1,8 @@
 import * as AD from "@radix-ui/react-alert-dialog";
 import { fontContext } from "@contexts/FontContext";
-import { ReactNode, useContext, useState, useEffect } from "react";
+import { ReactNode, useContext, useState, useEffect, ReactElement } from "react";
 import { twMerge } from "tailwind-merge";
+
 export function AlertDialog({
   Trigger = null,
   title,
@@ -17,7 +18,7 @@ export function AlertDialog({
   actionDisabled = false,
   dontClose = false,
   onAction = () => {},
-  customAction = null,
+  CustomAction = null,
   actionClass = "",
 }: {
   Trigger?: ReactNode;
@@ -33,7 +34,7 @@ export function AlertDialog({
   onOpenChange?: (open: boolean) => void;
   actionText?: string | ReactNode;
   actionDisabled?: boolean;
-  customAction?: ReactNode;
+  CustomAction?: ReactNode | null;
   onAction?: () => void;
   actionClass?: string;
 }) {
@@ -74,7 +75,7 @@ export function AlertDialog({
                 </AD.Cancel>
               )}
               {Footer}
-              {customAction || (
+              {CustomAction || (
                 <AD.Action
                   onClick={(event) => {
                     dontCloseOnAction && event.preventDefault();

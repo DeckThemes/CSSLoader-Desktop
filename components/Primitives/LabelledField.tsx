@@ -1,5 +1,5 @@
 import * as Label from "@radix-ui/react-label";
-import { useState, ReactNode } from "react";
+import { useState, ReactNode, KeyboardEventHandler } from "react";
 import { twMerge } from "tailwind-merge";
 
 export function LabelledInput({
@@ -11,6 +11,7 @@ export function LabelledInput({
   placeholder = "",
   inputClass = "",
   password = false,
+  onKeyDown = () => {},
 }: {
   label: ReactNode | string;
   value: string;
@@ -20,6 +21,7 @@ export function LabelledInput({
   placeholder?: string;
   inputClass?: string;
   password?: boolean;
+  onKeyDown?: KeyboardEventHandler<HTMLInputElement>;
 }) {
   const [type, setType] = useState<"text" | "password">(password ? "password" : "text");
   return (
@@ -28,6 +30,7 @@ export function LabelledInput({
         {label}
       </Label.Root>
       <input
+        onKeyDown={onKeyDown}
         onFocus={() => password && setType("text")}
         onBlur={() => password && setType("password")}
         placeholder={placeholder}
