@@ -36,7 +36,7 @@ export function ManageThemeCard({
           ) : (
             <>
               {themeData.version}
-              {themeData.author ? `• ${themeData.author}` : ""}
+              {themeData.author ? ` • ${themeData.author}` : ""}
               {updateStatus === "local" ? (
                 <span className="text-fore-9-dark"> - Local Theme</span>
               ) : (

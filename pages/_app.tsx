@@ -21,6 +21,7 @@ import { AppRoot } from "@components/AppRoot";
 import DynamicTitleBar from "@components/Native/DynamicTitlebar";
 import { AppFrame } from "@components/Native/AppFrame";
 import { osContext } from "@contexts/osContext";
+import { useBasicAsyncEffect } from "@hooks/useBasicAsyncEffect";
 
 export default function App(AppProps: AppProps) {
   const [themes, setThemes] = useState<Theme[]>([]);
@@ -38,24 +39,22 @@ export default function App(AppProps: AppProps) {
   );
 
   useEffect(() => {
-    // Checking for updates
+    // This sets OS and isWindows, which some other initializing logic then runs based on that result
     getOS().then(setOS);
-    checkIfBackendIsStandalone().then((isStandalone) => {
-      if (isStandalone) {
-        checkForNewBackend().then((newStandalone) => {
-          if (newStandalone) {
-            setNewBackend(newStandalone as string);
-            setShowNewBackend(true);
-          }
-        });
-      }
-    });
-
-    refreshBackendExists();
-
     // This actually initializes the themes and such
     recheckDummy();
   }, []);
+
+  useBasicAsyncEffect(async () => {
+    if (!isWindows) return;
+    refreshBackendExists();
+    const isStandalone = await checkIfBackendIsStandalone();
+    if (!isStandalone) return;
+    const newStandalone = await checkForNewBackend();
+    if (!newStandalone) return;
+    setNewBackend(newStandalone as string);
+    setShowNewBackend(true);
+  }, [isWindows]);
 
   async function recheckDummy() {
     recursiveCheck(
@@ -66,35 +65,31 @@ export default function App(AppProps: AppProps) {
   }
 
   async function refreshBackendExists() {
-    await checkIfStandaloneBackendExists().then((value) => setBackendExists(value));
+    if (!isWindows) return;
+    const backendExists = await checkIfStandaloneBackendExists();
+    setBackendExists(backendExists);
   }
 
   async function dummyFuncTest() {
-    return dummyFunction()
-      .then((data) => {
-        if (data && data.success) {
-          setDummyResult(data.result);
-          return true;
-        }
-        setDummyResult(false);
-        return false;
-      })
-      .catch(() => {
-        setDummyResult(false);
-        return false;
-      });
+    try {
+      const data = await dummyFunction();
+      if (!data || !data.success) throw new Error(undefined);
+      setDummyResult(data.result);
+      return true;
+    } catch {
+      setDummyResult(false);
+      return false;
+    }
   }
 
   async function refreshThemes(reset: boolean = false) {
-    isWindows && (await refreshBackendExists());
+    if (isWindows) await refreshBackendExists();
     await dummyFuncTest();
 
-    const promise = reset ? reloadBackend() : getInstalledThemes();
-    return promise.then((data) => {
-      if (data) {
-        setThemes(data.sort());
-      }
-    });
+    const data = reset ? await reloadBackend() : await getInstalledThemes();
+    if (data) {
+      setThemes(data.sort());
+    }
   }
 
   return (
