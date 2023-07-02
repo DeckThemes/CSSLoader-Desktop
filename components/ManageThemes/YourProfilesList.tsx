@@ -3,6 +3,7 @@ import { ManageThemeCard } from "./ManageThemeCard";
 import { themeContext } from "@contexts/themeContext";
 import { LocalThemeStatus } from "@pages/manage-themes";
 import { Flags, MinimalCSSThemeInfo, Theme } from "ThemeTypes";
+import { deletePreset } from "backend";
 
 export function YourProfilesList({
   updateStatuses,
@@ -15,7 +16,7 @@ export function YourProfilesList({
   handleUninstall: (e: Theme) => void;
   handleUpdate: (e: MinimalCSSThemeInfo) => void;
 }) {
-  const { themes } = useContext(themeContext);
+  const { themes, refreshThemes } = useContext(themeContext);
   const userChangeablePresets = themes.filter(
     (e) => e.flags.includes(Flags.isPreset) && e.name !== "Default Profile"
   );
@@ -32,7 +33,9 @@ export function YourProfilesList({
               themeData={e}
               updateStatuses={updateStatuses}
               uninstalling={uninstalling}
-              handleUninstall={handleUninstall}
+              handleUninstall={(e: Theme) => {
+                deletePreset(e.name, themes, refreshThemes);
+              }}
               handleUpdate={handleUpdate}
             />
           ))}

@@ -10,6 +10,8 @@ export function Tooltip({
   arrow = false,
   disabled = false,
   content,
+  triggerRootClass = "",
+  align = "center",
 }: {
   triggerContent: ReactElement;
   delayDuration?: number;
@@ -18,6 +20,8 @@ export function Tooltip({
   disabled?: boolean;
   arrow?: boolean;
   content: ReactElement | string;
+  triggerRootClass?: string;
+  align?: "center" | "end" | "start";
 }) {
   const { montserrat } = useContext(fontContext);
   const [open, setOpen] = useState(false);
@@ -28,10 +32,11 @@ export function Tooltip({
         onOpenChange={(open) => !disabled && setOpen(open)}
         delayDuration={delayDuration}
       >
-        <RadixTooltip.Trigger>{triggerContent}</RadixTooltip.Trigger>
+        <RadixTooltip.Trigger className={triggerRootClass}>{triggerContent}</RadixTooltip.Trigger>
         <RadixTooltip.Portal>
           <div className={`dark ${montserrat} font-fancy`}>
             <RadixTooltip.Content
+              align="end"
               side={tooltipSide}
               className={twMerge(
                 "font-fancy rounded-xl bg-fore-3-light p-2 px-4 text-black dark:bg-fore-3-dark dark:text-white",
