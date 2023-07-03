@@ -20,7 +20,7 @@ export function GenericInstallBackendModal({
   onAction?: () => void;
   dontClose?: boolean;
   onCloseWindow?: () => void;
-  descriptionText?: string;
+  descriptionText?: string | ReactNode;
 }) {
   return (
     <>

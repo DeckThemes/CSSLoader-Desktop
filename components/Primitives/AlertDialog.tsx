@@ -24,7 +24,7 @@ export function AlertDialog({
   Trigger?: ReactNode;
   title: string;
   triggerDisabled?: boolean;
-  description?: string;
+  description?: string | ReactNode;
   Content?: ReactNode;
   dontClose?: boolean;
   Footer?: ReactNode;
