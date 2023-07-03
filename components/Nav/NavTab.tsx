@@ -1,8 +1,12 @@
 import { useRouter } from "next/router";
-import { KeyboardEvent } from "react";
+import { KeyboardEvent, useEffect } from "react";
 
 export function NavTab({ href, name, icon }: { href: string; name: string; icon: any }) {
   const router = useRouter();
+
+  useEffect(() => {
+    router.prefetch("/store");
+  }, []);
 
   const handleKeyDown = (e: KeyboardEvent<HTMLButtonElement>, href: string) => {
     if (e.key === "Enter") {
