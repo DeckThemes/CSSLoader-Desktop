@@ -177,6 +177,7 @@ module.exports = {
           dark: "hsl(229, 5%, 4%)",
           light: "hsla(264, 3%, 94%, 1)",
         },
+        amber9: "hsl(39 100% 57.0%)",
         brandBlue: "#2563eb",
         brandBlueTransparent: "#2563eb22",
         dangerRed: "#EB3431",

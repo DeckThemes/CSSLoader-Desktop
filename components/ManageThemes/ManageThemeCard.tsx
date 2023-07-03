@@ -50,14 +50,18 @@ export function ManageThemeCard({
         {updateStatus === "outdated" && remoteEntry && (
           <button
             onClick={() => remoteEntry && handleUpdate(remoteEntry)}
-            className="flex flex-col items-center justify-center 2cols:flex-row-reverse 2cols:gap-2"
+            className="flex flex-col items-center justify-center focus-visible:ring-4 focus-visible:ring-amber9 2cols:flex-row-reverse 2cols:gap-2"
           >
             <BsFillCloudDownloadFill className="text-2xl 2cols:text-3xl" />
             <span>{remoteEntry.version}</span>
           </button>
         )}
         <div className="flex items-center justify-center">
-          <button disabled={uninstalling} onClick={() => handleUninstall(themeData)}>
+          <button
+            className="focus-visible:ring-4 focus-visible:ring-amber9"
+            disabled={uninstalling}
+            onClick={() => handleUninstall(themeData)}
+          >
             <BsTrashFill className="text-2xl 2cols:text-3xl" />
           </button>
         </div>

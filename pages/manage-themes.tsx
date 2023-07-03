@@ -14,6 +14,7 @@ export default function ManageThemes() {
   const [updateStatuses, setUpdateStatuses] = useState<
     [string, LocalThemeStatus, false | MinimalCSSThemeInfo][]
   >([]);
+
   function handleUninstall(listEntry: Theme) {
     setUninstalling(true);
     deleteTheme(listEntry.name).then(() => {
@@ -21,12 +22,14 @@ export default function ManageThemes() {
       setUninstalling(false);
     });
   }
+
   function handleUpdate(remoteEntry: MinimalCSSThemeInfo) {
     downloadThemeFromUrl(remoteEntry.id).then(() => {
       toast(`${remoteEntry.name} Updated`);
       refreshThemes(true);
     });
   }
+
   useEffect(() => {
     bulkThemeUpdateCheck(localThemeList).then((value) => {
       setUpdateStatuses(value);
@@ -38,7 +41,7 @@ export default function ManageThemes() {
       <div className="mt-12 w-full max-w-[960px]">
         <h2 className="font-fancy mb-4 text-sm font-bold">Theme Directory</h2>
         <button
-          className="flex w-fit items-center justify-center gap-2 rounded-full border-2 border-[#2e2e2e] bg-[#2563eb] px-4 py-2 text-sm font-bold transition duration-100"
+          className="flex w-fit items-center justify-center gap-2 rounded-full border-2 border-[#2e2e2e] bg-[#2563eb] px-4 py-2 text-sm font-bold transition duration-100 focus-visible:ring-4 focus-visible:ring-amber9"
           onClick={async () => {
             // These have to be async imported here as otherwise NextJS tries to "SSR" them and it errors
             const { homeDir, join } = await import("@tauri-apps/api/path");

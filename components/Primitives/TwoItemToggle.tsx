@@ -31,13 +31,19 @@ export function TwoItemToggle({
           )}
         >
           <button
-            className={twMerge("relative z-20 flex w-16 items-center justify-center", optionClass)}
+            className={twMerge(
+              "relative z-20 flex w-16 items-center justify-center focus-visible:ring-4 focus-visible:ring-amber9",
+              optionClass
+            )}
             onClick={() => onValueChange(options[0].value)}
           >
             <span>{options[0].displayText}</span>
           </button>
           <button
-            className={twMerge("relative z-20 flex w-16 items-center justify-center", optionClass)}
+            className={twMerge(
+              "relative z-20 flex w-16 items-center justify-center focus-visible:ring-4 focus-visible:ring-amber9",
+              optionClass
+            )}
             onClick={() => onValueChange(options[1].value)}
           >
             <span>{options[1].displayText}</span>

@@ -2,6 +2,7 @@ import { fontContext } from "@contexts/FontContext";
 import * as Dialog from "@radix-ui/react-dialog";
 import { ReactNode, useContext } from "react";
 import { twMerge } from "tailwind-merge";
+
 export function Modal({
   Trigger = null,
   title,

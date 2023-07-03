@@ -2,6 +2,7 @@ import { fontContext } from "@contexts/FontContext";
 import * as RadixTooltip from "@radix-ui/react-tooltip";
 import { ReactElement, useContext, useState } from "react";
 import { twMerge } from "tailwind-merge";
+
 export function Tooltip({
   triggerContent,
   delayDuration = 100,
@@ -32,7 +33,9 @@ export function Tooltip({
         onOpenChange={(open) => !disabled && setOpen(open)}
         delayDuration={delayDuration}
       >
-        <RadixTooltip.Trigger className={triggerRootClass}>{triggerContent}</RadixTooltip.Trigger>
+        <RadixTooltip.Trigger asChild={true} className={triggerRootClass}>
+          {triggerContent}
+        </RadixTooltip.Trigger>
         <RadixTooltip.Portal>
           <div className={`dark ${montserrat} font-fancy`}>
             <RadixTooltip.Content

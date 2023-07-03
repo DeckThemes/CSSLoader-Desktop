@@ -26,7 +26,7 @@ export function MenuDropdown({
       <DropdownMenu.Trigger
         disabled={triggerDisabled}
         className={twMerge(
-          "flex h-fit w-12 select-none items-center justify-center gap-2 rounded-full border border-borders-base3-dark px-4 py-2 text-xs font-bold text-white transition duration-150",
+          "flex h-fit w-12 select-none items-center justify-center gap-2 rounded-full border border-borders-base3-dark px-4 py-2 text-xs font-bold text-white transition duration-150 focus-visible:ring-4 focus-visible:ring-amber9",
           !triggerDisabled && "hover:scale-95 hover:bg-base-3-dark hover:active:scale-90",
           triggerClass
         )}
@@ -38,6 +38,7 @@ export function MenuDropdown({
         <div className={`dark text-white ${montserrat}`}>
           <DropdownMenu.Content
             align={align}
+            onCloseAutoFocus={(e) => e.preventDefault()}
             className="radio-dropdown font-fancy z-[9999] w-[250px] cursor-default select-none overflow-hidden rounded-xl border-2 border-borders-base2-light bg-base-3-light text-sm text-black transition-all dark:border-borders-base2-dark dark:bg-base-3-dark dark:text-white"
           >
             {options.map((e) => {

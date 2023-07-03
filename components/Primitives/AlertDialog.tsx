@@ -56,7 +56,14 @@ export function AlertDialog({
         }
       }}
     >
-      {Trigger && <AD.Trigger disabled={triggerDisabled}>{Trigger}</AD.Trigger>}
+      {Trigger && (
+        <AD.Trigger
+          className="focus-visible:ring-4 focus-visible:ring-amber9"
+          disabled={triggerDisabled}
+        >
+          {Trigger}
+        </AD.Trigger>
+      )}
       <AD.Portal>
         <div className={`${montserrat} font-fancy dark text-white`}>
           <AD.Overlay className="fixed top-0 left-0 right-0 bottom-0 z-[9998] rounded-lg bg-app-backdropUmbra-dark" />

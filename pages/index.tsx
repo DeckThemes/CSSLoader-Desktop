@@ -150,7 +150,7 @@ export default function MainPage() {
 
         <div className="mt-8 flex w-full max-w-[960px] items-end justify-between px-4 pb-8">
           <button
-            className="flex h-full w-fit items-center justify-center gap-2 rounded-full border-2 border-[#2e2e2e] px-4 py-2"
+            className="flex h-full w-fit items-center justify-center gap-2 rounded-full border-2 border-[#2e2e2e] px-4 py-2 focus-visible:ring-4 focus-visible:ring-amber9"
             onClick={() => {
               refreshThemes(true);
             }}

@@ -124,7 +124,7 @@ export default function SettingsPage() {
                     setOngoingAction(false);
                     console.log("Backend Killed");
                   }}
-                  className="flex h-12 items-center justify-center whitespace-nowrap rounded-xl bg-base-3-dark px-4"
+                  className="flex h-12 items-center justify-center whitespace-nowrap rounded-xl bg-base-3-dark px-4 focus-visible:ring-4 focus-visible:ring-amber9"
                 >
                   {ongoingAction ? <ImSpinner5 /> : "Kill Backend"}
                 </button>
@@ -136,7 +136,7 @@ export default function SettingsPage() {
                     setOngoingAction(false);
                     console.log("Backend Started");
                   }}
-                  className="flex h-12 items-center justify-center whitespace-nowrap rounded-xl bg-base-3-dark px-4"
+                  className="flex h-12 items-center justify-center whitespace-nowrap rounded-xl bg-base-3-dark px-4 focus-visible:ring-4 focus-visible:ring-amber9"
                 >
                   {ongoingAction ? <ImSpinner5 /> : "Force Start Backend"}
                 </button>
