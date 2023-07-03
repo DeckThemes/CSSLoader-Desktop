@@ -31,7 +31,7 @@ const Titlebar = () => {
         <Portal.Root style={{ pointerEvents: "all", cursor: "default" }}>
           <div
             data-tauri-drag-region
-            className="cssloader-titlebar fixed z-[2147483647] flex h-8 !cursor-default select-none flex-row overflow-hidden rounded-t-lg bg-base-6-dark"
+            className="cssloader-titlebar fixed z-[2147483647] flex h-8 !cursor-default select-none flex-row overflow-hidden rounded-t-lg border-x-[1px] border-t-[1px] border-[#2f2f2f] bg-base-6-dark"
           >
             <div draggable={false} className="absolute top-0 left-0 flex h-full select-none">
               <Link

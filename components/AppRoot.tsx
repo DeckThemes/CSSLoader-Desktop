@@ -31,11 +31,11 @@ export function AppRoot({ Component, pageProps }: AppProps) {
 
   return (
     // overflow-hidden rounded-b-lg
-    <div className="absolute top-0 left-0 right-0 bottom-0">
-      <div className="relative top-8">
+    <div className="absolute top-0 left-0 right-0 bottom-0 overflow-hidden rounded-lg bg-base-6-dark">
+      <div className="relative top-8 overflow-hidden rounded-b-lg">
         <div
           // A lot of this codebase is from the DeckThemes codebase, which has a light and dark mode, however this app only has a dark mode, so we put the dark class here incase we copy over things that have both styles
-          className={`dark relative flex h-[calc(100vh-32px)] flex-col overflow-y-scroll bg-base-6-dark text-textDark ${montserrat} ${openSans}`}
+          className={`dark relative mr-[4px] flex h-[calc(100vh-32px)] flex-col overflow-y-scroll bg-base-6-dark pr-[8px] text-textDark ${montserrat} ${openSans}`}
         >
           <ToastContainer
             position="bottom-center"
