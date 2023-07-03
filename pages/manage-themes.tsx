@@ -59,7 +59,7 @@ export default function ManageThemes() {
         <h2 className="font-fancy mx-auto mb-4 w-full max-w-[960px] text-sm font-bold">
           Installed Themes
         </h2>
-        <div className="mx-auto flex w-full max-w-[960px] flex-col gap-4">
+        <div className="mx-auto mb-4 flex w-full max-w-[960px] flex-col gap-4">
           {localThemeList
             .filter((e) => !e.flags.includes(Flags.isPreset))
             .map((e) => (
