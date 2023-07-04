@@ -24,7 +24,6 @@ export const server: Server = {
       }),
     })
       .then((res) => {
-        console.log(res);
         return res.data;
       })
       .then((json: any) => {

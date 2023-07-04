@@ -12,8 +12,6 @@ export function PresetSelectionDropdown() {
   const presets = useMemo(() => themes.filter((e) => e.flags.includes(Flags.isPreset)), [themes]);
   const [showModal, setShowModal] = useState(false);
 
-  console.log(selectedPreset?.name);
-
   return (
     <>
       <div className="flex w-full items-center justify-center gap-4">

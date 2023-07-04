@@ -83,7 +83,7 @@ export function ThemeToggle({
   collapsible?: boolean;
   rootClass?: string;
 }) {
-  const { refreshThemes, selectedPreset } = useContext(themeContext);
+  const { refreshThemes, selectedPreset, themes } = useContext(themeContext);
   const [showOptDepsModal, setShowOptDepsModal] = useState<boolean>(false);
   const [collapsed, setCollapsed] = useState<boolean>(true);
   const isPreset = useMemo(() => {
@@ -140,7 +140,6 @@ export function ThemeToggle({
                         : `${data.dependencies.length} other themes are required by ${data.name}`
                     }`
                   );
-                  return;
                 }
                 if (!data.flags.includes(Flags.dontDisableDeps)) {
                   toast(
@@ -152,21 +151,28 @@ export function ThemeToggle({
                         : `${data.dependencies.length} themes were originally enabled by ${data.name}`
                     }`
                   );
-                  return;
                 }
               }
 
               if (!selectedPreset) return;
-              if (switchValue) {
-                generatePresetFromThemeNames(selectedPreset.name, [
-                  ...selectedPreset.dependencies,
-                  data.name,
-                ]);
-              } else {
-                generatePresetFromThemeNames(selectedPreset.name, [
-                  ...selectedPreset.dependencies.filter((e) => e !== data.name),
-                ]);
-              }
+              // This used to generate the new list of themes by the dependencies of the preset + or - the checked theme
+              // However, since we added profiles, the list of enabled themes IS the list of dependencies, so this works
+              await generatePresetFromThemeNames(
+                selectedPreset.name,
+                switchValue
+                  ? [
+                      ...themes
+                        .filter((e) => e.enabled && !e.flags.includes(Flags.isPreset))
+                        .map((e) => e.name),
+                      data.name,
+                    ]
+                  : themes
+                      .filter(
+                        (e) =>
+                          e.enabled && !e.flags.includes(Flags.isPreset) && e.name !== data.name
+                      )
+                      .map((e) => e.name)
+              );
             }}
           />
         </>
