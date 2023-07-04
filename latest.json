@@ -1,15 +1,15 @@
 {
   "version": "0.7.0",
   "notes": "Download the release for your platform below",
-  "pub_date": "2023-07-04T04:19:30.483Z",
+  "pub_date": "2023-07-04T04:27:44.862Z",
   "platforms": {
     "windows-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUR25UdTJ0dzN1MW9wbUdDOWl0WFQwR2VLbkVwZmYzajVDM0JFZTl6TS84SS8yWmEzQWdUV0VjdTZ3L01xbjhDcHlYeEo1MnRxMk5mMDJuelBKRGc3SHBFUzJHd3cvYXdJPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNjg4NDQ0MzU5CWZpbGU6Q1NTTG9hZGVyIERlc2t0b3BfMC43LjBfeDY0X2VuLVVTLm1zaS56aXAKeDVxOHZPZEhUQlUvNzFhdjlZMFRYTFYyVVNncE5mclUvUE5XNG5iZDBoQS8vK1VmdXlYclVPSjlXTHVtcU1FclJrZ2kwU3ErQ3dKdXRYR1R6dUFwQnc9PQo=",
-      "url": "https://github.com/beebls/CSSLoader-Desktop/releases/download/nightly-f3c5f7a/CSSLoader.Desktop_nightly-f3c5f7a.msi.zip"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUR25UdTJ0dzN1MW5JblVKekRDY0VqeFUyOXFUTXQwV2dzaVlUZjRXeHQ0eG9mcWFPdWNidlRTNjFXL3BnTzl6UW1CL2tlVGhSMXNTbWpaaHU4aFFBUFFmV1ZTYmxEYkFFPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNjg4NDQ0ODM4CWZpbGU6Q1NTTG9hZGVyIERlc2t0b3BfMC43LjBfeDY0X2VuLVVTLm1zaS56aXAKdFpUNlZQNi9JVTlDZy9tSys0N0FzM3l1VzVoei9jMkxhK1p5VndXZWF3Uk4yaVVMemRWK0Zta1IzbGJ0UVNvVExSSUdZUTFvZlRFcXZ2dDZ5OGduRGc9PQo=",
+      "url": "https://github.com/beebls/CSSLoader-Desktop/releases/download/nightly-e7d824b/CSSLoader.Desktop_nightly-e7d824b.msi.zip"
     },
     "linux-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUR25UdTJ0dzN1MXRzQUJQamNLWTFUYWNpN2J1QXZFK2ZkcDJRQUNYSWozd202cUErdUFjNGFGUFZoZ3hpR1RXdURmVnJ4N2l4OHk5RVpJMkVad2dRVXpjZEVuU3F1eHdzPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNjg4NDQ0MzY0CWZpbGU6Y3NzLWxvYWRlci1kZXNrdG9wXzAuNy4wX2FtZDY0LkFwcEltYWdlLnRhci5negpFaFk3MEJVcjlYS1ZlcEdWK1htNG1KYXlOQkV0Z3JtVS9HT2tlYjdmeDhvNHdBbjZ0RXhuQXZkc0t5VG1mWjdjVE03ZUpkcXZTZDJzRHJyeGx2SENDUT09Cg==",
-      "url": "https://github.com/beebls/CSSLoader-Desktop/releases/download/nightly-f3c5f7a/CSSLoader.Desktop_nightly-f3c5f7a.AppImage.tar.gz"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUR25UdTJ0dzN1MXV4QUVVczJEeXI2SmtPOFdFMTNUWDRyQjlLOTdpWDRYN0R0Um01bVh5WUNvZnVPdThUdXBOcXlnVnJDcElVS3Z5L3BkODQwTW5nb1pydGtXRXVJL2drPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNjg4NDQ0ODU1CWZpbGU6Y3NzLWxvYWRlci1kZXNrdG9wXzAuNy4wX2FtZDY0LkFwcEltYWdlLnRhci5negpFSm1zL2Zob1JGWlpvNGtxUktMblRWOW5KM3lVL1l0UFMxTVBTcm1qRzhQTTNMVStnNHJzZ0JZTk04SEgyTkszazA2dmZUdGdhMFljdzFidHRRL1ZBdz09Cg==",
+      "url": "https://github.com/beebls/CSSLoader-Desktop/releases/download/nightly-e7d824b/CSSLoader.Desktop_nightly-e7d824b.AppImage.tar.gz"
     }
   }
 }
