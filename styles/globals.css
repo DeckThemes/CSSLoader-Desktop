@@ -18,6 +18,7 @@ body {
   overflow: hidden;
   /* background: transparent !important; */
   border-radius: 8px;
+  color-scheme: dark;
 }
 
 /* body {
@@ -113,7 +114,7 @@ input[type="color"]::-webkit-color-swatch {
 
 @keyframes load-in {
   0% {
-    transform: scale(1.02) translateY(24px);
+    transform: translateY(24px);
     opacity: 0;
     pointer-events: none;
   }
@@ -158,27 +159,48 @@ input[type="color"]::-webkit-color-swatch {
   }
 }
 
-@keyframes store-transform {
+/* @keyframes store-transform {
   0% {
-    transform: translateY(90vh);
+    transform: translateY(100vh) scale(1.5);
     opacity: 1;
   }
 
   100% {
-    transform: translateY(-100%) scale(0.3);
-    opacity: 0;
+    transform: translateY(15vh);
+    opacity: 0.6;
+  }
+} */
+
+@keyframes store-transform-skeleton {
+  0% {
+    transform: translateY(100vh);
+    opacity: 1;
+  }
+
+  100% {
+    transform: none;
   }
 }
 
-.store-loading-animation {
-  opacity: 0;
+/* .store-loading-animation {
   pointer-events: none;
   transition: 250ms;
-  will-change: transform;
-
-  animation: store-transform 0.5s forwards;
+  will-change: transform, filter;
+  filter: grayscale(1);
+  animation: store-transform 0.7s both;
   animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
-  animation-delay: 0.15s;
+  animation-delay: 0.25s;
+} */
+
+.store-loading-animation-skeleton {
+  opacity: 1;
+  pointer-events: none;
+  transition: 250ms;
+  will-change: transform, filter;
+
+  animation: store-transform-skeleton 0.9s both;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  animation-delay: 0.2s;
 }
 
 .backend-loading-animation {

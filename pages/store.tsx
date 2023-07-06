@@ -60,16 +60,31 @@ export default function Store() {
           width={"100%"}
           height={"100%"}
           loading="eager"
-          className="iframe-load-animation h-full w-full flex-grow !bg-transparent"
+          className="iframe-load-animation z-[20] h-full w-full flex-grow !bg-transparent"
         />
-        <Image
+        {/* <Image
           src="logo_css_darkmode.png"
           width={64}
           height={64}
           alt="CSSLoader Logo"
-          className="store-loading-animation pointer-events-none absolute"
+          className="store-loading-animation pointer-events-none absolute z-[11]"
           draggable={false}
-        />
+          aria-hidden
+        /> */}
+        <div
+          aria-hidden
+          className="page-shadow store-loading-animation-skeleton pointer-events-none absolute top-[72px] left-4 z-[10] grid h-screen w-[calc(100%-44px)] place-content-center rounded-t-3xl border-[1px] border-borders-base3-light bg-base-2-light dark:border-borders-base1-dark dark:bg-base-2-dark"
+        >
+          <Image
+            src="logo_css_darkmode.png"
+            width={64}
+            height={64}
+            alt="CSSLoader Logo"
+            className="pointer-events-none opacity-25 grayscale"
+            draggable={false}
+            aria-hidden
+          />
+        </div>
       </div>
     </>
   );
