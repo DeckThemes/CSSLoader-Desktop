@@ -80,7 +80,7 @@ export default function Store() {
             width={64}
             height={64}
             alt="CSSLoader Logo"
-            className="pointer-events-none opacity-25 grayscale"
+            className="store-loading-img pointer-events-none grayscale"
             draggable={false}
             aria-hidden
           />
