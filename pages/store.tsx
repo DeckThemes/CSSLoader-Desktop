@@ -73,7 +73,7 @@ export default function Store() {
         /> */}
         <div
           aria-hidden
-          className="page-shadow store-loading-animation-skeleton pointer-events-none absolute top-[72px] left-4 z-[10] grid h-screen w-[calc(100%-44px)] place-content-center rounded-t-3xl border-[1px] border-borders-base3-light bg-base-2-light dark:border-borders-base1-dark dark:bg-base-2-dark"
+          className="page-shadow store-loading-animation-skeleton pointer-events-none absolute top-[72px] left-4 z-[10] grid h-screen place-content-center rounded-t-3xl border-[1px] border-borders-base3-light bg-base-2-light dark:border-borders-base1-dark dark:bg-base-2-dark"
         >
           <Image
             src="logo_css_darkmode.png"
