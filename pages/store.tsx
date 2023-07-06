@@ -3,6 +3,7 @@ import { themeContext } from "@contexts/themeContext";
 import { allowedStoreOrigins, storeUrl } from "../constants";
 import { downloadThemeFromUrl, sleep, storeRead, toast } from "../backend";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 export default function Store() {
   const storeRef = useRef<HTMLIFrameElement>();
@@ -30,7 +31,7 @@ export default function Store() {
   }, []);
   return (
     <>
-      <main className="flex h-full w-full flex-1 flex-grow flex-col items-center gap-4">
+      <div className="relative flex h-full w-full flex-1 flex-grow flex-col items-center gap-4">
         <iframe
           // @ts-ignore
           ref={storeRef}
@@ -59,9 +60,17 @@ export default function Store() {
           width={"100%"}
           height={"100%"}
           loading="eager"
-          className="iframe-load-animation h-full w-full flex-grow rounded-3xl !bg-transparent"
+          className="iframe-load-animation h-full w-full flex-grow !bg-transparent"
         />
-      </main>
+        <Image
+          src="logo_css_darkmode.png"
+          width={64}
+          height={64}
+          alt="CSSLoader Logo"
+          className="store-loading-animation pointer-events-none absolute"
+          draggable={false}
+        />
+      </div>
     </>
   );
 }

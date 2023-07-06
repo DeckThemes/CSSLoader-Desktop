@@ -8,8 +8,11 @@ import { BackendFailedPage } from "./BackendFailedPage";
 import { backendStatusContext } from "@contexts/backendStatusContext";
 import { themeContext } from "@contexts/themeContext";
 import { osContext } from "@contexts/osContext";
+import { useRouter } from "next/router";
 
 export function AppRoot({ Component, pageProps }: AppProps) {
+  const router = useRouter();
+
   const { montserrat, openSans } = useContext(fontContext);
   const { isWindows } = useContext(osContext);
   const {
@@ -35,7 +38,12 @@ export function AppRoot({ Component, pageProps }: AppProps) {
       <div className="relative top-8 overflow-hidden rounded-b-lg">
         <div
           // A lot of this codebase is from the DeckThemes codebase, which has a light and dark mode, however this app only has a dark mode, so we put the dark class here incase we copy over things that have both styles
-          className={`dark relative mr-[4px] flex h-[calc(100vh-32px)] flex-col overflow-y-scroll bg-base-6-dark pr-[8px] text-textDark ${montserrat} ${openSans}`}
+          className={`dark relative flex h-[calc(100vh-32px)] flex-col bg-base-6-dark text-textDark ${montserrat} ${openSans} ${
+            router.pathname === "/store"
+              ? // 4px margin to prevent scrolling iframe on store page still
+                "mr-[4px] overflow-y-hidden"
+              : "mr-[4px] overflow-y-scroll pr-[8px]"
+          }`}
         >
           <ToastContainer
             position="bottom-center"
@@ -51,7 +59,13 @@ export function AppRoot({ Component, pageProps }: AppProps) {
             theme={"dark"}
           />
           {dummyResult && <MainNav />}
-          <main className="page-shadow ml-4 mt-4 mb-4 flex h-min flex-1 flex-grow flex-col rounded-3xl border-[1px] border-borders-base3-light bg-base-2-light dark:border-borders-base1-dark dark:bg-base-2-dark">
+          <main
+            className={`flex h-min flex-1 flex-grow flex-col ${
+              router.pathname === "/store"
+                ? ""
+                : "page-shadow ml-4 mt-4 mb-4 rounded-3xl border-[1px] border-borders-base3-light bg-base-2-light dark:border-borders-base1-dark dark:bg-base-2-dark"
+            }`}
+          >
             {isWindows && (showNewBackendPage || (!backendExists && !dummyResult)) && (
               <DownloadBackendPage
                 onboarding={!backendExists}

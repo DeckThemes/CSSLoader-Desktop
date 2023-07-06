@@ -113,10 +113,12 @@ input[type="color"]::-webkit-color-swatch {
 
 @keyframes load-in {
   0% {
+    transform: scale(1.02) translateY(24px);
     opacity: 0;
     pointer-events: none;
   }
   100% {
+    transform: none;
     opacity: 1;
     pointer-events: auto;
   }
@@ -125,8 +127,11 @@ input[type="color"]::-webkit-color-swatch {
 .iframe-load-animation {
   opacity: 0;
 
-  animation: load-in 0.2s ease forwards;
-  animation-delay: 0.4s;
+  animation: load-in 0.4s forwards;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  animation-delay: 0.65s;
+
+  will-change: transform;
 }
 
 .cssloader-titlebar {
@@ -151,6 +156,29 @@ input[type="color"]::-webkit-color-swatch {
   100% {
     filter: hue-rotate(0deg) brightness(135%);
   }
+}
+
+@keyframes store-transform {
+  0% {
+    transform: translateY(90vh);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-100%) scale(0.3);
+    opacity: 0;
+  }
+}
+
+.store-loading-animation {
+  opacity: 0;
+  pointer-events: none;
+  transition: 250ms;
+  will-change: transform;
+
+  animation: store-transform 0.5s forwards;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  animation-delay: 0.15s;
 }
 
 .backend-loading-animation {

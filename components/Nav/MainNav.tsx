@@ -3,8 +3,10 @@ import { RiArrowLeftLine, RiArrowRightLine, RiPaintFill, RiSettings2Fill } from 
 import { AiOutlineCloudDownload } from "react-icons/ai";
 import { BsFolder } from "react-icons/bs";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 
 export function MainNav() {
+  const router = useRouter();
   const [scrollPosition, setScrollPosition] = useState<number>(0);
   const [containerWidth, setContainerWidth] = useState<number>(0);
   const [contentWidth, setContentWidth] = useState<number>(0);
@@ -48,8 +50,11 @@ export function MainNav() {
 
   return (
     <>
+      {/* 100% - 22px rather than 26px because of the added 4px margin when on /store */}
       <div
-        className="sticky top-0 isolate z-[9997] w-full dark:bg-base-6-dark"
+        className={`sticky top-0 isolate z-[9997] dark:bg-base-6-dark ${
+          router.pathname === "/store" ? "w-[calc(100%-22px)]" : "w-full"
+        }`}
         style={{ boxShadow: "0px 0px 15px #090a0c, 0px 4px 15px #090a0c" }}
       >
         <div className="mx-auto flex w-full max-w-5xl justify-center px-4 sm:items-center">

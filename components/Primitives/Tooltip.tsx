@@ -33,9 +33,7 @@ export function Tooltip({
         onOpenChange={(open) => !disabled && setOpen(open)}
         delayDuration={delayDuration}
       >
-        <RadixTooltip.Trigger asChild={true} className={triggerRootClass}>
-          {triggerContent}
-        </RadixTooltip.Trigger>
+        <RadixTooltip.Trigger className={triggerRootClass}>{triggerContent}</RadixTooltip.Trigger>
         <RadixTooltip.Portal>
           <div className={`dark ${montserrat} font-fancy`}>
             <RadixTooltip.Content
