@@ -131,7 +131,7 @@ export function ThemeToggle({
 
               // Dependency Toast
               if (data.dependencies.length > 0) {
-                if (switchValue === true) {
+                if (switchValue) {
                   toast(
                     `${data.name} enabled other themes`,
                     `${
@@ -141,7 +141,7 @@ export function ThemeToggle({
                     }`
                   );
                 }
-                if (!data.flags.includes(Flags.dontDisableDeps)) {
+                if (!switchValue && !data.flags.includes(Flags.dontDisableDeps)) {
                   toast(
                     `${data.name} disabled other themes`,
                     // @ts-ignore
