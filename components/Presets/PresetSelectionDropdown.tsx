@@ -11,6 +11,11 @@ export function PresetSelectionDropdown() {
   const { themes, refreshThemes, selectedPreset } = useContext(themeContext);
   const presets = useMemo(() => themes.filter((e) => e.flags.includes(Flags.isPreset)), [themes]);
   const [showModal, setShowModal] = useState(false);
+  console.log(
+    themes.filter((e) => e.flags.includes(Flags.isPreset) && e.enabled).length > 1
+      ? "Invalid State"
+      : selectedPreset?.name || "None"
+  );
 
   return (
     <>
@@ -21,11 +26,18 @@ export function PresetSelectionDropdown() {
           headingText="Selected Profile"
           ariaLabel="Profile Selection Dropdown"
           // value={presets.find((e) => e.enabled)?.name || "Default Profile"}
-          value={selectedPreset?.name || "Default Profile"}
+          value={
+            themes.filter((e) => e.flags.includes(Flags.isPreset) && e.enabled).length > 1
+              ? "Invalid State"
+              : selectedPreset?.name || "None"
+          }
           options={[
             // This just ensures that default profile is the first result
-            "Default Profile",
-            ...presets.map((e) => e.name).filter((e) => e !== "Default Profile"),
+            ...(themes.filter((e) => e.flags.includes(Flags.isPreset) && e.enabled).length > 1
+              ? ["Invalid State"]
+              : []),
+            "None",
+            ...presets.map((e) => e.name),
             "New Profile",
           ]}
           onValueChange={async (e) => {
@@ -33,35 +45,28 @@ export function PresetSelectionDropdown() {
               setShowModal(true);
               return;
             }
+            if (e === "Invalid State") return;
             await changePreset(e, themes);
             refreshThemes();
           }}
         />
-        <Tooltip
-          content="You cannot edit the default profile."
-          delayDuration={500}
+
+        <MenuDropdown
+          triggerDisabled={!selectedPreset}
           align="end"
-          disabled={selectedPreset?.name !== "Default Profile"}
-          triggerRootClass="self-end"
-          triggerContent={
-            <MenuDropdown
-              triggerDisabled={selectedPreset?.name === "Default Profile"}
-              align="end"
-              options={[
-                {
-                  displayText: "Delete Theme",
-                  icon: <BiTrash size={20} />,
-                  onSelect: async () => {
-                    deletePreset(selectedPreset!.name, themes, refreshThemes);
-                  },
-                },
-              ]}
-              triggerClass={twMerge(
-                "h-12 w-12 self-end rounded-xl border-2 border-borders-base1-dark bg-base-5.5-dark transition-all hover:border-borders-base2-dark",
-                selectedPreset?.name === "Default Profile" && "opacity-50"
-              )}
-            />
-          }
+          options={[
+            {
+              displayText: "Delete Profile",
+              icon: <BiTrash size={20} />,
+              onSelect: async () => {
+                deletePreset(selectedPreset!.name, themes, refreshThemes);
+              },
+            },
+          ]}
+          triggerClass={twMerge(
+            "h-12 w-12 self-end rounded-xl border-2 border-borders-base1-dark bg-base-5.5-dark transition-all hover:border-borders-base2-dark",
+            !selectedPreset && "opacity-50"
+          )}
         />
       </div>
     </>

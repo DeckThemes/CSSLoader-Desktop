@@ -17,9 +17,7 @@ export function YourProfilesList({
   handleUpdate: (e: MinimalCSSThemeInfo) => void;
 }) {
   const { themes, refreshThemes } = useContext(themeContext);
-  const userChangeablePresets = themes.filter(
-    (e) => e.flags.includes(Flags.isPreset) && e.name !== "Default Profile"
-  );
+  const userChangeablePresets = themes.filter((e) => e.flags.includes(Flags.isPreset));
   if (userChangeablePresets.length === 0) return null;
   return (
     <>

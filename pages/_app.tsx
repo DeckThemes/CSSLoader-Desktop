@@ -72,18 +72,6 @@ export default function App(AppProps: AppProps) {
     setBackendExists(backendExists);
   }
 
-  // This will likely only run on a user's first run
-  // todo: potentially there's a way to make this run without an expensive stringify useEffect running always
-  // however, I want to make sure that someone can't delete the folder "Default Profile", as that would be bad
-  useEffect(() => {
-    if (!themes.find((e) => e.name === "Default Profile")) {
-      generatePresetFromThemeNames("Default Profile", []).then(async () => {
-        await changePreset("Default Profile", themes);
-        refreshThemes(true);
-      });
-    }
-  }, [JSON.stringify(themes.filter((e) => e.flags.includes(Flags.isPreset)))]);
-
   async function dummyFuncTest() {
     try {
       const data = await dummyFunction();
