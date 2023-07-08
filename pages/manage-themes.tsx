@@ -38,8 +38,8 @@ export default function ManageThemes() {
 
   return (
     <main className="flex flex-1 flex-col items-center gap-8 px-4">
-      <div className="mt-12 w-full max-w-[960px]">
-        <h2 className="font-fancy mb-4 text-sm font-bold">Theme Directory</h2>
+      <div className="mt-6 w-full max-w-[960px]">
+        <h2 className="font-fancy mb-4 text-lg font-bold">Theme Directory</h2>
         <button
           className="flex w-fit items-center justify-center gap-2 rounded-full border-2 border-[#2e2e2e] bg-[#2563eb] px-4 py-2 text-sm font-bold transition duration-100 focus-visible:ring-4 focus-visible:ring-amber9"
           onClick={async () => {
@@ -56,7 +56,7 @@ export default function ManageThemes() {
         </button>
       </div>
       <div className="flex w-full flex-col">
-        <h2 className="font-fancy mx-auto mb-4 w-full max-w-[960px] text-sm font-bold">
+        <h2 className="font-fancy mx-auto mb-4 w-full max-w-[960px] text-lg font-bold">
           Installed Themes
         </h2>
         <div className="mx-auto mb-4 flex w-full max-w-[960px] flex-col gap-4">
