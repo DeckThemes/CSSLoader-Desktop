@@ -68,8 +68,8 @@ export default function SettingsPage() {
 
   return (
     <>
-      <main className="flex w-full flex-1 flex-grow flex-col items-center gap-4">
-        <div className="flex w-full max-w-[960px] flex-col gap-8 px-4 pt-12">
+      <main className="flex w-full flex-1 flex-grow flex-col items-center gap-4 px-4">
+        <div className="mt-6 flex w-full max-w-[960px] flex-col gap-8">
           <div className="flex w-full flex-col gap-4">
             <span className="text-lg font-bold">Store Settings</span>
             <div className="flex items-end justify-center gap-4">

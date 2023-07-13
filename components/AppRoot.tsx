@@ -2,7 +2,7 @@ import { ToastContainer } from "react-toastify";
 import { MainNav } from "./Nav";
 import { DownloadBackendPage } from "./DownloadBackendPage";
 import { AppProps } from "next/app";
-import { useContext } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { fontContext } from "@contexts/FontContext";
 import { BackendFailedPage } from "./BackendFailedPage";
 import { backendStatusContext } from "@contexts/backendStatusContext";
@@ -32,11 +32,20 @@ export function AppRoot({ Component, pageProps }: AppProps) {
     setNewBackend("");
   }
 
+  const scrollableContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (scrollableContainerRef.current) {
+      scrollableContainerRef.current.scrollTop = 0;
+    }
+  }, [router.asPath]);
+
   return (
     // overflow-hidden rounded-b-lg
     <div className="absolute top-0 left-0 right-0 bottom-0 overflow-hidden rounded-lg bg-base-6-dark">
       <div className="relative top-8 overflow-hidden rounded-b-lg">
         <div
+          ref={scrollableContainerRef}
           // A lot of this codebase is from the DeckThemes codebase, which has a light and dark mode, however this app only has a dark mode, so we put the dark class here incase we copy over things that have both styles
           className={`dark relative flex h-[calc(100vh-32px)] flex-col bg-base-6-dark text-textDark ${montserrat} ${openSans} ${
             router.pathname === "/store"
