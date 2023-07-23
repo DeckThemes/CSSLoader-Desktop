@@ -90,6 +90,8 @@ npm i
 npm run tauri dev
 ```
 
+A maintained list of frontend bugs/upcoming features is available through our [project board](https://fyro.notion.site/31266833d05746b19d63a72c4a69b649), we refer to issues based on their IDs in the board.
+
 ## Store
 
 The DeckThemes store is managed under [a different github repository](https://github.com/beebls/DeckThemes).
