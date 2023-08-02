@@ -2,13 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  height: 100%;
+  width: 100%;
+}
+
 html,
 body {
+  /* I'm not sure why you removed the width and height at 100%, but it's super important */
+  height: 100%;
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: var(--montserrat), BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
+    Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  overflow: hidden;
+  /* background: transparent !important; */
+  border-radius: 8px;
+  color-scheme: dark;
 }
+
+/* body {
+	overflow-y: scroll;
+} */
 
 a {
   color: inherit;
@@ -17,22 +32,188 @@ a {
 
 * {
   box-sizing: border-box;
+  user-select: none;
+  outline: none;
+  font-family: var(--montserrat);
 }
 
-.fancy-font {
+/* *:focus-visible {
+	box-shadow: 0 0 0 2px transparent, 0 0 0 4px hsl(39 100% 57.0%);
+} */
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    color: white;
+  }
+}
+
+.font-fancy {
   font-family: var(--montserrat);
+}
+
+.font-notfancy {
+  font-family: var(--opensans);
 }
 
 main {
   font-family: var(--opensans);
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+iframe {
+  background: transparent !important;
+}
+
+input[type="color"] {
+  -webkit-appearance: none;
+  border: none;
+  width: 32px;
+  height: 32px;
+}
+input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+input[type="color"]::-webkit-color-swatch {
+  border: none;
+}
+
+::-webkit-scrollbar {
+  width: 15px;
+  height: 0px;
+  background: transparent;
+  padding-right: 8px;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 9999px;
+  background: #484848;
+  background-clip: padding-box;
+  border: 5px solid rgba(0, 0, 0, 0);
+  border-width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 9999px;
+  background: transparent;
+}
+
+.page-shadow {
+  box-shadow: 0px 0px 30px hsl(220, 5%, 0%);
+}
+
+.modal-shadow {
+  box-shadow: 0px 0px 20px hsl(220, 5%, 0%);
+}
+
+@keyframes load-in {
+  0% {
+    /* transform: translateY(24px); */
+    opacity: 0;
+    pointer-events: none;
   }
-  body {
-    color: white;
-    background: black;
+  100% {
+    transform: none;
+    opacity: 1;
+    pointer-events: auto;
   }
+}
+
+.iframe-load-animation {
+  opacity: 0;
+
+  animation: load-in 0.4s forwards;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  animation-delay: 0.65s;
+
+  will-change: transform;
+}
+
+.cssloader-titlebar {
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.radio-dropdown {
+  box-shadow: 0 0 30px #000;
+}
+
+@keyframes hue-rotate {
+  0% {
+    filter: hue-rotate(0deg) brightness(135%);
+  }
+
+  50% {
+    filter: hue-rotate(360deg) brightness(135%);
+  }
+
+  100% {
+    filter: hue-rotate(0deg) brightness(135%);
+  }
+}
+
+/* @keyframes store-transform {
+  0% {
+    transform: translateY(100vh) scale(1.5);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(15vh);
+    opacity: 0.6;
+  }
+} */
+
+@keyframes store-transform-skeleton {
+  0% {
+    transform: translateY(-56px);
+    width: calc(100% - 38px);
+  }
+
+  100% {
+    transform: none;
+    width: calc(100% - 44px);
+  }
+}
+
+/* .store-loading-animation {
+  pointer-events: none;
+  transition: 250ms;
+  will-change: transform, filter;
+  filter: grayscale(1);
+  animation: store-transform 0.7s both;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  animation-delay: 0.25s;
+} */
+
+.store-loading-animation-skeleton {
+  opacity: 1;
+  pointer-events: none;
+  transition: 250ms;
+  will-change: transform, filter;
+
+  animation: store-transform-skeleton 0.9s both;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  /* animation-delay: 0.2s; */
+}
+
+@keyframes pulse {
+  50% {
+      opacity: .5;
+      transform: scale(0.9)
+  }
+}
+.store-loading-img {
+  animation: pulse 1.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.backend-loading-animation {
+  animation: hue-rotate 4s linear infinite forwards;
 }

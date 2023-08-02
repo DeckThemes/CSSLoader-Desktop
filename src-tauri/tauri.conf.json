@@ -12,6 +12,9 @@
   },
   "tauri": {
     "allowlist": {
+      "os": {
+        "all": true
+      },
       "path": {
         "all": true
       },
@@ -28,9 +31,41 @@
         "scope": [
           "$CONFIG\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\*",
           "$APPDATA/standaloneVersion.txt",
-          "$APPDATA"
+          "$APPDATA",
+          "$HOME/homebrew/themes/*"
         ],
         "writeFile": true
+      },
+      "window": {
+        "all": false,
+        "center": false,
+        "close": true,
+        "create": false,
+        "hide": false,
+        "maximize": true,
+        "minimize": true,
+        "print": false,
+        "requestUserAttention": false,
+        "setAlwaysOnTop": false,
+        "setCursorGrab": false,
+        "setCursorIcon": false,
+        "setCursorPosition": false,
+        "setCursorVisible": false,
+        "setDecorations": true,
+        "setFocus": true,
+        "setFullscreen": true,
+        "setIcon": false,
+        "setMaxSize": false,
+        "setMinSize": false,
+        "setPosition": false,
+        "setResizable": false,
+        "setSize": true,
+        "setSkipTaskbar": false,
+        "setTitle": false,
+        "show": false,
+        "startDragging": true,
+        "unmaximize": true,
+        "unminimize": true
       },
       "shell": {
         "all": true,
@@ -40,11 +75,19 @@
           {
             "name": "killBackend",
             "cmd": "powershell.exe",
+            "args": ["taskkill", "/IM", "CssLoader-Standalone-Headless.exe", "/F"]
+          },
+          {
+            "name": "copyBackend",
+            "cmd": "powershell.exe",
             "args": [
-              "taskkill",
-              "/IM",
-              "CssLoader-Standalone-Headless.exe",
-              "/F"
+              "Copy-Item",
+              "-Path",
+              { "validator": ".*" },
+              "-Destination",
+              "([Environment]::GetFolderPath('Startup')",
+              "+",
+              "'\\CssLoader-Standalone-Headless.exe')"
             ]
           },
           {
@@ -132,9 +175,7 @@
     "updater": {
       "active": true,
       "dialog": true,
-      "endpoints": [
-        "https://raw.githubusercontent.com/beebls/CSSLoader-Desktop/dev/latest.json"
-      ],
+      "endpoints": ["https://raw.githubusercontent.com/beebls/CSSLoader-Desktop/main/latest.json"],
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEQ2RUUwREI3QjYzQjlEQzYKUldUR25UdTJ0dzN1MWdPaVZGbGhaWitmNUJKNkNQRUphd0tOdmR6MzNyMHQ3SHorNDcyRTNqS2MK"
     },
     "windows": [
@@ -143,6 +184,8 @@
         "height": 600,
         "resizable": true,
         "title": "CSSLoader Desktop",
+        "decorations": false,
+        "transparent": true,
         "width": 800,
         "minWidth": 460,
         "minHeight": 300

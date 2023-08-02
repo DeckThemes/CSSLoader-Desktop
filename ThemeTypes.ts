@@ -11,6 +11,8 @@ export interface Theme {
   patches: Patch[];
   dependencies: string[];
   flags: Flags[];
+  created: number;
+  modified: number;
 }
 
 export interface ThemePatchComponent {
@@ -32,6 +34,7 @@ export interface Patch {
 export enum Flags {
   "isPreset" = "PRESET",
   "dontDisableDeps" = "KEEP_DEPENDENCIES",
+  "optionalDeps" = "OPTIONAL_DEPENDENCIES",
 }
 
 // API TYPES

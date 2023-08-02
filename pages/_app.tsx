@@ -1,150 +1,121 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { Theme } from "../ThemeTypes";
-import { Montserrat, Open_Sans } from "next/font/google";
-import { createContext, useState, useEffect } from "react";
-import * as python from "../backend";
-import { ToastContainer } from "react-toastify";
+import { Flags, Theme } from "../ThemeTypes";
+import { useState, useEffect, useMemo, use } from "react";
 import "react-toastify/dist/ReactToastify.css";
-import { useRouter } from "next/router";
-import { BackendFailedPage, MainNav, DownloadBackendPage } from "../components";
-import { exists, BaseDirectory } from "@tauri-apps/api/fs";
+import {
+  checkForNewBackend,
+  checkIfStandaloneBackendExists,
+  checkIfBackendIsStandalone,
+  dummyFunction,
+  reloadBackend,
+  startBackend,
+  recursiveCheck,
+  getInstalledThemes,
+  getOS,
+  generatePresetFromThemeNames,
+  changePreset,
+} from "../backend";
+import { themeContext } from "@contexts/themeContext";
+import { FontContext } from "@contexts/FontContext";
+import { backendStatusContext } from "@contexts/backendStatusContext";
+import { AppRoot } from "@components/AppRoot";
+import DynamicTitleBar from "@components/Native/DynamicTitlebar";
+import { AppFrame } from "@components/Native/AppFrame";
+import { osContext } from "@contexts/osContext";
+import { useBasicAsyncEffect } from "@hooks/useBasicAsyncEffect";
 
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  variable: "--montserrat",
-});
-
-const openSans = Open_Sans({
-  subsets: ["latin"],
-  variable: "--opensans",
-});
-
-export const themeContext = createContext<{
-  themes: Theme[];
-  setThemes: any;
-  refreshThemes: any;
-}>({
-  themes: [],
-  setThemes: () => {},
-  refreshThemes: () => {},
-});
-
-export default function App({ Component, pageProps }: AppProps) {
+export default function App(AppProps: AppProps) {
   const [themes, setThemes] = useState<Theme[]>([]);
-  const [dummyResult, setDummyResult] = useState<boolean>(false);
+  // This is now undefined before the initial check, that way things can use dummyResult !== undefined to see if the app has properly loaded
+  const [dummyResult, setDummyResult] = useState<boolean | undefined>(undefined);
   const [backendExists, setBackendExists] = useState<boolean>(false);
-  // const [newBackendAvailable, setNewBackend] = useState<string>('');
-  // const [showNewBackendPage, setShowNewBackend] = useState<boolean>(false)
-  const router = useRouter();
+  const [newBackendVersion, setNewBackend] = useState<string>("");
+  const [showNewBackendPage, setShowNewBackend] = useState<boolean>(false);
+  const [OS, setOS] = useState<string>("");
+  const isWindows = useMemo(() => OS === "win32", [OS]);
+
+  const selectedPreset = useMemo(
+    () => themes.find((e) => e.flags.includes(Flags.isPreset) && e.enabled),
+    [themes]
+  );
+
   useEffect(() => {
-    // python.checkForNewStandalone().then((newStandalone) => {
-    //   if (newStandalone){
-    //     setNewBackend(newStandalone as string);
-    //     setShowNewBackend(true)
-    //   }
-    // });
-    python.checkIfBackendExists().then((backendExists) => {
-      setBackendExists(backendExists);
-      if (backendExists) {
-        recheckDummy();
-      }
-    });
+    // This sets OS and isWindows, which some other initializing logic then runs based on that result
+    getOS().then(setOS);
+    // This actually initializes the themes and such
+    recheckDummy();
   }, []);
 
-  async function recheckDummy() {
-    const recursive = async () => {
-      const value = await dummyFuncTest();
-      if (value) {
-        refreshThemes();
-        return;
-      } else
-        setTimeout(() => {
-          recursive();
-        }, 1000);
-    };
+  useBasicAsyncEffect(async () => {
+    if (!isWindows) return;
+    refreshBackendExists();
+    const isStandalone = await checkIfBackendIsStandalone();
+    if (!isStandalone) return;
+    const newStandalone = await checkForNewBackend();
+    if (!newStandalone) return;
+    setNewBackend(newStandalone as string);
+    setShowNewBackend(true);
+  }, [isWindows]);
 
-    const value = await dummyFuncTest();
-    if (value) {
-      refreshThemes();
-      return;
-    } else {
-      python.startBackend();
-      recursive();
-    }
+  async function recheckDummy() {
+    recursiveCheck(
+      dummyFuncTest,
+      () => refreshThemes(true),
+      () => isWindows && startBackend()
+    );
+  }
+
+  async function refreshBackendExists() {
+    if (!isWindows) return;
+    const backendExists = await checkIfStandaloneBackendExists();
+    setBackendExists(backendExists);
   }
 
   async function dummyFuncTest() {
-    return python
-      .dummyFunction()
-      .then((data) => {
-        if (data.success) {
-          setDummyResult(data.result);
-          return true;
-        }
-        setDummyResult(false);
-        return false;
-      })
-      .catch(() => {
-        setDummyResult(false);
-        return false;
-      });
+    try {
+      const data = await dummyFunction();
+      if (!data || !data.success) throw new Error(undefined);
+      setDummyResult(data.result);
+      return true;
+    } catch {
+      setDummyResult(false);
+      return false;
+    }
   }
 
-  function refreshThemes() {
-    python.checkIfBackendExists().then((value) => setBackendExists(value));
-    dummyFuncTest();
-    python
-      .reloadBackend()
-      .then((data) => {
-        if (data) {
-          setThemes(data.sort());
-        }
-      })
-      .catch((err) => {
-        setDummyResult(false);
-      });
-    return;
+  async function refreshThemes(reset: boolean = false) {
+    if (isWindows) await refreshBackendExists();
+    await dummyFuncTest();
+
+    const data = reset ? await reloadBackend() : await getInstalledThemes();
+    if (data) {
+      setThemes(data.sort());
+    }
   }
 
   return (
-    <themeContext.Provider value={{ themes, setThemes, refreshThemes }}>
-      <div
-        className={`overflow-y-hidden dark w-full min-h-screen h-full flex flex-col bg-bgDark dark:text-textDark ${montserrat.variable} ${openSans.variable}`}
+    <themeContext.Provider value={{ themes, setThemes, refreshThemes, selectedPreset }}>
+      <backendStatusContext.Provider
+        value={{
+          dummyResult,
+          backendExists,
+          showNewBackendPage,
+          newBackendVersion,
+          recheckDummy,
+          setNewBackend,
+          setShowNewBackend,
+        }}
       >
-        <ToastContainer
-          position="bottom-center"
-          autoClose={3000}
-          hideProgressBar={false}
-          newestOnTop
-          closeOnClick
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme={"dark"}
-        />
-        {dummyResult ? (
-          <>
-            <MainNav dummyFuncTest={dummyFuncTest} />
-            <main
-              style={{
-                overflowY: router.pathname === "/store" ? "auto" : "scroll",
-              }}
-              className="w-full h-minusNav overflow-y-scroll"
-            >
-              <Component {...pageProps} />
-            </main>
-          </>
-        ) : (
-          <>
-            {backendExists ? (
-              <BackendFailedPage />
-            ) : (
-              <DownloadBackendPage onboarding />
-            )}
-          </>
-        )}
-      </div>
+        <osContext.Provider value={{ OS, isWindows }}>
+          <FontContext>
+            <AppFrame>
+              <DynamicTitleBar />
+              <AppRoot {...AppProps} />
+            </AppFrame>
+          </FontContext>
+        </osContext.Provider>
+      </backendStatusContext.Provider>
     </themeContext.Provider>
   );
 }

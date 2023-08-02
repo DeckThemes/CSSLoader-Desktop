@@ -77,6 +77,8 @@ runs:
             });
           }
 
+          core.info(`Tag: ${process.env.release_tag}`)
+          core.info(`Branch: ${process.env.git_branch}`)
 
           let versionNoV = process.env.release_tag.substring(1);
           if (process.env.git_branch === "nightly") {
@@ -86,6 +88,9 @@ runs:
             "windowsInstaller": `CSSLoader.Desktop_${versionNoV}.msi`,
             "windowsUpdater": `CSSLoader.Desktop_${versionNoV}.msi.zip`,
             "windowsUpdaterSig": `CSSLoader.Desktop_${versionNoV}.msi.zip.sig`,
+            "linuxInstaller": `CSSLoader.Desktop_${versionNoV}.AppImage`,
+            "linuxUpdater": `CSSLoader.Desktop_${versionNoV}.AppImage.tar.gz`,
+            "linuxUpdaterSig": `CSSLoader.Desktop_${versionNoV}.AppImage.tar.gz.sig`,
           }
 
           const assets = await github.rest.repos.listReleaseAssets({
@@ -104,12 +109,22 @@ runs:
           const winUpdaterSig = assets.data.find((asset) => asset.name.endsWith(".msi.zip.sig"));
           await setReleaseAssetName(winUpdaterSig.id, GENERIC_NAMES["windowsUpdaterSig"]);
 
+          const linuxInstaller = assets.data.find((asset) => asset.name.endsWith(".AppImage"));
+          await setReleaseAssetName(linuxInstaller.id, GENERIC_NAMES["linuxInstaller"]);
+
+          const linuxUpdater = assets.data.find((asset) => asset.name.endsWith(".AppImage.tar.gz"));
+          await setReleaseAssetName(linuxUpdater.id, GENERIC_NAMES["linuxUpdater"]);
+            
+          const linuxUpdaterSig = assets.data.find((asset) => asset.name.endsWith(".AppImage.tar.gz.sig"));
+          await setReleaseAssetName(linuxUpdaterSig.id, GENERIC_NAMES["linuxUpdaterSig"]);
+
           const latest = assets.data.find((asset) => asset.name === "latest.json");
           const latestContentsBuff = Buffer.from(await getReleaseAssetContents(latest.id));
           let latestContents = latestContentsBuff.toString();
           await deleteReleaseAsset(latest.id);
 
           latestContents = latestContents.replace(winUpdater.name, GENERIC_NAMES["windowsUpdater"]);
+          latestContents = latestContents.replace(linuxUpdater.name, GENERIC_NAMES["linuxUpdater"]);
             
           await uploadReleaseAsset("latest.json", Buffer.from(latestContents));
 

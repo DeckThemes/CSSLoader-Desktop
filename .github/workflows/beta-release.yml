@@ -12,9 +12,6 @@ jobs:
     runs-on: ubuntu-20.04
     outputs:
       release_id: ${{ steps.create-release.outputs.result }}
-      change_log: ${{ steps.changelog.outputs.clean_changelog }}
-      version: ${{ steps.changelog.outputs.version }}
-      tag: ${{ steps.changelog.outputs.tag }}
 
     steps:
       - name: Checkout Repository
@@ -40,7 +37,7 @@ jobs:
               name: `CSSLoader Desktop Beta ${process.env.PACKAGE_VERSION}`,
               body: `Download the release for your platform below`,
               draft: true,
-              prerelease: true
+              prerelease: false
             });
 
             core.setOutput("tag", `beta-${process.env.PACKAGE_VERSION}`);
@@ -92,8 +89,6 @@ jobs:
           tagName: ${{ needs.create-release.outputs.tag }}
           releaseBody: "Download the release for your platform below"
           releaseDraft: true
-          includeDebug: true
-          includeRelease: false
           includeUpdaterJson: false
 
   publish-release:
@@ -129,5 +124,5 @@ jobs:
               repo: context.repo.repo,
               release_id: process.env.release_id,
               draft: false,
-              prerelease: true
+              prerelease: false
             })
