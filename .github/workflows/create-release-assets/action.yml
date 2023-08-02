@@ -77,9 +77,9 @@ runs:
             });
           }
 
-
           core.info(`Tag: ${process.env.release_tag}`)
           core.info(`Branch: ${process.env.git_branch}`)
+
           let versionNoV = process.env.release_tag.substring(1);
           if (process.env.git_branch === "nightly") {
             versionNoV = process.env.release_tag
