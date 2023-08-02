@@ -6,7 +6,7 @@ export async function changePreset(themeName: string, themeList: Theme[]) {
     // Disables all themes before enabling the preset
     await Promise.all(themeList.filter((e) => e.enabled).map((e) => setThemeState(e.name, false)));
 
-    await setThemeState(themeName, true);
+    themeName !== "None" && (await setThemeState(themeName, true));
     resolve(true);
   });
 }
