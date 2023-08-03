@@ -304,7 +304,9 @@ function run() {
             let newVersion = `${parseInt(oldVersion.substring(0, 1)) + 1}${oldVersion.substring(1)}`;
             // Generate the string changelog
             let stringChangelog = filterChangeLog(yield (0, generateChangelog_1.generateStringChangelog)(tagPrefix, preset, newVersion, 1, config, gitPath, !prerelease));
-            newVersion = calcTrueNewVersionFromLog(oldVersion, stringChangelog);
+            // IN PROG CHANGE, CONSULT TORMAK MAYBE WE CAN MAKE SOMETHING BETTER
+            // newVersion = calcTrueNewVersionFromLog(oldVersion, stringChangelog);
+            let newVersion = oldVersion;
             let gitTag = `${tagPrefix}${newVersion}`;
             core.info(`Calculated version: "${newVersion}"`);
             core.info(`Calculated tag: "${gitTag}"`);
@@ -36099,7 +36101,7 @@ class SemVer {
       case 'minor':
         // If this is a pre-minor version, bump up to the same minor version.
         // Otherwise increment minor.
-        // 1.2.0-5 bumps to 1.2.0
+        // 1.2.0-5 bumps to 1
         // 1.2.1 bumps to 1.3.0
         if (this.patch !== 0 || this.prerelease.length === 0) {
           this.minor++
