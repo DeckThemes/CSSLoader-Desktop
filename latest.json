@@ -1,11 +1,15 @@
 {
-  "version": "0.6.2",
+  "version": "1.0.0",
   "notes": "Check Github for the release notes!",
-  "pub_date": "2023-06-13T23:38:17.859Z",
+  "pub_date": "2023-08-03T00:23:17.467Z",
   "platforms": {
     "windows-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUR25UdTJ0dzN1MXAzQjVndjZONWFMYng5bk1DTUNLVlNzZGJxWjUyN3FMVC8wa2U0UVM3TkZyMXlyRFk5NWcwdStGeGtJR1BCUFJ0TnBiY0tnWU8rZW9KWjFMdHNnMkEwPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNjg2Njk5NDk1CWZpbGU6Q1NTTG9hZGVyIERlc2t0b3BfMC42LjJfeDY0X2VuLVVTLm1zaS56aXAKdDB5dDVLYXRTQ3k2WGtmWGhuTC9ZQmxJNDhwbEl1d0M2dHJnQjJhc1ZiT2FPMVdIUWR1bnAzbHVIZGNSNVdzTjhHUHpvWkJnd3FTenczaGFQVWV5QkE9PQo=",
-      "url": "https://github.com/beebls/CSSLoader-Desktop/releases/latest/download/CSSLoader.Desktop_0.6.2_x64_en-US.msi.zip"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUR25UdTJ0dzN1MWkvL3NRTlkwdUhSSGVKRXk5OW5vWlVaYzRhZXdydXhNZmtWc3FyZnhrWjRGQ2hQb3hZUEgweW1mMkRmRnhDWlpPcm9LZFhPaFh5dWpaSTZsWHpNR2drPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNjkxMDIyMTM2CWZpbGU6Q1NTTG9hZGVyIERlc2t0b3BfMS4wLjBfeDY0X2VuLVVTLm1zaS56aXAKMGZzOUFTaWF1SDRZeXdUNmluZm9MUFRZdG84UEZTb2JQai9JcGxwelRaSFBRUUJuTkNUWHlCRDdSYzdCdzhqSzYvc2d4aWF1L2ZVYktEWXVOTVoyQVE9PQo=",
+      "url": "https://github.com/beebls/CSSLoader-Desktop/releases/download/v1.0.0/CSSLoader.Desktop_1.0.0.msi.zip"
+    },
+    "linux-x86_64": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUR25UdTJ0dzN1MXBreHNnY1l6cjBwM1NTb2VKMCtUOU9FOWxhZXlkQ1hwYmswS3l6MlB5YjZkeFRhUTlEYnhrNmN1Wi80N2lxN2kyWEkvbXp3czJscHBHSzIxUHFFM0FjPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNjkxMDIyMTkxCWZpbGU6Y3NzLWxvYWRlci1kZXNrdG9wXzEuMC4wX2FtZDY0LkFwcEltYWdlLnRhci5nego5ZFp5Mkh4UkUyQ0tONFZvbWtyTnpvekh6ZXlXdXNqdFUzNUd2Q3B5RkwycVZ0ZlZiRnFkRjU3M1lwUGtpTXBXckJKSkxXSmp6ZG5ZT0hoSFd5MEtDUT09Cg==",
+      "url": "https://github.com/beebls/CSSLoader-Desktop/releases/download/v1.0.0/CSSLoader.Desktop_1.0.0.AppImage.tar.gz"
     }
   }
 }
