@@ -1,15 +1,15 @@
 {
-  "version": "0.7.0",
-  "notes": "Download the release for your platform below",
-  "pub_date": "2023-08-02T20:46:00.198Z",
+  "version": "1.0.0",
+  "notes": "Check Github for the release notes!",
+  "pub_date": "2023-08-03T00:23:17.467Z",
   "platforms": {
-    "linux-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUR25UdTJ0dzN1MWpjbzhBRkxZckt0V0V5QzAxVTBtNHkwZ1dyWHI5Tkg0MDhjbkZzb1FsRHNPbHFYRm5RYXZzSUNiZWhYUkpieHR1aTF0QzFXU2gwWVJNRVE4M2hPOFFFPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNjkxMDA4OTIwCWZpbGU6Y3NzLWxvYWRlci1kZXNrdG9wXzAuNy4wX2FtZDY0LkFwcEltYWdlLnRhci5negpETzYxVVV5Q1pGRTRVU2x4YlRzSFpmeTZ5TVFZY3E4L3BqUzFNTnJhVlNxcytpTHB0TVFxeXZjblBWcXRzRjc5azVzSitLV3RJZlRVcXJuWmxUY1hEUT09Cg==",
-      "url": "https://github.com/beebls/CSSLoader-Desktop/releases/latest/download/CSSLoader.Desktop_.AppImage.tar.gz"
-    },
     "windows-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUR25UdTJ0dzN1MXJaOExmMmZIYUJkc2d6aHQvb0RMejZCdFIxRnFFeWJqdHpSMFFNdVVyNk1KTDJPREtFRUE0TVNoU25OdkNTZUVWdlRGdXM4a2tNZkVZRVdyeS9ianc4PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNjkxMDA5MTU4CWZpbGU6Q1NTTG9hZGVyIERlc2t0b3BfMC43LjBfeDY0X2VuLVVTLm1zaS56aXAKc0E4OTNHTW9GSHFxbEorK2lGWFBuTFVTV1NpQUlrVHVwZitXUk5tR3NVYlNHSExBSW9aaWZxLzRySjYwQ2FMeTlXNERmeW5zOUp0U2Yvc29zNnVsQUE9PQo=",
-      "url": "https://github.com/beebls/CSSLoader-Desktop/releases/latest/download/CSSLoader.Desktop_.msi.zip"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUR25UdTJ0dzN1MWkvL3NRTlkwdUhSSGVKRXk5OW5vWlVaYzRhZXdydXhNZmtWc3FyZnhrWjRGQ2hQb3hZUEgweW1mMkRmRnhDWlpPcm9LZFhPaFh5dWpaSTZsWHpNR2drPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNjkxMDIyMTM2CWZpbGU6Q1NTTG9hZGVyIERlc2t0b3BfMS4wLjBfeDY0X2VuLVVTLm1zaS56aXAKMGZzOUFTaWF1SDRZeXdUNmluZm9MUFRZdG84UEZTb2JQai9JcGxwelRaSFBRUUJuTkNUWHlCRDdSYzdCdzhqSzYvc2d4aWF1L2ZVYktEWXVOTVoyQVE9PQo=",
+      "url": "https://github.com/beebls/CSSLoader-Desktop/releases/download/v1.0.0/CSSLoader.Desktop_1.0.0.msi.zip"
+    },
+    "linux-x86_64": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUR25UdTJ0dzN1MXBreHNnY1l6cjBwM1NTb2VKMCtUOU9FOWxhZXlkQ1hwYmswS3l6MlB5YjZkeFRhUTlEYnhrNmN1Wi80N2lxN2kyWEkvbXp3czJscHBHSzIxUHFFM0FjPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNjkxMDIyMTkxCWZpbGU6Y3NzLWxvYWRlci1kZXNrdG9wXzEuMC4wX2FtZDY0LkFwcEltYWdlLnRhci5nego5ZFp5Mkh4UkUyQ0tONFZvbWtyTnpvekh6ZXlXdXNqdFUzNUd2Q3B5RkwycVZ0ZlZiRnFkRjU3M1lwUGtpTXBXckJKSkxXSmp6ZG5ZT0hoSFd5MEtDUT09Cg==",
+      "url": "https://github.com/beebls/CSSLoader-Desktop/releases/download/v1.0.0/CSSLoader.Desktop_1.0.0.AppImage.tar.gz"
     }
   }
 }
