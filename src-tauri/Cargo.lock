@@ -61,6 +61,7 @@ dependencies = [
  "tauri",
  "tauri-build",
  "tokio",
+ "winapi",
  "zip-extract",
 ]
 

@@ -22,11 +22,12 @@ serde = { version = "1.0", features = ["derive"] }
 tauri = { version = "1.2.4", features = ["dialog-all", "fs-create-dir", "fs-exists", "fs-read-file", "fs-write-file", "http-all", "os-all", "path-all", "shell-all", "updater", "window-close", "window-maximize", "window-minimize", "window-set-decorations", "window-set-focus", "window-set-fullscreen", "window-set-size", "window-start-dragging", "window-unmaximize", "window-unminimize"] }
 reqwest = { version = "0.11.0", features = ["json"] }
 tokio = { version = "1", features = ["full"] }
+winapi = { version = "0.3.9", features = ["tlhelp32"] }
 
 [features]
 # by default Tauri runs in production mode
 # when `tauri dev` runs it is executed with `cargo run --no-default-features` if `devPath` is an URL
-default = [ "custom-protocol" ]
+default = ["custom-protocol"]
 # this feature is used for production builds where `devPath` points to the filesystem
 # DO NOT remove this
-custom-protocol = [ "tauri/custom-protocol" ]
+custom-protocol = ["tauri/custom-protocol"]
