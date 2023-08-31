@@ -75,16 +75,6 @@ export default function MainPage() {
     <>
       {/* pl-4 negates the shift from the scrollbar */}
       <main className="flex flex-1 flex-grow flex-col items-center gap-4">
-        {/* <div className="mt-8">
-		  <div className="w-full max-w-[960px] mx-auto text-center">These are your currently installed themes. Get more themes through the Store page.</div>
-		</div> */}
-
-        <button
-          className="h-64 w-64 bg-red-800"
-          onClick={() => {
-            test();
-          }}
-        ></button>
         <div className="mt-6 flex w-full flex-col items-center">
           {/* <h2 className="font-fancy mx-auto mb-4 w-full max-w-[960px] text-sm font-bold">
             Installed Themes

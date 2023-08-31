@@ -23,6 +23,8 @@ tauri = { version = "1.2.4", features = ["dialog-all", "fs-create-dir", "fs-exis
 reqwest = { version = "0.11.0", features = ["json"] }
 tokio = { version = "1", features = ["full"] }
 winapi = { version = "0.3.9", features = ["tlhelp32"] }
+log = "0.4.20"
+directories = "5.0.1"
 
 [features]
 # by default Tauri runs in production mode
