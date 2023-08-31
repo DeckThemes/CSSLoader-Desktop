@@ -73,7 +73,6 @@ export default function MainPage() {
 
   return (
     <>
-      {/* pl-4 negates the shift from the scrollbar */}
       <main className="flex flex-1 flex-grow flex-col items-center gap-4">
         <div className="mt-6 flex w-full flex-col items-center">
           {/* <h2 className="font-fancy mx-auto mb-4 w-full max-w-[960px] text-sm font-bold">
