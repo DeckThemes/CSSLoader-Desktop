@@ -7,3 +7,4 @@ export * from "./copyBackend";
 export * from "./getOS";
 export * from "./downloadTemplate";
 export * from "./checkIfThemeExists";
+export * from "./downloadbackend";
