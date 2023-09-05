@@ -1,10 +1,12 @@
-import { useContext, useMemo, useState } from "react";
+import { useContext } from "react";
 import { themeContext } from "@contexts/themeContext";
 import { changePreset, checkIfThemeExists, generatePreset, setThemeState, toast } from "../backend";
 import { InputAlertDialog } from "./Primitives/InputAlertDialog";
+import { backendStatusContext } from "@contexts/backendStatusContext";
 
 export function CreatePresetModal({ closeModal }: { closeModal: () => void }) {
   const { themes: localThemeList, refreshThemes, selectedPreset } = useContext(themeContext);
+  const { backendManifestVersion } = useContext(backendStatusContext);
 
   const nameContainsInvalidCharacters = (presetName: string) =>
     !!presetName.match(/[\\/:*?\"<>|]/g);
@@ -28,7 +30,7 @@ export function CreatePresetModal({ closeModal }: { closeModal: () => void }) {
       if (selectedPreset) {
         await setThemeState(selectedPreset?.name, false);
       }
-      await setThemeState(input, true);
+      await setThemeState(backendManifestVersion >= 9 ? input + ".profile" : input, true);
       await refreshThemes();
       toast("Preset Created Successfully");
       closeModal();

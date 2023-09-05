@@ -25,11 +25,10 @@ export function PresetSelectionDropdown() {
           triggerClass="bg-base-5.5-dark"
           headingText="Selected Profile"
           ariaLabel="Profile Selection Dropdown"
-          // value={presets.find((e) => e.enabled)?.name || "Default Profile"}
           value={
             themes.filter((e) => e.flags.includes(Flags.isPreset) && e.enabled).length > 1
               ? "Invalid State"
-              : selectedPreset?.name || "None"
+              : selectedPreset?.display_name || selectedPreset?.name || "None"
           }
           options={[
             // This just ensures that default profile is the first result
@@ -37,7 +36,7 @@ export function PresetSelectionDropdown() {
               ? ["Invalid State"]
               : []),
             "None",
-            ...presets.map((e) => e.name),
+            ...presets.map((e) => e?.display_name || e.name),
             "New Profile",
           ]}
           onValueChange={async (e) => {
@@ -46,7 +45,15 @@ export function PresetSelectionDropdown() {
               return;
             }
             if (e === "Invalid State") return;
-            await changePreset(e, themes);
+            if (e === "None") {
+              await changePreset(e, themes);
+            }
+            // since e is the display_name, and toggle uses the real name, need to find that...
+            // Still checks name as a fallback
+            const themeEntry = themes.find((f) => f?.display_name === e || f.name === e);
+            if (themeEntry) {
+              await changePreset(themeEntry.name, themes);
+            }
             refreshThemes();
           }}
         />

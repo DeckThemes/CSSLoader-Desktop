@@ -15,6 +15,7 @@ import {
   getOS,
   generatePresetFromThemeNames,
   changePreset,
+  getBackendVersion,
 } from "../backend";
 import { themeContext } from "@contexts/themeContext";
 import { FontContext } from "@contexts/FontContext";
@@ -32,6 +33,7 @@ export default function App(AppProps: AppProps) {
   const [backendExists, setBackendExists] = useState<boolean>(false);
   const [newBackendVersion, setNewBackend] = useState<string>("");
   const [showNewBackendPage, setShowNewBackend] = useState<boolean>(false);
+  const [backendManifestVersion, setManifestVersion] = useState<number>(8);
   const [OS, setOS] = useState<string>("");
   const isWindows = useMemo(() => OS === "win32", [OS]);
 
@@ -87,6 +89,10 @@ export default function App(AppProps: AppProps) {
   async function refreshThemes(reset: boolean = false) {
     if (isWindows) await refreshBackendExists();
     await dummyFuncTest();
+    const backendVer = await getBackendVersion();
+    if (backendVer.success) {
+      setManifestVersion(backendVer.result);
+    }
 
     const data = reset ? await reloadBackend() : await getInstalledThemes();
     if (data) {
@@ -105,6 +111,7 @@ export default function App(AppProps: AppProps) {
           recheckDummy,
           setNewBackend,
           setShowNewBackend,
+          backendManifestVersion,
         }}
       >
         <osContext.Provider value={{ OS, isWindows }}>

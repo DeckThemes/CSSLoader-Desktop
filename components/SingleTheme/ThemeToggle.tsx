@@ -6,7 +6,6 @@ import { themeContext } from "@contexts/themeContext";
 import { generatePreset, generatePresetFromThemeNames, setThemeState, toast } from "../../backend";
 import { AlertDialog, ToggleSwitch } from "..";
 import { twMerge } from "tailwind-merge";
-import { BsXCircleFill } from "react-icons/bs";
 
 function OptionalDepsModal({
   themeData,
@@ -106,7 +105,7 @@ export function ThemeToggle({
       )}
       <div className="flex justify-between gap-4">
         <div className="flex flex-col">
-          <span className="font-fancy text-md font-bold">{data.name}</span>
+          <span className="font-fancy text-md font-bold">{data?.display_name || data.name}</span>
           <span className="font-fancy text-muted text-sm">
             {isPreset ? `Preset` : `${data.version} • ${data.author}`}
           </span>

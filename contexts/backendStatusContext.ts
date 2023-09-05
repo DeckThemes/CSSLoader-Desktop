@@ -8,6 +8,7 @@ export const backendStatusContext = createContext<{
   recheckDummy: any;
   setNewBackend: Dispatch<SetStateAction<string>>;
   setShowNewBackend: Dispatch<SetStateAction<boolean>>;
+  backendManifestVersion: number;
 }>({
   dummyResult: undefined,
   showNewBackendPage: false,
@@ -16,4 +17,5 @@ export const backendStatusContext = createContext<{
   backendExists: false,
   setNewBackend: () => {},
   setShowNewBackend: () => {},
+  backendManifestVersion: 8,
 });
