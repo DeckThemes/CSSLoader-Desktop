@@ -18,7 +18,7 @@ use winapi::shared::minwindef::DWORD;
 
 fn main() {
   tauri::Builder::default()
-    .invoke_handler(tauri::generate_handler![download_template,kill_standalone_backend,download_latest_backend,start_backend,install_backend])
+    .invoke_handler(tauri::generate_handler![download_template,kill_standalone_backend,download_latest_backend,start_backend,install_backend,get_string_startup_dir])
     .run(tauri::generate_context!())
     .expect("error while running tauri application");
 }
@@ -42,17 +42,34 @@ async fn download_template(template_name: String) -> bool {
   return !extract.is_err()
 }
 
-async fn get_backend_path() -> Option<PathBuf> {
+async fn get_startup_dir() -> Option<PathBuf> {
   if let Some(base_dirs) = BaseDirs::new() {
     let config = base_dirs.config_dir();
     let startup_dir: std::path::PathBuf = Path::new(&config).join("Microsoft\\Windows\\Start Menu\\Programs\\Startup");
-    let backend_file_name: std::path::PathBuf = startup_dir.join("CssLoader-Standalone-Headless.exe");
     // TODO: MAKE SURE THE FILE OR DIRECTORY EXISTS
     // MAYBE NOT THE FILE AS ON INITIAL INSTALL IT WONT EXIST
     // BUT THE FOLDER FOR SURE
-    return Some(backend_file_name);
+    return Some(startup_dir);
   }
   return None;
+}
+
+async fn get_backend_path() -> Option<PathBuf> {
+  let startup_dir = get_startup_dir().await;
+  if startup_dir.is_none() {
+    return None;
+  }
+  let backend_file_name = startup_dir.unwrap().join("CssLoader-Standalone-Headless.exe");
+  return Some(backend_file_name);
+}
+
+#[tauri::command]
+async fn get_string_startup_dir() -> String {
+  let startup_dir = get_startup_dir().await;
+  if startup_dir.is_none() {
+    return "ERROR:".to_owned();
+  }
+  return startup_dir.unwrap().to_string_lossy().to_string();
 }
 
 #[tauri::command]
