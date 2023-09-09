@@ -6,5 +6,5 @@ export * from "./checkIfStandaloneBackendExists";
 export * from "./copyBackend";
 export * from "./getOS";
 export * from "./downloadTemplate";
+export * from "./downloadBackend";
 export * from "./checkIfThemeExists";
-export * from "./downloadbackend";

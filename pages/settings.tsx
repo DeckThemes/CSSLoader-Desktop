@@ -1,20 +1,10 @@
 import { AlertDialog, LabelledInput, Tooltip } from "@components/Primitives";
-import {
-  copyBackend,
-  killBackend,
-  sleep,
-  startBackend,
-  storeRead,
-  storeWrite,
-  toast,
-} from "backend";
+import { killBackend, startBackend, storeRead, storeWrite, toast } from "backend";
 import { useState, useEffect, useContext } from "react";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
 import { BsDiscord } from "react-icons/bs";
 import { FaPatreon } from "react-icons/fa";
 import { themeContext } from "@contexts/themeContext";
-import { GenericInstallBackendModal } from "@components/GenericInstallBackendModal";
-import { open } from "@tauri-apps/api/dialog";
 import { osContext } from "@contexts/osContext";
 import { ImSpinner5 } from "react-icons/im";
 import { CreateTemplateTheme } from "@components/Settings";

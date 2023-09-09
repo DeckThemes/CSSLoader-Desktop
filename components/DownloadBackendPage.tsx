@@ -1,7 +1,5 @@
 import { useState } from "react";
-import { ImSpinner5 } from "react-icons/im";
-import { downloadBackend, killBackend, startBackend } from "../backend";
-import { AlertDialog } from "./Primitives";
+import { downloadBackend } from "../backend/tauriMethods";
 import { GenericInstallBackendModal } from "./GenericInstallBackendModal";
 
 export function DownloadBackendPage({
