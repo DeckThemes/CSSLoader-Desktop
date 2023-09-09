@@ -146,8 +146,7 @@ export default function SettingsPage() {
                     // These have to be async imported here as otherwise NextJS tries to "SSR" them and it errors
                     const { invoke } = await import("@tauri-apps/api");
                     const { open } = await import("@tauri-apps/api/shell");
-                    const { resolve } = await import("@tauri-apps/api/path");
-                    const path = await resolve(await invoke("get_string_startup_dir", {}));
+                    const path: string = await invoke("get_string_startup_dir", {});
                     open(path);
                   }}
                   className="flex h-12 items-center justify-center whitespace-nowrap rounded-xl bg-base-3-dark px-4 focus-visible:ring-4 focus-visible:ring-amber9"
