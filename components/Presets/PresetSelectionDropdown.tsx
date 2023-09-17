@@ -11,11 +11,6 @@ export function PresetSelectionDropdown() {
   const { themes, refreshThemes, selectedPreset } = useContext(themeContext);
   const presets = useMemo(() => themes.filter((e) => e.flags.includes(Flags.isPreset)), [themes]);
   const [showModal, setShowModal] = useState(false);
-  console.log(
-    themes.filter((e) => e.flags.includes(Flags.isPreset) && e.enabled).length > 1
-      ? "Invalid State"
-      : selectedPreset?.name || "None"
-  );
 
   return (
     <>

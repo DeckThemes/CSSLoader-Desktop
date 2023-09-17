@@ -27,8 +27,9 @@ export function CreatePresetModal({ closeModal }: { closeModal: () => void }) {
       }
       await generatePreset(input);
       await refreshThemes(true);
+      // Don't need to disable all themes here because the preset was created based on what you have enabled.
       if (selectedPreset) {
-        await setThemeState(selectedPreset?.name, false);
+        await setThemeState(selectedPreset.name, false);
       }
       await setThemeState(backendManifestVersion >= 9 ? input + ".profile" : input, true);
       await refreshThemes();

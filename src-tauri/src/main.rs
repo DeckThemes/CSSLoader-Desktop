@@ -10,15 +10,26 @@ use zip_extract;
 use std::process::Command;
 use std::{fs, ptr};
 
+#[cfg(target_os = "windows")]
 use winapi::um::tlhelp32::{CreateToolhelp32Snapshot, Process32First, Process32Next, PROCESSENTRY32};
 use winapi::um::processthreadsapi::{OpenProcess, TerminateProcess};
 use winapi::um::winnt::{PROCESS_QUERY_INFORMATION, PROCESS_VM_READ};
 use winapi::um::handleapi::CloseHandle;
 use winapi::shared::minwindef::DWORD;
 
+
+#[cfg(target_os = "windows")]
 fn main() {
   tauri::Builder::default()
     .invoke_handler(tauri::generate_handler![download_template,kill_standalone_backend,download_latest_backend,start_backend,install_backend,get_string_startup_dir])
+    .run(tauri::generate_context!())
+    .expect("error while running tauri application");
+}
+
+#[cfg(target_os = "linux")]
+fn main() {
+  tauri::Builder::default()
+    .invoke_handler(tauri::generate_handler![download_template])
     .run(tauri::generate_context!())
     .expect("error while running tauri application");
 }
@@ -42,6 +53,7 @@ async fn download_template(template_name: String) -> bool {
   return !extract.is_err()
 }
 
+#[cfg(target_os = "windows")]
 async fn get_startup_dir() -> Option<PathBuf> {
   if let Some(base_dirs) = BaseDirs::new() {
     let config = base_dirs.config_dir();
@@ -54,6 +66,7 @@ async fn get_startup_dir() -> Option<PathBuf> {
   return None;
 }
 
+#[cfg(target_os = "windows")]
 async fn get_backend_path() -> Option<PathBuf> {
   let startup_dir = get_startup_dir().await;
   if startup_dir.is_none() {
@@ -63,6 +76,7 @@ async fn get_backend_path() -> Option<PathBuf> {
   return Some(backend_file_name);
 }
 
+#[cfg(target_os = "windows")]
 #[tauri::command]
 async fn get_string_startup_dir() -> String {
   let startup_dir = get_startup_dir().await;
@@ -72,6 +86,7 @@ async fn get_string_startup_dir() -> String {
   return startup_dir.unwrap().to_string_lossy().to_string();
 }
 
+#[cfg(target_os = "windows")]
 #[tauri::command]
 async fn install_backend(backend_url: String) -> String {
   kill_standalone_backend().await;
@@ -83,6 +98,7 @@ async fn install_backend(backend_url: String) -> String {
   return String::from("SUCCESS");
 }
 
+#[cfg(target_os = "windows")]
 #[tauri::command]
 async fn start_backend() -> String {
   let backend_file_name = get_backend_path().await;
@@ -96,6 +112,7 @@ async fn start_backend() -> String {
   return String::from("SUCCESS");
 }
 
+#[cfg(target_os = "windows")]
 #[tauri::command]
 async fn download_latest_backend(backend_url: String) -> String {
   let backend_file_name = get_backend_path().await;
@@ -120,6 +137,7 @@ async fn download_latest_backend(backend_url: String) -> String {
   return String::from("SUCCESS");
 }
 
+#[cfg(target_os = "windows")]
 async fn find_standalone_pids() -> Option<Vec<u32>> {
   
   let process_name: &str = "CssLoader-Standalone-Headless.exe";
@@ -170,6 +188,7 @@ async fn find_standalone_pids() -> Option<Vec<u32>> {
 }
 
 
+#[cfg(target_os = "windows")]
 #[tauri::command]
 async fn kill_standalone_backend() -> String {
   let process_ids: Option<Vec<u32>> = find_standalone_pids().await;
@@ -194,6 +213,7 @@ async fn kill_standalone_backend() -> String {
   return String::from("SUCCESS:");
 }
 
+#[cfg(target_os = "windows")]
 async fn kill_pid(process_id: u32) -> String {
   unsafe {
     // Get a handle to the process
