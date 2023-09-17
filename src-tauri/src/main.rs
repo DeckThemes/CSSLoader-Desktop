@@ -11,11 +11,13 @@ use std::process::Command;
 use std::{fs, ptr};
 
 #[cfg(target_os = "windows")]
-use winapi::um::tlhelp32::{CreateToolhelp32Snapshot, Process32First, Process32Next, PROCESSENTRY32};
-use winapi::um::processthreadsapi::{OpenProcess, TerminateProcess};
-use winapi::um::winnt::{PROCESS_QUERY_INFORMATION, PROCESS_VM_READ};
-use winapi::um::handleapi::CloseHandle;
-use winapi::shared::minwindef::DWORD;
+use {
+  winapi::um::tlhelp32::{CreateToolhelp32Snapshot, Process32First, Process32Next, PROCESSENTRY32},
+  winapi::um::processthreadsapi::{OpenProcess, TerminateProcess},
+  winapi::um::winnt::{PROCESS_QUERY_INFORMATION, PROCESS_VM_READ},
+  winapi::um::handleapi::CloseHandle,
+  winapi::shared::minwindef::DWORD,
+};
 
 
 #[cfg(target_os = "windows")]
