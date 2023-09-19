@@ -8,6 +8,7 @@ import { TbColumns1, TbColumns2 } from "react-icons/tb";
 import { Flags } from "ThemeTypes";
 import Link from "next/link";
 import { storeRead, storeWrite } from "backend";
+import { test } from "backend/tauriMethods/test";
 
 export default function MainPage() {
   const vw = useVW();
@@ -72,12 +73,7 @@ export default function MainPage() {
 
   return (
     <>
-      {/* pl-4 negates the shift from the scrollbar */}
       <main className="flex flex-1 flex-grow flex-col items-center gap-4">
-        {/* <div className="mt-8">
-		  <div className="w-full max-w-[960px] mx-auto text-center">These are your currently installed themes. Get more themes through the Store page.</div>
-		</div> */}
-
         <div className="mt-6 flex w-full flex-col items-center">
           {/* <h2 className="font-fancy mx-auto mb-4 w-full max-w-[960px] text-sm font-bold">
             Installed Themes

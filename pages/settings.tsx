@@ -1,20 +1,10 @@
 import { AlertDialog, LabelledInput, Tooltip } from "@components/Primitives";
-import {
-  copyBackend,
-  killBackend,
-  sleep,
-  startBackend,
-  storeRead,
-  storeWrite,
-  toast,
-} from "backend";
+import { killBackend, startBackend, storeRead, storeWrite, toast } from "backend";
 import { useState, useEffect, useContext } from "react";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
 import { BsDiscord } from "react-icons/bs";
 import { FaPatreon } from "react-icons/fa";
 import { themeContext } from "@contexts/themeContext";
-import { GenericInstallBackendModal } from "@components/GenericInstallBackendModal";
-import { open } from "@tauri-apps/api/dialog";
 import { osContext } from "@contexts/osContext";
 import { ImSpinner5 } from "react-icons/im";
 import { CreateTemplateTheme } from "@components/Settings";
@@ -36,9 +26,9 @@ export default function SettingsPage() {
 
   const [ongoingAction, setOngoingAction] = useState<boolean>(false);
 
-  const [showBackendInstallModal, setShowBackendInstallModal] = useState<boolean>(false);
-  const [installText, setInstallText] = useState<string>("");
-  const [installModalDesc, setInstallModalDesc] = useState<string>("");
+  // const [showBackendInstallModal, setShowBackendInstallModal] = useState<boolean>(false);
+  // const [installText, setInstallText] = useState<string>("");
+  // const [installModalDesc, setInstallModalDesc] = useState<string>("");
 
   function onSaveToken() {
     if (token.length !== 12) {
@@ -140,7 +130,20 @@ export default function SettingsPage() {
                 >
                   {ongoingAction ? <ImSpinner5 /> : "Force Start Backend"}
                 </button>
-                <AlertDialog
+                <button
+                  disabled={ongoingAction}
+                  onClick={async () => {
+                    // These have to be async imported here as otherwise NextJS tries to "SSR" them and it errors
+                    const { invoke } = await import("@tauri-apps/api");
+                    const { open } = await import("@tauri-apps/api/shell");
+                    const path: string = await invoke("get_string_startup_dir", {});
+                    open(path);
+                  }}
+                  className="flex h-12 items-center justify-center whitespace-nowrap rounded-xl bg-base-3-dark px-4 focus-visible:ring-4 focus-visible:ring-amber9"
+                >
+                  Open Backend Location
+                </button>
+                {/* <AlertDialog
                   cancelText="Go Back"
                   title="Wait A Second!"
                   description="This feature is meant for developers. If you do not understand exactly what you're doing, cancel this popup. Do not install files from untrusted sources."
@@ -200,7 +203,7 @@ export default function SettingsPage() {
                     installText={installText}
                     dontClose
                   />
-                )}
+                )} */}
               </>
             )}
             {/* This was a WIP thing that would print out the current app state to a txt file, doesn't seem needed */}

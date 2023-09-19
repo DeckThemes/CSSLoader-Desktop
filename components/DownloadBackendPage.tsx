@@ -1,7 +1,5 @@
 import { useState } from "react";
-import { ImSpinner5 } from "react-icons/im";
-import { downloadBackend, killBackend, startBackend } from "../backend";
-import { AlertDialog } from "./Primitives";
+import { downloadBackend } from "../backend/tauriMethods";
 import { GenericInstallBackendModal } from "./GenericInstallBackendModal";
 
 export function DownloadBackendPage({
@@ -19,26 +17,13 @@ export function DownloadBackendPage({
   const [installText, setInstallText] = useState<string>("");
   async function installBackend() {
     setInstallProg(1);
-    function doTheInstall() {
-      setInstallText("Downloading Backend");
-      downloadBackend(async () => {
-        setInstallProg(50);
-        setInstallText("Starting Backend");
-        await startBackend();
-        setInstallProg(100);
-        setInstallText("Install Complete");
-        setTimeout(() => {
-          onUpdateFinish();
-        }, 1000);
-      });
-    }
-    if (onboarding) {
-      doTheInstall();
-    } else {
-      setInstallText("Stopping Backend");
-      await killBackend();
-      doTheInstall();
-    }
+    setInstallText("Downloading Backend");
+    await downloadBackend();
+    setInstallProg(100);
+    setInstallText("Install Complete");
+    setTimeout(() => {
+      onUpdateFinish();
+    }, 1000);
   }
 
   return (

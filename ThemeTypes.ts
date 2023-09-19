@@ -4,6 +4,7 @@ export interface Theme {
   id: string;
   enabled: boolean; // used to be called checked
   name: string;
+  display_name?: string;
   author: string;
   bundled: boolean; // deprecated
   require: number;
