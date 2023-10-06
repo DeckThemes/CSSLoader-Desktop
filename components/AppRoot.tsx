@@ -42,7 +42,7 @@ export function AppRoot({ Component, pageProps }: AppProps) {
 
   return (
     // overflow-hidden rounded-b-lg
-    <div className="absolute top-0 left-0 right-0 bottom-0 overflow-hidden rounded-lg bg-base-6-dark">
+    <div className="absolute top-0 left-0 right-0 bottom-0 overflow-hidden bg-base-6-dark">
       <div className="relative top-8 overflow-hidden rounded-b-lg">
         <div
           ref={scrollableContainerRef}

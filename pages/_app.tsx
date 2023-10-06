@@ -36,6 +36,8 @@ export default function App(AppProps: AppProps) {
   const [backendManifestVersion, setManifestVersion] = useState<number>(8);
   const [OS, setOS] = useState<string>("");
   const isWindows = useMemo(() => OS === "win32", [OS]);
+  const [maximized, setMaximized] = useState<boolean>(false);
+  const [fullscreen, setFullscreen] = useState<boolean>(false);
 
   const selectedPreset = useMemo(
     () => themes.find((e) => e.flags.includes(Flags.isPreset) && e.enabled),
@@ -43,10 +45,28 @@ export default function App(AppProps: AppProps) {
   );
 
   useEffect(() => {
+    let unsubscribeToWindowChanges: () => void;
+
+    async function subscribeToWindowChanges() {
+      // why did you use a ssr framework in an app
+      const { appWindow } = await import("@tauri-apps/api/window");
+
+      unsubscribeToWindowChanges = await appWindow.onResized(() => {
+        appWindow.isMaximized().then(setMaximized);
+        appWindow.isFullscreen().then(setFullscreen);
+      });
+    }
+
+    subscribeToWindowChanges();
+
     // This sets OS and isWindows, which some other initializing logic then runs based on that result
     getOS().then(setOS);
     // This actually initializes the themes and such
     recheckDummy();
+
+    return () => {
+      unsubscribeToWindowChanges && unsubscribeToWindowChanges();
+    };
   }, []);
 
   useBasicAsyncEffect(async () => {
@@ -114,7 +134,7 @@ export default function App(AppProps: AppProps) {
           backendManifestVersion,
         }}
       >
-        <osContext.Provider value={{ OS, isWindows }}>
+        <osContext.Provider value={{ OS, isWindows, maximized, fullscreen }}>
           <FontContext>
             <AppFrame>
               <DynamicTitleBar />

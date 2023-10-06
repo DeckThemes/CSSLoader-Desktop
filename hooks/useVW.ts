@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useSyncExternalStore } from "react";
 
-export function useVW() {
+export function useVW2() {
   const [vw, setVW] = useState(window.innerWidth);
 
   useEffect(() => {
@@ -21,5 +21,28 @@ export function useVW() {
     };
   }, []);
 
+  return vw;
+}
+
+function subscribe(callback: any) {
+  let timeoutId: NodeJS.Timeout;
+
+  function handleResize() {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      callback();
+    }, 100);
+  }
+
+  window.addEventListener("resize", handleResize);
+  return () => window.removeEventListener("resize", handleResize);
+}
+function getSnapshot() {
+  return window.innerWidth;
+}
+
+export function useVW() {
+  const vw = useSyncExternalStore(subscribe, getSnapshot);
+  console.log(vw);
   return vw;
 }
