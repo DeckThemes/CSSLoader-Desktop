@@ -107,7 +107,7 @@ export default function App(AppProps: AppProps) {
     }
   }
 
-  async function refreshThemes(reset: boolean = false) {
+  async function refreshThemes(reset: boolean = false): Promise<Theme[] | undefined> {
     if (isWindows) await refreshBackendExists();
     await dummyFuncTest();
     const backendVer = await getBackendVersion();
@@ -123,6 +123,9 @@ export default function App(AppProps: AppProps) {
     if (errors) {
       setErrors(errors);
     }
+
+    // Returning themes for preset thingy thingy
+    return data?.sort();
   }
 
   return (
