@@ -96,3 +96,7 @@ export interface StarredThemeList {
   total: number;
   items: PartialCSSThemeInfo[];
 }
+
+type ThemeErrorTitle = string;
+type ThemeErrorDescription = string;
+export type ThemeError = [ThemeErrorTitle, ThemeErrorDescription];

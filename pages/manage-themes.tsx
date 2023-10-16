@@ -5,6 +5,7 @@ import { deleteTheme, downloadThemeFromUrl, toast } from "../backend";
 import { bulkThemeUpdateCheck } from "../logic";
 import { ManageThemeCard, YourProfilesList } from "../components";
 import { BiFolderOpen } from "react-icons/bi";
+import { ThemeErrorsList } from "@components/ManageThemes/ThemeErrorsList";
 
 export type LocalThemeStatus = "installed" | "outdated" | "local";
 
@@ -37,7 +38,7 @@ export default function ManageThemes() {
   }, [localThemeList]);
 
   return (
-    <main className="flex flex-1 flex-col items-center gap-8 px-4">
+    <main className="flex flex-1 flex-col items-center gap-8 px-4 pb-4">
       <div className="mt-6 w-full max-w-[960px]">
         <h2 className="font-fancy mb-4 text-lg font-bold">Theme Directory</h2>
         <button
@@ -74,6 +75,7 @@ export default function ManageThemes() {
         </div>
       </div>
       <YourProfilesList {...{ updateStatuses, uninstalling, handleUninstall, handleUpdate }} />
+      <ThemeErrorsList />
     </main>
   );
 }

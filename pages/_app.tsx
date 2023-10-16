@@ -1,6 +1,6 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { Flags, Theme } from "../ThemeTypes";
+import { Flags, Theme, ThemeError } from "../ThemeTypes";
 import { useState, useEffect, useMemo, use } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import {
@@ -14,6 +14,7 @@ import {
   getInstalledThemes,
   getOS,
   generatePresetFromThemeNames,
+  getLastLoadErrors,
   changePreset,
   getBackendVersion,
 } from "../backend";
@@ -28,6 +29,7 @@ import { useBasicAsyncEffect } from "@hooks/useBasicAsyncEffect";
 
 export default function App(AppProps: AppProps) {
   const [themes, setThemes] = useState<Theme[]>([]);
+  const [errors, setErrors] = useState<ThemeError[]>([]);
   // This is now undefined before the initial check, that way things can use dummyResult !== undefined to see if the app has properly loaded
   const [dummyResult, setDummyResult] = useState<boolean | undefined>(undefined);
   const [backendExists, setBackendExists] = useState<boolean>(false);
@@ -50,7 +52,6 @@ export default function App(AppProps: AppProps) {
     async function subscribeToWindowChanges() {
       // why did you use a ssr framework in an app
       const { appWindow } = await import("@tauri-apps/api/window");
-
       unsubscribeToWindowChanges = await appWindow.onResized(() => {
         appWindow.isMaximized().then(setMaximized);
         appWindow.isFullscreen().then(setFullscreen);
@@ -118,10 +119,16 @@ export default function App(AppProps: AppProps) {
     if (data) {
       setThemes(data.sort());
     }
+    const errors = await getLastLoadErrors();
+    if (errors) {
+      setErrors(errors);
+    }
   }
 
   return (
-    <themeContext.Provider value={{ themes, setThemes, refreshThemes, selectedPreset }}>
+    <themeContext.Provider
+      value={{ themes, setThemes, errors, setErrors, refreshThemes, selectedPreset }}
+    >
       <backendStatusContext.Provider
         value={{
           dummyResult,

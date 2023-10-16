@@ -5,8 +5,7 @@ import {
   VscChromeMinimize,
   VscChromeRestore,
 } from "react-icons/vsc";
-import { useContext, useEffect, useState } from "react";
-import { useInterval } from "@hooks/useInterval";
+import { useContext } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import * as Portal from "@radix-ui/react-portal";
