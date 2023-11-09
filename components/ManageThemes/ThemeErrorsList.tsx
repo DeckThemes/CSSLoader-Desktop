@@ -4,7 +4,7 @@ import { useContext } from "react";
 export function ThemeErrorsList() {
   const { errors } = useContext(themeContext);
   return (
-    <div className="flex w-full flex-col">
+    <div className="flex w-full max-w-[960px] flex-col">
       <h2 className="font-fancy mx-auto mb-4 w-full max-w-[960px] text-sm font-bold">Errors</h2>
       <div className="flex flex-col gap-4">
         {errors.map((e) => {
