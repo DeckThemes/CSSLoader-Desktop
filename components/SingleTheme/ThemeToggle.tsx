@@ -126,7 +126,9 @@ export function ThemeToggle({
               }
               // Actually enabling the theme
               await setThemeState(data.name, switchValue);
-              await refreshThemes();
+
+              // Need to grab up to date data
+              const updatedThemes: Theme[] | undefined = await refreshThemes();
 
               // Dependency Toast
               if (data.dependencies.length > 0) {
@@ -153,24 +155,14 @@ export function ThemeToggle({
                 }
               }
 
-              if (!selectedPreset) return;
+              if (!selectedPreset || !updatedThemes) return;
               // This used to generate the new list of themes by the dependencies of the preset + or - the checked theme
               // However, since we added profiles, the list of enabled themes IS the list of dependencies, so this works
               await generatePresetFromThemeNames(
                 selectedPreset.name,
-                switchValue
-                  ? [
-                      ...themes
-                        .filter((e) => e.enabled && !e.flags.includes(Flags.isPreset))
-                        .map((e) => e.name),
-                      data.name,
-                    ]
-                  : themes
-                      .filter(
-                        (e) =>
-                          e.enabled && !e.flags.includes(Flags.isPreset) && e.name !== data.name
-                      )
-                      .map((e) => e.name)
+                updatedThemes
+                  .filter((e) => e.enabled && !e.flags.includes(Flags.isPreset))
+                  .map((e) => e.name)
               );
             }}
           />

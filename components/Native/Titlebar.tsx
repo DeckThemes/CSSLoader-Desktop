@@ -5,25 +5,15 @@ import {
   VscChromeMinimize,
   VscChromeRestore,
 } from "react-icons/vsc";
-import { useEffect, useState } from "react";
-import { useInterval } from "@hooks/useInterval";
+import { useContext } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import * as Portal from "@radix-ui/react-portal";
+import { twMerge } from "tailwind-merge";
+import { osContext } from "@contexts/osContext";
 
 const Titlebar = () => {
-  const [maximized, setMaximized] = useState(false);
-  const [fullscreen, setFullscreen] = useState(false);
-
-  const tauriInterval = useInterval(() => {
-    appWindow.isMaximized().then(setMaximized);
-    appWindow.isFullscreen().then(setFullscreen);
-  }, 200);
-
-  useEffect(() => {
-    tauriInterval.start();
-    return tauriInterval.stop;
-  }, []);
+  const { fullscreen, maximized } = useContext(osContext);
 
   return (
     !fullscreen && (
@@ -31,7 +21,10 @@ const Titlebar = () => {
         <Portal.Root style={{ pointerEvents: "all", cursor: "default" }}>
           <div
             data-tauri-drag-region
-            className="cssloader-titlebar fixed z-[2147483647] flex h-8 !cursor-default select-none flex-row overflow-hidden rounded-t-lg border-x-[1px] border-t-[1px] border-[#2f2f2f] bg-base-6-dark"
+            className={twMerge(
+              "cssloader-titlebar fixed z-[2147483647] flex h-8 !cursor-default select-none flex-row overflow-hidden border-x-[1px] border-t-[1px] border-[#2f2f2f] bg-base-6-dark",
+              maximized ? "rounded-t-none" : "rounded-t-lg"
+            )}
           >
             <div draggable={false} className="absolute top-0 left-0 flex h-full select-none">
               <Link

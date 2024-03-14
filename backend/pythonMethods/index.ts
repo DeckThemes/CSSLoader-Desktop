@@ -14,3 +14,4 @@ export * from "./getBackendVersion";
 export * from "./generatePreset";
 export * from "./fetchThemePath";
 export * from "./generatePresetFromThemeNames";
+export * from "./getLastLoadErrors";
