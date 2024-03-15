@@ -1,4 +1,4 @@
-import { AlertDialog, LabelledInput, Tooltip } from "@components/Primitives";
+import { AlertDialog, LabelledInput, ToggleSwitch, Tooltip } from "@components/Primitives";
 import { killBackend, startBackend, storeRead, storeWrite, toast } from "backend";
 import { useState, useEffect, useContext } from "react";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
@@ -12,13 +12,37 @@ import { fetch, Body } from "@tauri-apps/api/http";
 
 export default function SettingsPage() {
   const [token, setToken] = useState<string>("");
+  const [betaTranslationsState, setBetaTranslationsState] = useState<boolean>(false);
+
+  async function fetchToken() {
+    const res = await storeRead("shortToken");
+    if (res.success && res.result) {
+      setToken(res.result);
+    }
+  }
+
+  async function fetchBetaTranslationsState() {
+    const res = await storeRead("beta_translations");
+    if (res.success && res.result) {
+      setBetaTranslationsState(res.result === "1" ? true : false);
+    }
+  }
+
+  async function updateBetaTranslations(value: boolean) {
+    setOngoingAction(true);
+    const res = await storeWrite("beta_translations", value ? "1" : "0");
+    setOngoingAction(false);
+    if (!res.success) {
+      toast("Error Updating Beta Translations State");
+      return;
+    }
+    toast("Changes will apply after a restart.");
+    void fetchBetaTranslationsState();
+  }
 
   useEffect(() => {
-    storeRead("shortToken").then((res) => {
-      if (res.success && res.result) {
-        setToken(res.result);
-      }
-    });
+    void fetchToken();
+    void fetchBetaTranslationsState();
   }, []);
 
   const { refreshThemes } = useContext(themeContext);
@@ -102,6 +126,22 @@ export default function SettingsPage() {
             </div>
           </div>
           <div className="flex w-full flex-col gap-4">
+            <span className="text-lg font-bold">CSSLoader Settings</span>
+            <div className="flex w-full items-center justify-center rounded-xl border-2 border-borders-base1-dark p-6 transition hover:border-borders-base2-dark dark:bg-base-3-dark">
+              <div className="flex flex-col">
+                <span className="text-md font-bold">Enable Beta Steam CSS Translations</span>
+                <span className="text-sm">Enable this if you are on Steam Client Beta</span>
+              </div>
+              <div className="ml-auto flex items-center">
+                <ToggleSwitch
+                  checked={betaTranslationsState}
+                  disabled={ongoingAction}
+                  onChange={updateBetaTranslations}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="flex w-full flex-col gap-4">
             <span className="text-lg font-bold">Developer Settings</span>
             <CreateTemplateTheme {...{ ongoingAction }} />
             {isWindows && (
@@ -143,83 +183,8 @@ export default function SettingsPage() {
                 >
                   Open Backend Location
                 </button>
-                {/* <AlertDialog
-                  cancelText="Go Back"
-                  title="Wait A Second!"
-                  description="This feature is meant for developers. If you do not understand exactly what you're doing, cancel this popup. Do not install files from untrusted sources."
-                  actionText="I Know What I'm Doing"
-                  actionClass="bg-dangerRed"
-                  onAction={() => {
-                    open({
-                      directory: false,
-                      multiple: false,
-                      filters: [
-                        {
-                          name: "CSSLoader-Standalone-Headless.exe",
-                          extensions: ["exe"],
-                        },
-                      ],
-                      //  @ts-ignore
-                    }).then(async (path: string) => {
-                      if (!path) {
-                        toast("Invalid Selection");
-                        return;
-                      }
-                      setOngoingAction(true);
-                      setInstallModalDesc("Installing " + path.slice(path.lastIndexOf("\\") + 1));
-                      // TODO: This function assumes each function never fails, add some failsafes/error messages
-                      setShowBackendInstallModal(true);
-                      setInstallText("Stopping Backend");
-                      await killBackend();
-                      await sleep(2000);
-                      setInstallText("Installing New Backend");
-                      await copyBackend(path);
-                      setInstallText("Pausing To Allow Windows To Figure Itself Out");
-                      await startBackend();
-                      await sleep(10000);
-                      await startBackend();
-                      setOngoingAction(false);
-                      setShowBackendInstallModal(false);
-                      setInstallModalDesc("");
-                      refreshThemes();
-                    });
-                  }}
-                  Trigger={
-                    <>
-                      <button
-                        disabled={ongoingAction}
-                        className="flex h-12 w-full items-center justify-center whitespace-nowrap rounded-xl bg-base-3-dark px-4"
-                      >
-                        {ongoingAction ? <ImSpinner5 /> : "Install Backend From File"}
-                      </button>
-                    </>
-                  }
-                />
-                {showBackendInstallModal && (
-                  <GenericInstallBackendModal
-                    titleText="Installed Backend From File"
-                    descriptionText={installModalDesc}
-                    installProg={1}
-                    installText={installText}
-                    dontClose
-                  />
-                )} */}
               </>
             )}
-            {/* This was a WIP thing that would print out the current app state to a txt file, doesn't seem needed */}
-            {/* <button
-              onClick={async () => {
-                console.log("Themes", themes);
-                console.log(
-                  "Highest Support Manifest Version",
-                  await getBackendVersion().then((res) => res.result)
-                );
-                console.log("AppData's Stored Standalone Version", await getStandaloneVersion());
-              }}
-              className="h-12 whitespace-nowrap rounded-xl bg-base-3-dark px-4"
-            >
-              Data Dump
-            </button> */}
           </div>
           <div className="flex w-full flex-col gap-4">
             <span className="text-lg font-bold">Credits</span>
@@ -227,6 +192,7 @@ export default function SettingsPage() {
               <li>SuchMemeManySkill - Backend Dev</li>
               <li>Beebles - Frontend Dev</li>
               <li>Fero - Frontend Dev</li>
+              <li>Emerald - Frontend Dev</li>
             </ul>
             <div className="flex w-full flex-col items-start pb-8">
               <button
